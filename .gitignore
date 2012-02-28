@@ -1,0 +1,7 @@
+*.pdf
+*.exe
+*.log
+*.data
+*.Rdata
+*~
+*.xls
