@@ -24,7 +24,8 @@ test_find.peaks(){
 #als de functie gelijk blijft, dan blijft de diff potential waarde gelijk.
 #als de waarde van stijg naar daal gaat, dan wordt de diffpotential waarde in 0 omgezet.
 
-peak <- function(a){
+peak <- function(a,b=0){
+  a <- replace(a,a<=b,0)
   diffpotential <- seq(1,length(a))*0   #deze waarden wil ik graag uitlezen. Als er steeds groei plaatsvindt, dan wordt de waarde steeds groter. Maar als er een keer negatieve groei plaatsvindt, dan wordt hij terug gezet op 0.
   peaks <- NULL
     for(i in 2:length(a)){
@@ -36,10 +37,8 @@ peak <- function(a){
 	  }
     }
   diffpotential
+  pos <- which(diffpotential > 0)  #welke zijn groter dan nul
+  poszero <- (which(diffpotential[pos+1] == 0)) #welke volgende van groter dan nul zijn nul. (waar hij stopt met groeien)
+  pos[poszero] #(posities van de pieken in a en diffpotential 
 }
 
-
-peakmat <- NULL
-for(i in 1:ncol(xcuttoff)){
-  peakmat <- cbind(peakmat,peak(xcuttoff[,i]))
-}
