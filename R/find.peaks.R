@@ -28,14 +28,18 @@ peak <- function(a){
   diffpotential <- seq(1,length(a))*0   #deze waarden wil ik graag uitlezen. Als er steeds groei plaatsvindt, dan wordt de waarde steeds groter. Maar als er een keer negatieve groei plaatsvindt, dan wordt hij terug gezet op 0.
   peaks <- NULL
     for(i in 2:length(a)){
-	  if(diff(a)[i-1] > 0){ #<- deze waarden geven aan of er groei of niet heeft plaatsgevonden. want als diffa[i]> 0 dan heeft er positieve groei plaatsgevonden.
+	  if(diff(a)[i-1] >= 0){ #<- deze waarden geven aan of er groei of niet heeft plaatsgevonden. want als diffa[i]> 0 dan heeft er positieve groei plaatsgevonden.
 	    if(diffpotential[i-1] >= 0) { diffpotential [i] <- diffpotential[i-1] +1} else{diffpotential[i] <- 0}
 	  }  
 	  if(diff(a)[i-1] < 0){
 	    if(diffpotential[i-1] <= 0) { diffpotential [i] <- diffpotential[i-1] -1} else{diffpotential[i] <- 0}
 	  }
     }
-  x <- (which(diffpotential == 0)-1) # welke waarden nul zijn min 1 om dat daar de piek zit.
-  x <- x[-1]
-  x
+  diffpotential
+}
+
+
+peakmat <- NULL
+for(i in 1:ncol(xcuttoff)){
+  peakmat <- cbind(peakmat,peak(xcuttoff[,i]))
 }
