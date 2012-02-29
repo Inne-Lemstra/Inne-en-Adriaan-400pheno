@@ -2,7 +2,7 @@
 # created: 20-02-12
 #(c) created by Inne Lemstra
 
-setwd("X:/computational/400")
+
 
 data <- read.csv("BayShatraitsAll.csv",sep=";")
 phenotypes <- data[,1:404]
@@ -308,36 +308,37 @@ find.peeks <- function(n = c(1,2,3,4,5,6,5,6,5,6,7,6,5,3,4,2,2,4,3,1,2,2), cutof
 }
 
 
-if(n<cutoff) x=0
-x<-matrix(1:5,10,10)
-xcuttoff<- replace(x,x<3,0)
-xmaxleft<- replace(xcuttoff,xcuttoff!=max(xcuttoff)& xcuttoff>0,1)
-peakseq<- replace(xmaxleft, xmaxleft==max(xmaxleft), 2)
+#functie voor het vinden van peaks
+#hier wil ik de functie diffpotential maken. 
+#Deze geeft aan of er veel positieve of negatieve groei is geweest.
+#dat gebeurt door te kijken of de functie achter elkaar aan het stijgen of dalen is.
+# als de functie aan het dalen is, dan wordt elke waarde dat er gedaald wordt, de diff potential elke waarde -1 kleiner
+#als de functie aan het stijgen is, dan wordt elke waarde gestegen de diff potential waarde +1 groter.
+#als de functie gelijk blijft, dan blijft de diff potential waarde gelijk.
+#als de waarde van stijg naar daal gaat, dan wordt de diffpotential waarde in 0 omgezet.
 
-matry<-NULL
-for(rowy in 1:ncol(norm)){
-	vecty<-NULL
-	for(peak in 1:nrow(norm)){
-		
-	
+peak <- function(a,b=0){
+  a <- replace(a,a<=b,0) #b is hier je cutoff waarde.
+  diffpotential <- seq(1,length(a))*0   #deze waarden wil ik graag uitlezen. Als er steeds groei plaatsvindt, dan wordt de waarde steeds groter. Maar als er een keer negatieve groei plaatsvindt, dan wordt hij terug gezet op 0.
+  peaks <- NULL
+    for(i in 2:length(a)){
+	  if(diff(a)[i-1] > 0){ #<- deze waarden geven aan of er groei of niet heeft plaatsgevonden. want als diffa[i]> 0 dan heeft er positieve groei plaatsgevonden.
+	    if(diffpotential[i-1] >= 0) { diffpotential [i] <- diffpotential[i-1] +1} else{diffpotential[i] <- 0}
+	  }  
+	  if(diff(a)[i-1] < 0){
+	    if(diffpotential[i-1] <= 0) { diffpotential [i] <- diffpotential[i-1] -1} else{diffpotential[i] <- 0}
+	  }
+    }
+  diffpotential
+  pos <- which(diffpotential > 0)  #welke zijn groter dan nul
+  poszero <- (which(diffpotential[pos+1] == 0)) #welke volgende van groter dan nul zijn nul. (waar hij stopt met groeien)
+  pos[poszero] #(posities van de pieken in a en diffpotential 
+}
 
-
-while( x>0){
-	
-	maxy<-max(x)
-	replace(x,x=maxy,2)
-	if(x[10,10]){
-	stop("klaar")
-	}
-	}
-	
-
-
-
-
-
-as.matrix(x)
-
-
-
+normpeaklist <- vector("list", nrow(norm))
+for(i in 1:nrow(norm)){
+  normpeaklist[[i]] <- colnames(norm)[peak(norm[i,],3)]
+}
+names(normpeaklist)<- colnames(phenotypes)
+normpeaklist
 
