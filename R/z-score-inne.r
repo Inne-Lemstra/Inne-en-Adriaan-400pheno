@@ -1,3 +1,7 @@
+#Z-scores
+# created: 01-03-12
+#(c) created by Inne Lemstra
+
 matr <- NULL
 for(pheno in 1:404){
 	gemm <-mean(phenotypes[,pheno], na.rm=TRUE)

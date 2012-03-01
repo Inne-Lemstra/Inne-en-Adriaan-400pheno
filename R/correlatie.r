@@ -1,4 +1,6 @@
-#Matrix met correlatie waarden tusse phenotypes en markers
+#Matrix met correlatie waarden tussen phenotypes en markers
+# created: 01-03-12
+#(c) created by Inne Lemstra
 matri<-NULL
 for(romark in 1:ncol(genotypes)){
 	
