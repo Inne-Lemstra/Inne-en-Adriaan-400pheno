@@ -27,6 +27,14 @@ mmatrix <- cbind(mmatrix, LOD)
 #nu de effect waarde uitrekenen. 
 #omdat de waarden niet in een object zitten, moet ik ze er zelf even uittrekken.
 
+createEffectMatrix <- function(genotypes,phenotypes){
+
+}
+
+createTraitMatrix <- function(genotypes,phenotypes){
+  effectm <- createEffectMatrix(genotypes,phenotypes)
+}
+
 meanAA <- matrix(0,ncol(phenotypes),ncol(genotypes))
 meanBB <- matrix(0,ncol(phenotypes),ncol(genotypes))
 for(i in 1:ncol(genotypes)){
