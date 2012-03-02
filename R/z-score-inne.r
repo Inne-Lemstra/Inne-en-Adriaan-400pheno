@@ -2,17 +2,27 @@
 # created: 01-03-12
 #(c) created by Inne Lemstra
 
+#Z-scores bepalen voor een aantal kollommen
+#colgroups zijn de nummers van de kollommen
+#DATA is de dataset waaruit de waardes gehaalt moeten worden
+
+Zmat<-function(colgroups,DATA){
+
 matr <- NULL
-for(pheno in 1:404){
-	gemm <-mean(phenotypes[,pheno], na.rm=TRUE)
-	stand<- sd(phenotypes[,pheno], na.rm=TRUE)
+for(pheno in colgroups){
+	gemm <-mean(DATA[,pheno], na.rm=TRUE)
+	stand<- sd(DATA[,pheno], na.rm=TRUE)
 	vect <- NULL
-	for(a in 1:nrow(phenotypes)){
-		z<- ((phenotypes[a,pheno]-gemm)/stand)
+	for(a in 1:nrow(DATA)){
+		z<- ((DATA[a,pheno]-gemm)/stand)
 		vect <- c(vect,z)
 	}
 	matr <- cbind(matr,vect)
 }
-	image(matr, xlab= "phenotypes", ylab="genotypes", col=heat.colors(4))
+	colnames(matr) <- colnames(phenotypes)
+	matr
 	
-matr_D <- image(which(matr<=0.5),which(matr>0.5 & matr<= 1.0), which(matr>1.0), col= heat.colors(3) )
+}	
+
+#Ik wil er ook graag nog in hebben dat als je bij colgroups 
+# een character invoerd hij gaat zoeken in de namen van kollomen en vervolgens die nummers gebruikt
