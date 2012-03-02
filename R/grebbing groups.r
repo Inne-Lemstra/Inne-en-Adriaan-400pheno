@@ -7,14 +7,17 @@
 # Funk= de functie waarop je wilt zoeken
 # DATA = de dataset waarin gezocht moet worden
 
-Zoek <- function(Term, Funk=missing, DATA=data){
-	T1<-grep(Term, colnames(DATA),ignore.case=TRUE)
+Zoek <- function(Term, Funk=missing, DATA=colnames(data),Raw=missing){
+	T1<-grep(Term, DATA,ignore.case=TRUE)
 	if(!missing(Funk)){
 		Funk(apply(DATA[,T1], 2, na.rm=TRUE, Funk))
 	}
-	else{grep(Term, colnames(DATA),ignore.case=TRUE)
+	else{
+	if(missing(Raw)){DATA[grep(Term, DATA,ignore.case=TRUE),]
+		}else{grep(Term, DATA,ignore.case=TRUE)
+		}
 	}
-}
+	}
 
 #Als er geen Funk in wordt gevoerd worden de colnummers weergegeven
 #Is alleen getest op standart deviantion en mean
