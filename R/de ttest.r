@@ -16,7 +16,8 @@ t.test.mat<- function(MatrixTrait, MatrixGeno, genocode = c("AA","BB"), conf.lev
   }
 
 	colnames(matru)<- colnames(MatrixGeno)
-	return(-log10(matru))
+	rownames(matru) <- colnames(MatrixTrait)
+	return(-log10(matru)) #levert de min 10 log van de p waarde.
 }
 
 #om te gebruiken store t.test.mat in een variabele

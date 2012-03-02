@@ -4,7 +4,7 @@
 #nu de effect waarde uitrekenen. 
 #omdat de waarden niet in een object zitten, moet ik ze er zelf even uittrekken.
 
-createEffectMatrix <- function(genotypes,phenotypes){  #eerst genotypen en daarna phenotypen invullen. Dit geeft de effecten AA/BB op gemiddelden
+effect.matrix <- function(genotypes,phenotypes){  #eerst genotypen en daarna phenotypen invullen. Dit geeft de effecten AA/BB op gemiddelden
   meanAA <- matrix(0,ncol(phenotypes),ncol(genotypes)) 
   meanBB <- matrix(0,ncol(phenotypes),ncol(genotypes))
     for(i in 1:ncol(genotypes)){
@@ -25,3 +25,5 @@ createEffectMatrix <- function(genotypes,phenotypes){  #eerst genotypen en daarn
    }
    effectAAdivBB
 }
+
+#hiervoor de genotypes en phenotypes invulen resp. En er wordt geselecteerd op AA en BB

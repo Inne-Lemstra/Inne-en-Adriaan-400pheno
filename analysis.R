@@ -7,6 +7,11 @@
 data <- read.csv("BayShatraitsAll.csv",sep=";")
 phenotypes <- data[,1:404]
 genotypes <- data[,405:ncol(data)]
+phenotypes <- phenotypes[-c(1,2),]
+genotypes <- genotypes[-c(1,2),]
+genotypes <- apply(genotypes,2,as.character)
+
+
 genotypes[1:10,1:10]
 genotypes[1:10,1:50]
 colnames(phenotypes)
@@ -14,8 +19,7 @@ grep(".A",colnames(phenotypes))
 grep(".B",colnames(phenotypes))
 grep(".ABC",colnames(phenotypes))
 
-phenotypes <- phenotypes[-c(1,2),]
-genotypes <- genotypes[-c(1,2),]
+
 genotypes <- apply(genotypes,2,as.character)
 #Vragen 
 # - Welke environment heeft de meeste invloed ?
