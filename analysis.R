@@ -141,7 +141,8 @@ for(rmark in 1:ncol(genotypes)){
 }
 
 colnames(matru)<- colnames(genotypes)
-plot(-log10(matru)[1,],t='l')
+norm<- -log10(matru)
+plot(norm[1,],t='l')
 
 #peak finder
 
