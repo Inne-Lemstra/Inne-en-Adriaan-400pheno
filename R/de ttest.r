@@ -2,7 +2,7 @@
 # created: 01-03-12
 #(c) created by Inne Lemstra
 
-Peas<- function(MatrixTrait, MatrixGeno, genocode = c("AA","BB"), conf.level = 0.95){
+t.test.mat<- function(MatrixTrait, MatrixGeno, genocode = c("AA","BB"), conf.level = 0.95){
   matru<-NULL
   for(rmark in 1:ncol(MatrixGeno)){
     vectu<-NULL
@@ -16,9 +16,10 @@ Peas<- function(MatrixTrait, MatrixGeno, genocode = c("AA","BB"), conf.level = 0
   }
 
 	colnames(matru)<- colnames(MatrixGeno)
-	return(-log10(matru))
+	rownames(matru) <- colnames(MatrixTrait)
+	return(-log10(matru)) #levert de min 10 log van de p waarde.
 }
 
-#om te gebruiken store Peas in een variabele
-#vb.	T1 <- Peas(phenotypes, genotypes, 0.95)
-#vb.	T1 <- Peas(phenotypes, genotypes, c("CC","DD"), 0.95)
+#om te gebruiken store t.test.mat in een variabele
+#vb.	T1 <- t.test.mat(phenotypes, genotypes, 0.95)
+#vb.	T1 <- t.test.mat(phenotypes, genotypes, c("CC","DD"), 0.95)
