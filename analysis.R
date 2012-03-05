@@ -2,7 +2,7 @@
 # created: 20-02-12
 #(c) created by Inne Lemstra
 
-
+setwd("c:/400")
 
 data <- read.csv("BayShatraitsAll.csv",sep=";")
 phenotypes <- data[,1:404]
@@ -44,6 +44,7 @@ for(pheno in 1:404){
 }
 	image(matr, xlab= "phenotypes", ylab="genotypes", col=heat.colors(4))
 	
+	##### !!!!! REMOVE ??? !!!!! #####
 matr_D <- image(which(matr<=0.5),which(matr>0.5 & matr<= 1.0), which(matr>1.0), col= heat.colors(3) )
 
 

@@ -17,13 +17,30 @@ Zoek <- function(Term, Funk=missing, DATA=colnames(data),Raw=missing){
 		}else{grep(Term, DATA,ignore.case=TRUE)
 		}
 	}
-	}
+}
 
 #Als er geen Funk in wordt gevoerd worden de colnummers weergegeven
 #Is alleen getest op standart deviantion en mean
 #Bevat nog de stratification waarde
 
-
+Zoek <- function(Term, DATA, FUN, colTODO = c(1,2,3), index.return = TRUE){
+    if(missing(Term)) stop("You need to fill in a term")
+    if(missing(DATA)) stop("You need to fill DATA")
+	if(!is.matrix(DATA)) stop("DATA needs to be a matrix")
+	
+	if(!missing(FUN)){
+	    if(length(colnames(DATA))==0) stop("You'll need to supply column names")
+		T1<-grep(Term, colnames(DATA),ignore.case=TRUE)
+		return(FUN(apply(DATA[,T1], 2, na.rm=TRUE, FUN)))
+	}else{
+	    if(length(rownames(DATA))==0) stop("You'll need to supply row names")
+		if(index.return){
+		    T1 <- grep(Term, rownames(DATA),ignore.case=TRUE)
+			return(DATA[T1,])
+		}
+		return(grep(Term, rownames(DATA),ignore.case=TRUE))
+	}
+}
 
 
 #reference material
