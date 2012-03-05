@@ -18,7 +18,7 @@ genotypes <- apply(genotypes,2,as.character)
 ##einde data laden
 
 
-tmat <- t.test.mat(phenotypes,genotypes)  #tmat is een matrix van alle -log10 p-waarden per genotype tov phenotype
+tmat <- t.test.mat(phenotypes,genotypes,"AA","BB",0.95)  #tmat is een matrix van alle -log10 p-waarden per genotype tov phenotype
 traitmat <- trait.marker.list(peak.mat.row(tmat,3,phenotypes)) #traitmat is een matrix van alle traits en markers waar de piek groter is dan 3. in de eerste kolom trait, 2e kolom marker.
 
 #LOD tmat waarden die groter zijn dan de cutoff.
@@ -29,7 +29,7 @@ for (i in 1:nrow(traitmat)){
 traitmat <- cbind(traitmat,LOD) #hier wordt de LOD waarde aan de trait matrix gebonden.
 
 
-effect.mat<- effect.matrix(genotypes,phenotypes) #effect matrix is de matrix met alle AA/BB waarden.
+effect.mat<- effect.matrix(genotypes,phenotypes,"AA","BB") #effect matrix is de matrix met alle AA/BB waarden.
 effect.vec <- NULL
 for (i in 1:nrow(traitmat)){
    effect.vec <- c(effect.vec,effect.mat[traitmat[i,1],traitmat[i,2]]) #wordt automatisch op volgorde gezet door de traitmatrix. Deze vraagt de trait en marker namen op en de waarde is de AAdivBB.

@@ -11,6 +11,8 @@
 #als de waarde van stijg naar daal gaat, dan wordt de diffpotential waarde in 0 omgezet.
 
 peak <- function(a,b=0){  #a is een vector, b is een cutoff waarde.
+  if(!is.vector(a)) stop("a vector needs to be assigned")
+  if(length(b) != 1) stop("cutoff needs to be a vector of length 1")
   a <- replace(a,a<=b,0)
   diffpotential <- seq(1,length(a))*0   #deze waarden wil ik graag uitlezen. Als er steeds groei plaatsvindt, dan wordt de waarde steeds groter. Maar als er een keer negatieve groei plaatsvindt, dan wordt hij terug gezet op 0.
   peaks <- NULL
@@ -32,6 +34,9 @@ peak <- function(a,b=0){  #a is een vector, b is een cutoff waarde.
 
 # deze functie is om per rij een vector te maken met alle pieken die boven de cutoff uitkomen.
 peak.mat.row <- function(a,b=0,trait) { #a is een matrix, b is een cutoff waarde en trait is de file die je wilt gebruiken voor je phenotypen
+  if(!is.matrix(a)) stop("the object in which you want to find peaks, needs to be a matrix")
+  if(length(b) != 1) stop("cutoff needs to be a vector of length 1")
+  if(is.vector(trait)) stop("The trait matrix needs to be a matrix.")
   peak.mat <- vector("list", nrow(a))
   for(i in 1:nrow(a)){
     peak.mat[[i]] <- colnames(a)[peak(a[i,],b)]    #hier wordt de peaks functie gebruikt per trait. Om zo de markers aan te geven die significant zijn.

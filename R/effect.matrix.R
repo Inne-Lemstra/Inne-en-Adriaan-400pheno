@@ -4,13 +4,15 @@
 #nu de effect waarde uitrekenen. 
 #omdat de waarden niet in een object zitten, moet ik ze er zelf even uittrekken.
 
-effect.matrix <- function(genotypes,phenotypes){  #eerst genotypen en daarna phenotypen invullen. Dit geeft de effecten AA/BB op gemiddelden
-  meanAA <- matrix(0,ncol(phenotypes),ncol(genotypes)) 
+effect.matrix <- function(genotypes,phenotypes,geno1,geno2){  #eerst genotypen en daarna phenotypen invullen. Dit geeft de effecten AA/BB op gemiddelden
+  if(length(geno1) != 1) stop("marker definition 1 needs to be of length 1")
+  if(length(geno2) != 1) stop("marker definition 2 needs to be of length 1")
+ meanAA <- matrix(0,ncol(phenotypes),ncol(genotypes)) 
   meanBB <- matrix(0,ncol(phenotypes),ncol(genotypes))
     for(i in 1:ncol(genotypes)){
 	  for(b in 1:ncol(phenotypes)){
-	    genoA <- which(genotypes[,i]=="AA")   #in deze loop wordt het gemiddelde van een phenotype met genotype AA en BB berekend
-	    genoB <- which(genotypes[,i]=="BB")   
+	    genoA <- which(genotypes[,i]==geno1)   #in deze loop wordt het gemiddelde van een phenotype met genotype AA en BB berekend
+	    genoB <- which(genotypes[,i]==geno2)   
         meanAA[b,i] <- mean(phenotypes[genoA,b],na.rm=T) #hier wordt de gemiddelde in een matrix geplaatst met de hoeveelheid phenotypen als rij, en de hoeveelheid genotypen als kolom
 	    meanBB[b,i] <- mean(phenotypes[genoB,b],na.rm=T)
 	  }

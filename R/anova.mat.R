@@ -5,8 +5,8 @@ anova.mat <- function(pheno, geno, npheno = 1:ncol(pheno), ngeno= 1:ncol(geno)) 
   if(missing(pheno)) stop("matrix pheno is required") #hier het begin van de controle
   if(missing(geno)) stop("matrix geno is required")
   if(nrow(geno) != nrow(pheno)) stop("pheno and geno need the same individuals (rows)")
-  if(is.matrix(npheno)) stop("npheno moet een vector of een getal zijn")
-  if(is.matrix(ngeno)) stop("ngeno moet een vector of een getal zijn")
+  if(is.matrix(npheno)) stop("npheno moet een vector van 1 of meer waarden zijn.")
+  if(is.matrix(ngeno)) stop("ngeno moet een vector van 1 of meer waarden zijn.")
   #einde controlestap
   #begin definitie voor het uitrekenen
 anovamat <- matrix(0,length(npheno),length(ngeno))

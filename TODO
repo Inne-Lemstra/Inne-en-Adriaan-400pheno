@@ -1,6 +1,9 @@
 TODO:
 
-- Finish find.peaks.R (check)
+
 - Clean up code in analysis.R
 
 Git werkt nu thuis ook!!
+
+- opruimen en het goedmaken van functies voor de anova en t-tests.
+-het maken van een functie die een trait-lijst maakt van anova en t
