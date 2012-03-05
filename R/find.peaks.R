@@ -31,12 +31,12 @@ peak <- function(a,b=0){  #a is een vector, b is een cutoff waarde.
 #vb. peak(c(seq(1,10),seq(-1,-10),0) nu zoek je in een vector 1,2,3,4,5,6,7,8,9,10,-1,-2,-3,-4,-5,-6,-7,-8,-9,-10 de positieve pieken die boven nul uitkomen. wel een vector invullen.
 
 # deze functie is om per rij een vector te maken met alle pieken die boven de cutoff uitkomen.
-peak.mat.row <- function(a,b=0,trait= phenotypes) { #a is een matrix, b is een cutoff waarde en trait is de file die je wilt gebruiken voor je phenotypen
+peak.mat.row <- function(a,b=0,trait) { #a is een matrix, b is een cutoff waarde en trait is de file die je wilt gebruiken voor je phenotypen
   peak.mat <- vector("list", nrow(a))
   for(i in 1:nrow(a)){
     peak.mat[[i]] <- colnames(a)[peak(a[i,],b)]    #hier wordt de peaks functie gebruikt per trait. Om zo de markers aan te geven die significant zijn.
   }
-  names(peak.mat) <- colnames(trait)
+  names(peak.mat) <- colnames(trait[1:length(peak.mat)])
   peak.mat
 }
 

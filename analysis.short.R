@@ -19,7 +19,7 @@ genotypes <- apply(genotypes,2,as.character)
 
 
 tmat <- t.test.mat(phenotypes,genotypes)  #tmat is een matrix van alle -log10 p-waarden per genotype tov phenotype
-traitmat <- trait.marker.list(peak.mat.row(tmat,3)) #traitmat is een matrix van alle traits en markers waar de piek groter is dan 3. in de eerste kolom trait, 2e kolom marker.
+traitmat <- trait.marker.list(peak.mat.row(tmat,3,phenotypes)) #traitmat is een matrix van alle traits en markers waar de piek groter is dan 3. in de eerste kolom trait, 2e kolom marker.
 
 #LOD tmat waarden die groter zijn dan de cutoff.
 LOD <- NULL
