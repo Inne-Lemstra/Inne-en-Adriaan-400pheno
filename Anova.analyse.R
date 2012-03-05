@@ -28,7 +28,7 @@ for (i in 1:nrow(traitmat)){
 traitmat <- cbind(traitmat,LOD) #hier wordt de LOD waarde aan de trait matrix gebonden.
 
 
-effect.mat<- effect.matrix(genotypes,phenotypes) #effect matrix is de matrix met alle AA/BB waarden.
+effect.mat<- effect.matrix(genotypes,phenotypes,"AA","BB") #effect matrix is de matrix met alle AA/BB waarden.
 effect.vec <- NULL
 for (i in 1:nrow(traitmat)){
    effect.vec <- c(effect.vec,effect.mat[traitmat[i,1],traitmat[i,2]]) #wordt automatisch op volgorde gezet door de traitmatrix. Deze vraagt de trait en marker namen op en de waarde is de AAdivBB.
