@@ -16,3 +16,15 @@ rcomp<- Anomatrix[,1]%in%traitmat[,1]
 
 UniekT <-which(comp==FALSE)
 UniekA <- which(rcomp==FALSE)
+#Unieken uit matrixes halen
+T1<-(1:nrow(traitmat))%in%UniekT
+T2<-which(T1==FALSE)
+UniT <- traitmat[T2,]
+
+T3<-(1:nrow(Anomatrix))%in%UniekA
+T4<-which(T3==FALSE)
+UniA <- Anomatrix[T4,]
+
+voegsamen<-function(Matrix1,Matrix2){
+	merge(Matrix1,Matrix2, all.x=TRUE,all.y=TRUE)
+	}
