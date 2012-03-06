@@ -18,3 +18,21 @@ genotypes <- apply(genotypes,2,as.character)
 
 anovamat <- anova.mat(as.matrix(phenotypes),as.matrix(genotypes))
 traitmat <- trait.marker.list(peak.mat.row(anovamat,3,phenotypes))
+
+
+#LOD tmat waarden die groter zijn dan de cutoff.
+LOD <- NULL
+for (i in 1:nrow(traitmat)){
+  LOD <- c(LOD, anovamat[traitmat[i,1],traitmat[i,2]])  #wordt automatisch op volgorde gezet door de traitmatrix. deze vraagt de trait en marker namen op en de waarde in de tmat
+}
+traitmat <- cbind(traitmat,LOD) #hier wordt de LOD waarde aan de trait matrix gebonden.
+
+
+effect.mat<- effect.matrix(genotypes,phenotypes,"AA","BB") #effect matrix is de matrix met alle AA/BB waarden.
+effect.vec <- NULL
+for (i in 1:nrow(traitmat)){
+   effect.vec <- c(effect.vec,effect.mat[traitmat[i,1],traitmat[i,2]]) #wordt automatisch op volgorde gezet door de traitmatrix. Deze vraagt de trait en marker namen op en de waarde is de AAdivBB.
+}
+traitmat <- cbind(traitmat,effect.vec) #hier de effect.vec vector aan de traitmat gebonden.
+
+colnames(traitmat) <- c("Trait", "Marker", "LOD", "AA/BB") #colnames nog even gelijktrekken.
