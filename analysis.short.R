@@ -6,7 +6,7 @@ source("Inne-en-Adriaan-400pheno/R/find.peaks.R")
 source("Inne-en-Adriaan-400pheno/R/effect.matrix.R")
 source("Inne-en-Adriaan-400pheno/R/de.ttest.R")
 source("Inne-en-Adriaan-400pheno/R/trait.marker.list.R")
-
+source("Inne-en-Adriaan-400pheno/R/anova.mat.R")
 
 #data laden
 data <- read.csv("BayShatraitsAll.csv",sep=";")
