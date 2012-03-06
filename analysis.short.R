@@ -19,21 +19,21 @@ genotypes <- apply(genotypes,2,as.character)
 
 
 tmat <- t.test.mat(phenotypes,genotypes)  #tmat is een matrix van alle -log10 p-waarden per genotype tov phenotype
-traitmat <- trait.marker.list(peak.mat.row(tmat,3,phenotypes)) #traitmat is een matrix van alle traits en markers waar de piek groter is dan 3. in de eerste kolom trait, 2e kolom marker.
+MatrixT.test <- trait.marker.list(peak.mat.row(tmat,3,phenotypes)) #MatrixT.test is een matrix van alle traits en markers waar de piek groter is dan 3. in de eerste kolom trait, 2e kolom marker.
 
-#LOD tmat waarden die groter zijn dan de cutoff.
-LOD <- NULL
-for (i in 1:nrow(traitmat)){
-  LOD <- c(LOD, tmat[traitmat[i,1],traitmat[i,2]])  #wordt automatisch op volgorde gezet door de traitmatrix. deze vraagt de trait en marker namen op en de waarde in de tmat
+#LODT.test tmat waarden die groter zijn dan de cutoff.
+LODT.test <- NULL
+for (i in 1:nrow(MatrixT.test)){
+  LODT.test <- c(LODT.test, tmat[MatrixT.test[i,1],MatrixT.test[i,2]])  #wordt automatisch op volgorde gezet door de MatrixT.testrix. deze vraagt de trait en marker namen op en de waarde in de tmat
 }
-traitmat <- cbind(traitmat,LOD) #hier wordt de LOD waarde aan de trait matrix gebonden.
+MatrixT.test <- cbind(MatrixT.test,LODT.test) #hier wordt de LODT.test waarde aan de trait matrix gebonden.
 
 
 effect.mat<- effect.matrix(genotypes,phenotypes) #effect matrix is de matrix met alle AA/BB waarden.
 effect.vec <- NULL
-for (i in 1:nrow(traitmat)){
-   effect.vec <- c(effect.vec,effect.mat[traitmat[i,1],traitmat[i,2]]) #wordt automatisch op volgorde gezet door de traitmatrix. Deze vraagt de trait en marker namen op en de waarde is de AAdivBB.
+for (i in 1:nrow(MatrixT.test)){
+   effect.vec <- c(effect.vec,effect.mat[MatrixT.test[i,1],MatrixT.test[i,2]]) #wordt automatisch op volgorde gezet door de MatrixT.testrix. Deze vraagt de trait en marker namen op en de waarde is de AAdivBB.
 }
-traitmat <- cbind(traitmat,effect.vec) #hier de effect.vec vector aan de traitmat gebonden.
+MatrixT.test <- cbind(MatrixT.test,effect.vec) #hier de effect.vec vector aan de MatrixT.test gebonden.
 
-colnames(traitmat) <- c("Trait", "Marker", "LOD", "AA/BB") #colnames nog even gelijktrekken.
+colnames(MatrixT.test) <- c("Trait", "Marker", "LODT.test", "AA/BB") #colnames nog even gelijktrekken.
