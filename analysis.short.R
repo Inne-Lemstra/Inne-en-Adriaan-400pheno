@@ -67,7 +67,8 @@ colnames(MatrixAnova) <- c("Trait", "Marker", "LODAnova") #colnames nog even gel
 #Complte matrix met t.test en anova
 Temp<-voegsamen(MatrixT.test,MatrixAnova)
 Order<-sort(colnames(Temp),decreasing=TRUE)
-CombinedLod<-Temp[Order]
+CombiMatrix<-Temp[Order]
+
 
 
 
