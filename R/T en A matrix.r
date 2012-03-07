@@ -1,6 +1,11 @@
 #(c) Inne
 #created: 6 maart
 
+#De samenvoeg functie
+voegsamen<-function(Matrix1,Matrix2){
+  merge(Matrix1,Matrix2, all.x=TRUE,all.y=TRUE)
+}
+
 #T-test Matrix
 traitmat <- trait.marker.list(peak.mat.row(tmat,3,phenotypes))
 
@@ -25,6 +30,4 @@ T3<-(1:nrow(Anomatrix))%in%UniekA
 T4<-which(T3==FALSE)
 UniA <- Anomatrix[T4,]
 
-voegsamen<-function(Matrix1,Matrix2){
-	merge(Matrix1,Matrix2, all.x=TRUE,all.y=TRUE)
-	}
+
