@@ -8,6 +8,7 @@ source("400pheno/R/t.test.R")
 source("400pheno/R/trait.marker.list.R")
 source("400pheno/R/anova.mat.R")
 source("400pheno/R/T en A matrix.r")
+source("400pheno/R/chr_finder.r")
 
 #data laden
 data <- read.csv("BayShatraitsAll.csv",sep=";")
@@ -69,9 +70,12 @@ Temp<-voegsamen(MatrixT.test,MatrixAnova)
 Order<-sort(colnames(Temp),decreasing=TRUE)
 CombiMatrix<-Temp[Order]
 
+#lijst met chromosoom nummers corresponderend met genotypes
+chromos<-data[1,405:ncol(data)]
+lijsten_chr1<-per.chr(chromos,CombiMatrix[,2],1)
 
-
-
+#plot Marker op chromosoom 1
+plot(CombiMatrix[lijsten_chr1,])
 
 
 
