@@ -79,10 +79,3 @@ plot(CombiMatrix[lijsten_chr1,])
 
 
 
-
-
-																				f	f	fff																																															
-
-
-
-
