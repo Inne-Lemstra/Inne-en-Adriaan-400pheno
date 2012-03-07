@@ -4,9 +4,10 @@
 #nu de effect waarde uitrekenen. 
 #omdat de waarden niet in een object zitten, moet ik ze er zelf even uittrekken.
 
-effect.matrix <- function(genotypes,phenotypes,genocode = c("AA","BB")){  #eerst genotypen en daarna phenotypen invullen. Dit geeft de effecten AA/BB op gemiddelden
+effect.matrix <- function(genotypes,phenotypes,fun="divide",genocode = c("AA","BB")){  #eerst genotypen en daarna phenotypen invullen. Dit geeft de effecten AA/BB op gemiddelden
   if(missing(genotypes)) stop("No genotypes")
   if(missing(phenotypes)) stop("No phenotypes")
+  if(fun!="divide"&fun!="add"&fun!="substract") stop("fun must be divide or add or substract")
   meanAA <- matrix(0,ncol(phenotypes),ncol(genotypes)) 
   meanBB <- matrix(0,ncol(phenotypes),ncol(genotypes))
     for(i in 1:ncol(genotypes)){
@@ -22,10 +23,14 @@ effect.matrix <- function(genotypes,phenotypes,genocode = c("AA","BB")){  #eerst
  rownames(effectAAdivBB) <- colnames(phenotypes)
    for(i in 1:nrow(effectAAdivBB)){                     #in deze loop worden de gemiddelden   door elkaar gedeeld
    for(n in 1:ncol(effectAAdivBB)){
-     effectAAdivBB[i,n] <- ((meanAA[i,n])/(meanBB[i,n])) #hier vindt de deel-actie plaats voor alle waarden in de matrix
+     if(fun=="divide"){effectAAdivBB[i,n] <- ((meanAA[i,n])/(meanBB[i,n]))}
+     if(fun=="add"){effectAAdivBB[i,n] <- ((meanAA[i,n])+(meanBB[i,n]))}
+     if(fun=="substract"){effectAAdivBB[i,n] <- ((meanAA[i,n])-(meanBB[i,n]))} #hier vindt de deel-actie plaats voor alle waarden in de matrix
      }
    }
    effectAAdivBB
 }
 
 #hiervoor de genotypes en phenotypes invulen resp. En er wordt geselecteerd op AA en BB
+
+
