@@ -13,6 +13,15 @@ genotypes <- apply(genotypes,2,as.character)
 ##einde data laden
 
 
+
+#Eigenschappen scheidden
+
+Gmax 	<-	grep("Gmax", colnames(phenotypes), ignore.case = TRUE)
+U8		<-	grep("U8416", colnames(phenotypes), ignore.case = TRUE)
+T10		<-	grep("T10", colnames(phenotypes), ignore.case = TRUE)
+T50		<-	grep("T50", colnames(phenotypes), ignore.case = TRUE)
+AUC		<-	grep("AUC", colnames(phenotypes), ignore.case = TRUE)
+
 #hier een vector maken met de laatste 5 en 7 characters van de colnames van phenotypes.
 last5char <- NULL
 last7char <- NULL
@@ -21,9 +30,6 @@ for(i in 1:ncol(phenotypes)){
   #voor de .ABC omgeving een laatste 7 char
   last7char <- c(last7char,substr(colnames(phenotypes)[i],(nchar(colnames(phenotypes)[i])-6),nchar(colnames(phenotypes)[i])))
 }
-
-
-
 ##phenotypes op batch scheiden. (A,B,C, ABC, D)
 
 batchA   <- grep(".A", last5char,fixed = T,ignore.case=F)
@@ -37,17 +43,8 @@ batchD   <- grep(".D", last5char,fixed = T,ignore.case=F)
 batchA <- batchA[-(c(47,49,51,53,55))]
 
 #nu een vector maken met verchillende variabelen. als de batch onbekend is, dan NA, anders: A, B, C, D of ABC
-batchpheno <- seq(1:404)*0
-batchpheno[1:404] <- "\"NA\""
-batchpheno[batchA] <- "A"
-batchpheno[batchB] <- "B"
-batchpheno[batchC] <- "C"
-batchpheno[batchD] <- "D"
-batchpheno[batchABC] <- "ABC"
-
 
 ##environments scheiden
-
 
 AfterRipening     <- grep("AR.", colnames (phenotypes))
 NaCl     <- grep("NaCL", colnames(phenotypes))
@@ -58,16 +55,49 @@ ABA      <- grep("ABA", colnames(phenotypes))
 Fresh    <-grep("Fresh", colnames(phenotypes))
 Stratification <- grep("Stratification.", colnames (phenotypes))
 
-envpheno <- seq(1:404)*0
-envpheno[1:404] <- "\"NA\""
-envpheno[Fresh] <- "Fresh"
-envpheno[AfterRipening] <- "AR"
-envpheno[NaCl]  <- "NaCl"
-envpheno[Mannitol] <- "Mannitol"
-envpheno[Cold]  <- "Cold"
-envpheno[Heat] <- "Heat"
-envpheno[ABA] <- "ABA"
-envpheno[Stratification] <- "Strat"
+#nu dit gedaan is wil ik een matrix maken van alle eigenschappen. Met daarnaast de batches en de environments.
+
+matGmax <- matrix(NA,length(Gmax)*165,4)
+vecGmax <- NULL
+GmaxA <- NULL
+GmaxB <- NULL
+GmaxC <- NULL
+GmaxABC <- NULL
+GmaxD <- NULL
+#voor de environments.
+GmaxAR <- NULL
+GmaxNa <- NULL
+GmaxMa <- NULL
+GmaxCo <- NULL
+GmaxHe <- NULL
+GmaxAB <- NULL
+GmaxFr <- NULL
+GmaxSt <- NULL
+
+for(i in 1:length(Gmax)){
+  vecGmax <- c(vecGmax, phenotypes[,Gmax[i]]) #hier de waarden Gmax onder elkaar zetten.
+
+  GmaxA <- c(GmaxA,(which(Gmax[i] == batchA))) #hier kijken welke batches bij welke Gmax horen.
+  GmaxB <- c(GmaxB,(which(Gmax[i] == batchB)))
+  GmaxC <- c(GmaxC,(which(Gmax[i] == batchC)))
+  GmaxABC <- c(GmaxABC,(which(Gmax[i] == batchABC)))
+  GmaxD <- c(GmaxD,(which(Gmax[i] == batchD)))
+
+  GmaxAR <- c(GmaxAR,(which(Gmax[i] == AfterRipening))) #hier kijken welke environments bij welke Gmax horen.
+  GmaxNa <- c(GmaxNa,(which(Gmax[i] == NaCl)))
+  GmaxMa <- c(GmaxMa,(which(Gmax[i] == Mannitol)))
+  GmaxCo <- c(GmaxCo,(which(Gmax[i] == Cold)))
+  GmaxHe <- c(GmaxHe,(which(Gmax[i] == Heat)))
+  GmaxAB <- c(GmaxAB,(which(Gmax[i] == ABA)))
+  GmaxFr <- c(GmaxFr,(which(Gmax[i] == Fresh)))
+  GmaxSt <- c(GmaxSt,(which(Gmax[i] == Stratification)))
+}
+for(i in batchA[GmaxA])batchA[GmaxA][i]
+
+#fuck it, ik maak wel functies.
 
 
-lm(phenotypes ~ as.factor(batchpheno)+as.factor(envpheno)+as.factor(genotypes[,1]))
+
+matGmax[,1] <- vecGmax  #hier phenowaarden met Gmax onder elkaar zetten.
+
+
