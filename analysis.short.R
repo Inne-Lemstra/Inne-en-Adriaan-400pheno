@@ -75,7 +75,13 @@ chromos<-data[1,405:ncol(data)]
 lijsten_chr1<-per.chr(chromos,CombiMatrix[,2],1)
 
 #plot Marker op chromosoom 1
-plot(CombiMatrix[lijsten_chr1,])	
+plot(CombiMatrix[lijsten_chr1,])
+
+
+
+
+
+				
 
 
 
