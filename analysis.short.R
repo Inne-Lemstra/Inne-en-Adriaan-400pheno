@@ -81,7 +81,7 @@ plot(CombiMatrix[lijsten_chr1,])
 
 
 
-				
+																																																																					
 
 
 
