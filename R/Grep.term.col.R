@@ -20,7 +20,7 @@ grep.term.col <- function(traits, term, cutoff=0){
   searchmat <- vector("list",length(term)) #hier de lijst definieren.
   for (n in 1:length(term)){ #als term langer is dan 1, dan krijgt de lijst meer opties.
     
-	cols <- grep(term[n], colnames (traits))			#zoek naar de term in de colnames
+	cols <- grep(term[n], colnames (traits),fixed=T)			#zoek naar de term in de colnames
     if(length(cols) == 0) {next}
       for (i in 1:length(cols)){
         searchmat[[n]] <- cbind(searchmat[[n]], traits[,cols[i]])  # maak een matrix met de kolommen die de term bevatten in de colnaam
