@@ -33,4 +33,3 @@ grep.term.col <- function(traits, term, cutoff=0){
 }
 
 
-batchlist <- grep.term.col(phenotypes,c(".A.",".B.",".C.",".ABC",".D."),5)

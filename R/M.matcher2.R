@@ -7,8 +7,8 @@ matrixA<-grep.term.col(phenotypes,"ABA")
 Refmatrix<-phenotypes
 
 M.matcher<-function(Refmatrix, zoekmatrix, Term, addmatrix){
-  if(missing(addmatrix)) addmatrix <- refmatrix*NA
-  if(dim(addmatrix) != dim(refmatrix)) addmatrix <- refmatrix*NA
+  if(missing(addmatrix)) addmatrix <- Refmatrix*NA
+  if(dim(addmatrix) != dim(Refmatrix)) addmatrix <- Refmatrix*NA
   Names<-NULL
   matcol<-NULL
     for(x in 1:ncol(zoekmatrix)){
