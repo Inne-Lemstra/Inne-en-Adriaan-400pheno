@@ -32,5 +32,3 @@ effect.matrix <- function(genotypes,phenotypes,fun="divide",genocode = c("AA","B
 }
 
 #hiervoor de genotypes en phenotypes invulen resp. En er wordt geselecteerd op AA en BB
-
-
