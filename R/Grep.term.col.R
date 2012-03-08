@@ -25,8 +25,10 @@ grep.term.col <- function(traits, term, cutoff=0){
       for (i in 1:length(cols)){
         searchmat[[n]] <- cbind(searchmat[[n]], traits[,cols[i]])  # maak een matrix met de kolommen die de term bevatten in de colnaam
       }
-    colnames(searchmat[[n]])<- colnamesorigin[cols] #colnames terugzetten voor het geval ze afgekapt waren.
+    colnames(searchmat[[n]])<- colnamesorigin[cols] #colnames terugzetten voor het geval ze afgekapt waren
   }	
+  names(searchmat) <- term
+  
   return(searchmat) #geef de lijst met matrices
 }
 
