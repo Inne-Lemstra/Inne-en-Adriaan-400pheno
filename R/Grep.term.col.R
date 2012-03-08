@@ -14,7 +14,7 @@ grep.term.col <- function(traits, term, cutoff=0){
       colnames(traits)[i] <- substr(colnames(traits)[i],(nchar(colnames(traits)[i])-(cutoff-1)),nchar(colnames(traits)[i])) #de laatste cutoff caracters geef ik.
     }
   }
-  cols <- grep(term, colnames (traits))			#zoek naar de term in de colnames
+  cols <- grep(term, colnames (traits))     #zoek naar de term in de colnames
   searchmat <- NULL
     for (i in 1:length(cols)){
       searchmat <- cbind(searchmat, traits[,cols[i]])  # maak een matrix met de kolommen die de term bevatten in de colnaam
