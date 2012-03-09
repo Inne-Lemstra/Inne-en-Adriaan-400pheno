@@ -49,19 +49,52 @@ for(i in 1:length(listproperties)){
   for (n in 1:length(environments)){environmat[[i]] <- M.matcher(environmat[[i]],listenvironments[[n]],names(listenvironments)[n])}
 }
 
-listpropvec <- vector("list",length(listproperties)) 
+listpropvec <- vector("list",length(listproperties)) #de hele matrix achter elkaar zetten per kolom.
 for (i in 1:length(listproperties)){
   for (n in 1:ncol(listproperties[[i]])) {listpropvec[[i]] <- c(listpropvec[[i]],listproperties[[i]] [,n])}
 }
 
 listbatchvec <- vector("list",length(batches)) 
-for (i in 1:length(batches)){
-  for (n in 1:ncol(batches[[i]])) {listbatchvec[[i]] <- c(listbatchvec[[i]],batches[[i]] [,n])}
+for (i in 1:length(batches)){ #de hele matrix per kolom achter elkaar in een hele lange vector zetten. X de lijsten
+    for (n in 1:ncol(batches[[i]])) {listbatchvec[[i]] <- c(listbatchvec[[i]],batches[[i]] [,n])}
+  listbatchvec[[i]] [which(!unlist(lapply(unlist(lapply(listbatchvec[[i]],as.numeric)),is.na)))] <- NA  # hier de waarden die niet omgezet waren in een batch, omzetten naar NA
 }
-
+ 
 listenvironvec <- vector("list",length(environmat)) 
-for (i in 1:length(environmat)){
-  for (n in 1:ncol(environmat[[i]])) {listenvironvec[[i]] <- c(listenvironvec[[i]],environmat[[i]] [,n])}
+for (i in 1:length(environmat)){ #de hele matrix per kolom achter elkaar in een hele lange vector zetten. X de lijsten.
+    for (n in 1:ncol(environmat[[i]])) {listenvironvec[[i]] <- c(listenvironvec[[i]],environmat[[i]] [,n])}
+  listenvironvec[[i]] [which(!unlist(lapply(unlist(lapply(listenvironvec[[i]],as.numeric)),is.na)))] <- NA #hier alle niet omgezette waarden in NA veranderen.
 }
 
-lm
+
+#anova gedeelte
+Pfac <- vector("list",length(listpropvec))
+
+for (i in 1:length(listpropvec)){  
+  for (n in 1:ncol(genotypes)){  
+    Pfac[[i]] <- rbind(Pfac[[i]],anova(lm(listpropvec[[i]]~as.factor(listbatchvec[[i]])+as.factor(listenvironvec[[i]])+as.factor(rep(genotypes[,n],74))))$Pr)
+  }
+  Pfac[[i]] <- -log10(Pfac[[i]])
+  rownames(Pfac[[i]]) <- colnames(genotypes)
+  colnames(Pfac[[i]]) <- c("Batch","Environment","Genotype","Residuals")
+}
+names(Pfac) <- properties
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
