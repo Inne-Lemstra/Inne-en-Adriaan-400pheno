@@ -12,7 +12,7 @@ op <- par(las = 2)
 op<- par(cex = 0.6)
 op<- par(mai=c(1,0.6,1,1))
 
-axis(1,1:length(xass), labels=xass)
+axis(1,1:77 ,labels=xass)
 axis(2,0:107)
 X.maker(chromos,5,2)
 points(yass, t="l")
@@ -54,4 +54,9 @@ for(y in 1:length(xass)){
 
 #centimorgans
 Morgan<-data[2,405:ncol(data)]
+#zo moet ik dit doen, van morgan een lijst maken met centimorgans erin.(ten opzichte van elkaar).
+#dan in de axis(1, morgan, labels), en in de plot(c(1,de max Morgan),c(y-as)
+#de X.maker kan hiervoor omgeschreven worden
+
+
 
