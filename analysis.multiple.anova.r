@@ -77,8 +77,10 @@ for (i in 1:length(listpropvec)){
   Pfac[[i]] <- -log10(Pfac[[i]])
   rownames(Pfac[[i]]) <- colnames(genotypes)
   colnames(Pfac[[i]]) <- c("Batch","Environment","Genotype","Residuals")
+  Pfac[[i]] <-Pfac[[i]][-which(Pfac[[i]][,3] < 3),3] #hier alle waarden die kleiner zijn dan 3 eruit halen
 }
 names(Pfac) <- properties
+
 
 
 

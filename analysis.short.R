@@ -1,14 +1,14 @@
 ##copyright Adriaan van der Graaf 2012
 
 #je hoort nu in de folder onder Inne-en-Adriaan-400pheno te zitten
-setwd("c:/github/")
-source("400pheno/R/find.peaks.R")
-source("400pheno/R/effect.matrix.R")
-source("400pheno/R/t.test.R")
-source("400pheno/R/trait.marker.list.R")
-source("400pheno/R/anova.mat.R")
-source("400pheno/R/T en A matrix.r")
-source("400pheno/R/chr_finder.r")
+
+source("Inne-en-Adriaan-400pheno/R/find.peaks.R")
+source("Inne-en-Adriaan-400pheno/R/effect.matrix.R")
+source("Inne-en-Adriaan-400pheno/R/t.test.R")
+source("Inne-en-Adriaan-400pheno/R/trait.marker.list.R")
+source("Inne-en-Adriaan-400pheno/R/anova.mat.R")
+source("Inne-en-Adriaan-400pheno/R/T en A matrix.r")
+source("Inne-en-Adriaan-400pheno/R/chr_finder.r")
 
 #data laden
 data <- read.csv("BayShatraitsAll.csv",sep=";")
