@@ -5,16 +5,17 @@
 
 #plot grote
 plot(c(0,10),c(0,10),type="n")
-plot(c(0,length(xass)),c(1,107),type="n", xlab="Markers",ylab="Number of LOD above cuttof",axes=FALSE)
+plot(c(0,77),c(1,107),type="n", xlab="Markers",ylab="Number of LOD above cuttof",axes=FALSE)
 
 #bekijk ?axis
 op <- par(las = 2)
 op<- par(cex = 0.6)
-op <- par(mai=c(1,0.8,1,0.5))
+op<- par(mai=c(1,0.6,1,1))
 
+axis(1,1:length(xass), labels=xass)
 axis(2,0:107)
-X.maker(chromos,5,2)  
-points(yass)
+X.maker(chromos,5,2)
+points(yass, t="l")
 
 X.maker<- function(NameFile,aantalchr,gap){
 xass<-NULL
@@ -31,22 +32,26 @@ for(x in 1:aantalchr){
   xass<- c(xass,vec)
   }
   axis(1,1:length(xass), labels=xass)
+  xass
   }
 
-X.maker(chromos,5,2)  
+xass<-X.maker(chromos,5,2)  
+axis(1,1:length(xass), labels=xass)
 #nu de points invullen
 table(CombiMatrix[,2])
 
 yass<-NULL
 for(y in 1:length(xass)){
   positie<-NULL
-  positie<-grep(xass[y],names(table(CombiMatrix[,2])))
+  positie<-which(xass[y]==names(table(CombiMatrix[,2])))
     if(!is.na(positie&&1)){
     yass<-c(yass, table(CombiMatrix[,2])[positie])
-  }
-  else{
+  }else{
     yass<-c(yass,0)
   }
-  }
+  cat(y,length(yass),"\n")
+}
 
+#centimorgans
+Morgan<-data[2,405:ncol(data)]
 
