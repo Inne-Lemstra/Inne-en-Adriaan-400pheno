@@ -1,4 +1,4 @@
-##copyright Adriaan van der Graaf 2012
+##copyright Adriaan van der Graaf/Inne Lemstra 2012
 
 #je hoort nu in de folder onder Inne-en-Adriaan-400pheno te zitten
 setwd("c:/github/")
@@ -65,7 +65,7 @@ for (i in 1:nrow(MatrixAnova)){
 MatrixAnova <- cbind(MatrixAnova,LODAnova) #hier wordt de LODAnova waarde aan de trait matrix gebonden.
 colnames(MatrixAnova) <- c("Trait", "Marker", "LODAnova") #colnames nog even gelijktrekken.
 
-#Complte matrix met t.test en anova
+#Complete matrix met t.test en anova
 Temp<-voegsamen(MatrixT.test,MatrixAnova)
 Order<-sort(colnames(Temp),decreasing=TRUE)
 CombiMatrix<-Temp[Order]
