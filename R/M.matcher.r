@@ -12,7 +12,6 @@
 M.matcher<-function(Refmatrix, zoekmatrix, Term){
   if(missing(Refmatrix)) stop("ReferentieMatrix is not found")
   if(missing(zoekmatrix)) stop("Vul een matrix in met zoektermen")
-  #if(ncol(zoekmatrix)>ncol(Refmatrix)) stop("Refmatrix moet groter zijn de zoekmatrix")
   if(missing(Term)) stop("vul een Term in die de waarden vervangt")
   Names<-NULL
   matcol<-NULL
