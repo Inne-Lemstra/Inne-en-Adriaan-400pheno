@@ -3,7 +3,7 @@
 
 properties.merge <- function(traitmat,propvec){ #in deze functie word ervan uit gegaan dat de traitmat een matrix is met de eerste kolommen resp. trait en marker zijn.
   if (missing(traitmat)) stop("voer een traitmat in") #controle als er iets mist.
-  if (missing(proplist)) stop("voer een propmat in") 
+  if (missing(propvec)) stop("voer een propmat in") 
 
  #hier definieren van functies. grepvar, zijn de variabeelen in de traitmat die de namen van de list van propvec volgen
   grepvar <- vector("list",length(propvec)) 
@@ -17,14 +17,16 @@ properties.merge <- function(traitmat,propvec){ #in deze functie word ervan uit 
 	   if(length(doubles) ==  0)  {nondouble <- c(nondouble,names(propvec)[i],names(propvec[[i]])[n],as.numeric(propvec[[i]][n])) } #als er geen dubbelen zijn, dan komt de marker met property en value in nondouble gezet. 
 	  }
   }
-traitmat <- cbind(traitmat,MultiAnova) #hier de multianova aan de traitmat cbinden 
- 
+
+ traitmat <- cbind(traitmat,MultiAnova) #hier de multianova aan de traitmat cbinden. Dat wordt hier gedaan omdat de colnames van hierboven nog hetzelfde zijn
 traitmattest <- matrix(NA,(length(nondouble)/3),7) #traitmattest is voor de non-doubles.
 traitmattest[,1] <- nondouble[seq(1,length(nondouble),3)] #hier de properties in de traitmattest
 traitmattest[,2] <- nondouble[seq(2,length(nondouble),3)]#hier de marker
 traitmattest[,7] <- nondouble[seq(3,length(nondouble),3)]#hier de value
-colnames(traitmattest) <- colnames(traitmat) #colnames samenvoegen, anders werkt Rbind niet.
+traitmat <- cbind(traitmat,MultiAnova) #hier de multianova aan de traitmat cbinden. Dat wordt hier gedaan omdat de colnames van hierboven nog hetzelfde zijn
+#colnames(traitmattest) <- colnames(traitmat) #colnames samenvoegen, anders werkt Rbind niet.
+traitmat <- rbind(traitmat,traitmattest,deparse.level = 0) #hier de nondoubles aan de traitmat rbinden
 
-traitmat <- rbind(traitmat,traitmattest) #hier de nondoubles aan de traitmat rbinden
+
 return(traitmat) #hier traitmat tonen.
 }
