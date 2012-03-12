@@ -34,18 +34,18 @@ MatrixT.test <- cbind(MatrixT.test,LODT.test) #hier wordt de LODT.test waarde aa
 effect.mat.div<- effect.matrix(genotypes,phenotypes,"divide") #effect matrix is de matrix met alle AA/BB waarden.
 effect.vec.div <- NULL
 for (i in 1:nrow(MatrixT.test)){
-   effect.vec.div <- c(effect.vec,effect.mat[MatrixT.test[i,1],MatrixT.test[i,2]]) #wordt automatisch op volgorde gezet door de MatrixT.testrix. Deze vraagt de trait en marker namen op en de waarde is de AAdivBB.
+   effect.vec.div <- c(effect.vec.div,effect.mat.div[MatrixT.test[i,1],MatrixT.test[i,2]]) #wordt automatisch op volgorde gezet door de MatrixT.testrix. Deze vraagt de trait en marker namen op en de waarde is de AAdivBB.
 }
 MatrixT.test <- cbind(MatrixT.test,effect.vec.div) #hier de effect.vec vector aan de MatrixT.test gebonden.
 
 colnames(MatrixT.test) <- c("Trait", "Marker", "LODT.test", "AA/BB") #colnames nog even gelijktrekken.
 
 #AA-BB
-effect.mat<-NULL
+effect.mat.min<-NULL
 effect.mat.min<- effect.matrix(genotypes,phenotypes,"substract") #effect matrix is de matrix met alle AA/BB waarden.
-effect.vec <- NULL
+effect.vec.min <- NULL
 for (i in 1:nrow(MatrixT.test)){
-   effect.vec.min <- c(effect.vec,effect.mat.min[MatrixT.test[i,1],MatrixT.test[i,2]]) #wordt automatisch op volgorde gezet door de MatrixT.testrix. Deze vraagt de trait en marker namen op en de waarde is de AAdivBB.
+   effect.vec.min <- c(effect.vec.min,effect.mat.min[MatrixT.test[i,1],MatrixT.test[i,2]]) #wordt automatisch op volgorde gezet door de MatrixT.testrix. Deze vraagt de trait en marker namen op en de waarde is de AAdivBB.
 }
 MatrixT.test <- cbind(MatrixT.test,effect.vec.min) #hier de effect.vec vector aan de MatrixT.test gebonden.
 
@@ -73,7 +73,7 @@ MatrixAnova <- cbind(MatrixAnova,effect.vec.div) #hier de effect.vec vector aan 
 
 colnames(MatrixAnova) <- c("Trait", "Marker", "LODAnova", "AA/BB") #colnames nog even gelijktrekken.
 ########AA-BB#######
-effect.mat<-NULL
+effect.mat.min<-NULL
 effect.mat.min<- effect.matrix(genotypes,phenotypes,"substract") #effect matrix is de matrix met alle AA/BB waarden.
 effect.vec.min <- NULL
 for (i in 1:nrow(MatrixAnova)){
