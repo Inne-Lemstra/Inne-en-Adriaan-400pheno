@@ -1,4 +1,4 @@
-##copyright Adriaan van der Graaf 2012
+##copyright Adriaan van der Graaf/Inne Lemstra 2012
 
 #je hoort nu in de folder onder Inne-en-Adriaan-400pheno te zitten
 
@@ -31,23 +31,23 @@ for (i in 1:nrow(MatrixT.test)){
 MatrixT.test <- cbind(MatrixT.test,LODT.test) #hier wordt de LODT.test waarde aan de trait matrix gebonden.
 
 #AA/BB
-effect.mat<- effect.matrix(genotypes,phenotypes,"divide") #effect matrix is de matrix met alle AA/BB waarden.
-effect.vec <- NULL
+effect.mat.div<- effect.matrix(genotypes,phenotypes,"divide") #effect matrix is de matrix met alle AA/BB waarden.
+effect.vec.div <- NULL
 for (i in 1:nrow(MatrixT.test)){
-   effect.vec <- c(effect.vec,effect.mat[MatrixT.test[i,1],MatrixT.test[i,2]]) #wordt automatisch op volgorde gezet door de MatrixT.testrix. Deze vraagt de trait en marker namen op en de waarde is de AAdivBB.
+   effect.vec.div <- c(effect.vec,effect.mat[MatrixT.test[i,1],MatrixT.test[i,2]]) #wordt automatisch op volgorde gezet door de MatrixT.testrix. Deze vraagt de trait en marker namen op en de waarde is de AAdivBB.
 }
-MatrixT.test <- cbind(MatrixT.test,effect.vec) #hier de effect.vec vector aan de MatrixT.test gebonden.
+MatrixT.test <- cbind(MatrixT.test,effect.vec.div) #hier de effect.vec vector aan de MatrixT.test gebonden.
 
 colnames(MatrixT.test) <- c("Trait", "Marker", "LODT.test", "AA/BB") #colnames nog even gelijktrekken.
 
 #AA-BB
 effect.mat<-NULL
-effect.mat<- effect.matrix(genotypes,phenotypes,"substract") #effect matrix is de matrix met alle AA/BB waarden.
+effect.mat.min<- effect.matrix(genotypes,phenotypes,"substract") #effect matrix is de matrix met alle AA/BB waarden.
 effect.vec <- NULL
 for (i in 1:nrow(MatrixT.test)){
-   effect.vec <- c(effect.vec,effect.mat[MatrixT.test[i,1],MatrixT.test[i,2]]) #wordt automatisch op volgorde gezet door de MatrixT.testrix. Deze vraagt de trait en marker namen op en de waarde is de AAdivBB.
+   effect.vec.min <- c(effect.vec,effect.mat.min[MatrixT.test[i,1],MatrixT.test[i,2]]) #wordt automatisch op volgorde gezet door de MatrixT.testrix. Deze vraagt de trait en marker namen op en de waarde is de AAdivBB.
 }
-MatrixT.test <- cbind(MatrixT.test,effect.vec) #hier de effect.vec vector aan de MatrixT.test gebonden.
+MatrixT.test <- cbind(MatrixT.test,effect.vec.min) #hier de effect.vec vector aan de MatrixT.test gebonden.
 
 colnames(MatrixT.test) <- c("Trait", "Marker", "LODT.test", "AA/BB","AA-BB") #colnames nog even gelijktrekken.
 
@@ -62,10 +62,31 @@ LODAnova <- NULL
 for (i in 1:nrow(MatrixAnova)){
   LODAnova <- c(LODAnova, anovamat[MatrixAnova[i,1],MatrixAnova[i,2]])  #wordt automatisch op volgorde gezet door de MatrixAnovarix. deze vraagt de trait en marker namen op en de waarde in de tmat
 }
-MatrixAnova <- cbind(MatrixAnova,LODAnova) #hier wordt de LODAnova waarde aan de trait matrix gebonden.
-colnames(MatrixAnova) <- c("Trait", "Marker", "LODAnova") #colnames nog even gelijktrekken.
+MatrixAnova<-cbind(MatrixAnova,LODAnova)
+#######AA/BB########
+effect.mat.div<- effect.matrix(genotypes,phenotypes,"divide") #effect matrix is de matrix met alle AA/BB waarden.
+effect.vec.div <- NULL
+for (i in 1:nrow(MatrixAnova)){
+   effect.vec.div <- c(effect.vec.div,effect.mat.div[MatrixAnova[i,1],MatrixAnova[i,2]]) #wordt automatisch op volgorde gezet door de MatrixT.testrix. Deze vraagt de trait en marker namen op en de waarde is de AAdivBB.
+}
+MatrixAnova <- cbind(MatrixAnova,effect.vec.div) #hier de effect.vec vector aan de MatrixT.test gebonden.
 
-#Complte matrix met t.test en anova
+colnames(MatrixAnova) <- c("Trait", "Marker", "LODAnova", "AA/BB") #colnames nog even gelijktrekken.
+########AA-BB#######
+effect.mat<-NULL
+effect.mat.min<- effect.matrix(genotypes,phenotypes,"substract") #effect matrix is de matrix met alle AA/BB waarden.
+effect.vec.min <- NULL
+for (i in 1:nrow(MatrixAnova)){
+   effect.vec.min <- c(effect.vec.min,effect.mat.min[MatrixAnova[i,1],MatrixAnova[i,2]]) #wordt automatisch op volgorde gezet door de MatrixT.testrix. Deze vraagt de trait en marker namen op en de waarde is de AAdivBB.
+}
+MatrixAnova <- cbind(MatrixAnova,effect.vec.min) #hier de effect.vec vector aan de MatrixT.test gebonden.
+
+colnames(MatrixAnova) <- c("Trait", "Marker", "LODAnova", "AA/BB","AA-BB") #colnames nog even gelijktrekken.
+
+#MatrixAnova <- cbind(MatrixAnova,LODAnova) #hier wordt de LODAnova waarde aan de trait matrix gebonden.
+#colnames(MatrixAnova) <- c("Trait", "Marker", "LODAnova") #colnames nog even gelijktrekken.
+
+#Complete matrix met t.test en anova
 Temp<-voegsamen(MatrixT.test,MatrixAnova)
 Order<-sort(colnames(Temp),decreasing=TRUE)
 CombiMatrix<-Temp[Order]
