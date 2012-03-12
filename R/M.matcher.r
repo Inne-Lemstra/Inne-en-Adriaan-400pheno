@@ -7,6 +7,8 @@
 #zoekmatrix is een kleinere matrix met colnames die in Refmatrix gevonden moeten worden
 #Term is een woord waarmee je de waarden van alle gevonden kollums vervangt
 
+
+
 M.matcher<-function(Refmatrix, zoekmatrix, Term){
   if(missing(Refmatrix)) stop("ReferentieMatrix is not found")
   if(missing(zoekmatrix)) stop("Vul een matrix in met zoektermen")
@@ -41,6 +43,7 @@ M.matcher<-function(Refmatrix, zoekmatrix, Term){
 
 #T2<- as.matrix(matcol)
 #colnames(T2)<-Names
+
 
 
 
