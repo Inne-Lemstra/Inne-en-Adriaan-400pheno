@@ -14,8 +14,12 @@ op<- par(mai=c(1,0.6,1,1))
 
 axis(1,vecB,labels=xass[1:length(xass)])
 axis(2,0:107)
-X.maker(chromos,5,2)
-points(vecB,yass, t="l")
+X.maker(chromos,5)
+points(vecB[1:18],yass[1:18], t="b")
+points(vecB[19:29],yass[19:29], t="b")
+points(vecB[30:41],yass[30:41], t="b")
+points(vecB[42:52],yass[42:52], t="b")
+points(vecB[53:69],yass[53:69], t="b")
 
 X.maker<- function(NameFile,aantalchr){
 xass<-NULL
@@ -36,7 +40,7 @@ for(x in 1:aantalchr){
   }
 
 xass<-X.maker(chromos,5) 
-axis(1,1:length(xass), labels=xass)
+#axis(1,1:length(xass), labels=xass)
 #nu de points invullen
 table(CombiMatrix[,2])
 
