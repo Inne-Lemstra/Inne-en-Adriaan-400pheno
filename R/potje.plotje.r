@@ -36,7 +36,7 @@ Y.maker<-function(Matrix,col.mark,col.waarden, X.as,Fun){
 for(y in 1:length(X.as)){
   positie<-which(X.as[y]==Matrix[,col.mark])
     if(!is.na(positie&&1)){
-    waarde<-Fun(as.numeric(Matrix[positie,col.waarden]),na.rm=TRUE)
+    waarde<-Fun(as.numeric(unlist(Matrix[positie,col.waarden])),na.rm=TRUE)
     yass<-c(yass, waarde)
   }else{
     yass<-c(yass,0)
@@ -44,6 +44,8 @@ for(y in 1:length(X.as)){
 }
 yass
 }
+
+yass<-Y.maker(CombiMatrix,2,4,xass,mean)
 
 #bekijk ?axis
 op<- par(las = 2)
