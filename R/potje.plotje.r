@@ -2,53 +2,23 @@
 #date created:8 maart
 
 #een plotje
-
+chromos<-data[1,405:ncol(data)]
+Morgan<-data[2,405:ncol(data)]
 #plot grote
-plot(c(0,10),c(0,10),type="n")
 plot(c(100,600),c(1,107),type="n", xlab="Markers",ylab="Number of LOD above cuttof",axes=FALSE)
-
-#bekijk ?axis
-op <- par(las = 2)
-op<- par(cex = 0.6)
-op<- par(mai=c(1,0.6,1,1))
-
-axis(1,vecB,labels=xass[1:length(xass)])
-axis(2,seq(0,110,10))
-X.maker(chromos,5)
-#points(vecB,yass, t="b")
-
-#point calculator
-
-for(scheidslijn in 1:6){
-
-Punten <-which(vecB<(scheidslijn*100)&vecB>=(100*scheidslijn-100))
-points(vecB[Punten],yass[Punten], t="b")
-}
-
-
 
 X.maker<- function(NameFile,aantalchr){
 xass<-NULL
 for(x in 1:aantalchr){
-  #if(x!=aantalchr){
-   # vec<-NULL
-    #vec<-colnames(NameFile)[which(NameFile==x)]
-    #vec<-c(vec," ")
-  #}
-    #else{
     vec<-NULL
     vec<-colnames(NameFile)[which(NameFile==x)]
-    #}
   xass<- c(xass,vec)
   }
-  axis(1,1:length(xass), labels=xass)
   xass
   }
 
 xass<-X.maker(chromos,5) 
-#axis(1,1:length(xass), labels=xass)
 #nu de points invullen
-table(CombiMatrix[,2])
 
 yass<-NULL
 for(y in 1:length(xass)){
@@ -59,8 +29,40 @@ for(y in 1:length(xass)){
   }else{
     yass<-c(yass,0)
   }
-  cat(y,length(yass),"\n")
 }
+
+Y.maker<-function(Matrix,col.mark,col.waarden, X.as,Fun=NULL){
+  yass<-NULL
+for(y in 1:length(X.as)){
+  positie<-which(X.as[y]==Matrix[,col.mark])
+    if((!is.na(positie&&1))&(is.null(Fun))){
+    waarde<-as.numeric(as.character(unlist(Matrix[positie,col.waarden])),na.rm=TRUE)
+    yass<-c(yass, waarde)
+    }
+    if((!is.na(positie&&1))&(!is.null(Fun))){
+    waarde<-Fun(as.numeric(as.character(unlist(Matrix[positie,col.waarden]))),na.rm=TRUE)
+    yass<-c(yass, waarde)
+    }
+    if(is.na(positie&&1)){
+    yass<-c(yass,0)
+  }
+}
+  yass
+}
+
+Y.maker(CombiMatrix,2,5,xass)
+
+yass<-Y.maker(CombiMatrix,2,4,xass,mean)
+
+#bekijk ?axis
+op<- par(las = 2)
+op<- par(cex = 0.6)
+op<- par(mai=c(1,0.6,1,1))
+
+axis(1,vecB,labels=xass[1:length(xass)])
+axis(2,seq(0,110,10))
+X.maker(chromos,5)
+#points(vecB,yass, t="b")
 
 #centimorgans
 Morgan<-data[2,405:ncol(data)]
@@ -69,34 +71,6 @@ Morgan<-data[2,405:ncol(data)]
 #de X.maker kan hiervoor omgeschreven worden
 
 
-vecB<-NULL
-gap<-10
-for(chr in 1:ncol(chromos)){
-  #if(as.numeric(as.character(Morgan[1,chr]))==0){vecB<-c(vecB,(vecA+gap))
-  vecA<-as.numeric(as.character(Morgan[1,chr]))+(as.numeric(as.character(chromos[1,chr]))*100)
-  vecB<- c(vecB, vecA)
-  }
-
- 
-
- vecA=NULL
-  vecB<-NULL
-  z=0
-gap<-10
-for(chr in 1:ncol(chromos)){
-  if(as.numeric(as.character(Morgan[1,chr]))==0){
-  vecB<-c(vecB,(vecA+gap))
-  z=z+1
-  cat(chr,"\n")
-  }
-    vecA<-as.numeric(as.character(Morgan[1,chr]))+(as.numeric(as.character(chromos[1,chr]))*100)+gap*z
-    vecB<- c(vecB, vecA)
-  }
-  
-  
-  
-  
-  
   ### here is danny
   
 getD <- function(which.chr=1,distances,chr){
@@ -120,6 +94,7 @@ plotDanny <- function(Morgan, chromos, yass, gapsize=25,type='o'){
   chr <- as.numeric(unlist(t(chromos)))
   nchr <-length(unique(chr))
   plot(c(0, getCD(nchr, gapsize=gapsize,distances=distances,chr=chr)),c(0,max(yass)*1.25),t='n',main="Summarized QTL plot", ylab="# of significant QTL", xlab="Markers",xaxt="n")
+  par(new=T)
   locs <- NULL
   for(x in 1:nchr){
     locs <- c(locs,distances[which(chr==x)] + (getCD(x-1,gapsize,distances,chr)))
@@ -130,3 +105,47 @@ plotDanny <- function(Morgan, chromos, yass, gapsize=25,type='o'){
 
 plotDanny(Morgan,chromos,yass,gapsize=50)
 plotDanny(Morgan,chromos,yass,gapsize=50,type="h")
+
+#2 axis
+yass1<-Y.maker(CombiMatrix,2,3:4,xass,mean)
+yass2<-Y.maker(CombiMatrix,2,5,xass,mean)
+x <- 1:10
+y1 <- x
+y2 <- x^2
+
+plot(c(1,10), c(1,300), axes=F, ylab="", type="b")
+axis(2, c(1,300))
+points(1:10, seq(1,200,20))
+
+par(new=T)
+
+plot(c(1,10), c(0,1), axes=F, ylab="", type="b")
+axis(4, c(0,1))
+points(1:10, T1)
+
+axis(1,pretty(range(x),10))
+
+plotDanny <- function(Morgan, chromos, yass1, yass2, gapsize=25,type='l'){
+  op <- par(las = 2)
+  op <- par(cex.axis = 0.6)
+  distances <- as.numeric(t(Morgan[1,]))
+  chr <- as.numeric(unlist(t(chromos)))
+  nchr <-length(unique(chr))
+    plot(c(0, getCD(nchr, gapsize=gapsize,distances=distances,chr=chr)),c(0,4),type="n", axes=F,,xlab="Markers", ylab="")
+  axis(4, c(0,4))
+  locs<-NULL
+  for(x in 1:nchr){
+    locs <- c(locs,distances[which(chr==x)] + (getCD(x-1,gapsize,distances,chr)))
+    points(x=distances[which(chr==x)] + (getCD(x-1,gapsize,distances,chr)),y=yass2[which(chr==x)],t="o",lty=2,col="goldenrod",lwd=3)
+   }
+   par(new=T)
+  plot(c(0, getCD(nchr, gapsize=gapsize,distances=distances,chr=chr)),c(0,max(yass1)*1.25),type="n",main="Summarized QTL plot", ylab="# of significant QTL", xlab="Markers",xaxt="n")
+  axis(2, c(0,max(yass)*1.25))
+  locs <- NULL
+  for(x in 1:nchr){
+    locs <- c(locs,distances[which(chr==x)] + (getCD(x-1,gapsize,distances,chr)))
+    points(x=distances[which(chr==x)] + (getCD(x-1,gapsize,distances,chr)),y=yass1[which(chr==x)],type=type,col=x,lwd=3)
+  }
+  axis(1,locs,labels=names(Morgan[1,]))
+}
+plotDanny(Morgan,chromos,yass1,yass2)
