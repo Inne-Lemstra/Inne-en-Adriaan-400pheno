@@ -178,3 +178,6 @@ names(Pfac) <- properties
 ######
 
 TAAmerge <- properties.merge(CombiMatrix,Pfac)
+
+###omdat de laatste waarden(die niet voorkwamen in de eerste aNOVA of T-test) geen AA/BB waarde of AA-BB waarde hebben, wil ik daar wat aan doen.
+
