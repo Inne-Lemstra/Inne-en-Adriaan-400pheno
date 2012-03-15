@@ -131,14 +131,16 @@ plotDanny <- function(Morgan, chromos, yass1, yass2, gapsize=25,type='l'){
   distances <- as.numeric(t(Morgan[1,]))
   chr <- as.numeric(unlist(t(chromos)))
   nchr <-length(unique(chr))
-    plot(c(0, getCD(nchr, gapsize=gapsize,distances=distances,chr=chr)),c(0,4),type="n", axes=F,,xlab="Markers", ylab="")
-  axis(4, c(0,4))
+    plot(c(0, getCD(nchr, gapsize=gapsize,distances=distances,chr=chr)),c((min(yass2)*1.25),max(yass2)*1.25),type="n", axes=F,,xlab="Markers", ylab="")
+  axis(4, c((min(yass2)*1.25),max(yass2)*1.25))
   locs<-NULL
   for(x in 1:nchr){
+    
     locs <- c(locs,distances[which(chr==x)] + (getCD(x-1,gapsize,distances,chr)))
-    points(x=distances[which(chr==x)] + (getCD(x-1,gapsize,distances,chr)),y=yass2[which(chr==x)],t="o",lty=2,col="goldenrod",lwd=3)
+      points(x=distances[which(chr==x)] + (getCD(x-1,gapsize,distances,chr)),y=yass2[which(chr==x)],t="p",pch=16,col="purple",lwd=3)
+   
    }
-   par(new=T)
+      par(new=T)
   plot(c(0, getCD(nchr, gapsize=gapsize,distances=distances,chr=chr)),c(0,max(yass1)*1.25),type="n",main="Summarized QTL plot", ylab="# of significant QTL", xlab="Markers",xaxt="n")
   axis(2, c(0,max(yass)*1.25))
   locs <- NULL
@@ -148,4 +150,4 @@ plotDanny <- function(Morgan, chromos, yass1, yass2, gapsize=25,type='l'){
   }
   axis(1,locs,labels=names(Morgan[1,]))
 }
-plotDanny(Morgan,chromos,yass1,yass2)
+plotDanny(Morgan,chromos,yass1,sign(yass2))

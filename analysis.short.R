@@ -2,18 +2,18 @@
 
 #je hoort nu in de folder onder Inne-en-Adriaan-400pheno te zitten
 
-source("Inne-en-Adriaan-400pheno/R/find.peaks.R")
-source("Inne-en-Adriaan-400pheno/R/effect.matrix.R")
-source("Inne-en-Adriaan-400pheno/R/t.test.R")
-source("Inne-en-Adriaan-400pheno/R/trait.marker.list.R")
-source("Inne-en-Adriaan-400pheno/R/anova.mat.R")
-source("Inne-en-Adriaan-400pheno/R/T en A matrix.r")
-source("Inne-en-Adriaan-400pheno/R/chr_finder.r")
+source("400pheno/R/find.peaks.R")
+source("400pheno/R/effect.matrix.R")
+source("400pheno/R/t.test.R")
+source("400pheno/R/trait.marker.list.R")
+source("400pheno/R/anova.mat.R")
+source("400pheno/R/T en A matrix.r")
+source("400pheno/R/chr_finder.r")
 #voor de multiple anova
-source("Inne-en-Adriaan-400pheno/R/Grep.term.col.R") #functies laden
-source("Inne-en-Adriaan-400pheno/R/M.matcher.R")
+source("400pheno/R/Grep.term.col.R") #functies laden
+source("400pheno/R/M.matcher.R")
 #voor het mergen van de properties.
-source("Inne-en-Adriaan-400pheno/R/properties.merge.R")
+source("400pheno/R/properties.merge.R")
 
 #data laden
 data <- read.csv("BayShatraitsAll.csv",sep=";")
@@ -160,11 +160,13 @@ for (i in 1:length(environmat)){ #de hele matrix per kolom achter elkaar in een 
 
 #anova gedeelte
 Pfac <- vector("list",length(listpropvec))
-Coefficients <- vector("list",length(listpropvec))
+
+#Efac<-NULL
 for (i in 1:length(listpropvec)){  
   for (n in 1:ncol(genotypes)){  
     Pfac[[i]] <- rbind(Pfac[[i]],anova(lm(listpropvec[[i]]~as.factor(listbatchvec[[i]])+as.factor(listenvironvec[[i]])+as.factor(rep(genotypes[,n],74))))$Pr)
-	Coefficients[[i]] <- rbind(Coefficients[[i]],anova(lm(listpropvec[[i]]~as.factor(listbatchvec[[i]])+as.factor(listenvironvec[[i]])+as.factor(rep(genotypes[,n],74)))))
+    #Efac[[i]] <- rbind(Efac[[i]],unlist(lm(listpropvec[[i]]~as.factor(listbatchvec[[i]])+as.factor(listenvironvec[[i]])+as.factor(rep(genotypes[,n],74))))[14])
+
   }
   Pfac[[i]] <- -log10(Pfac[[i]])
   rownames(Pfac[[i]]) <- colnames(genotypes)
@@ -172,7 +174,6 @@ for (i in 1:length(listpropvec)){
   rownames(Coefficients[[i]]) <- colnames(genotypes)
   colnames(Coefficients[[i]]) <- c("Batch","Environment","Genotype","Residuals")
   Pfac[[i]] <-Pfac[[i]][-which(Pfac[[i]][,3] < 3),3] #hier alle waarden die kleiner zijn dan 3 eruit halen
-  Coefficients[[i]] <- Coefficitents[[i]][-which(Pfac[[i]][,3] < 3),3]
 }
 names(Pfac) <- properties
 names(Coefficients) <- properties
@@ -184,5 +185,32 @@ names(Coefficients) <- properties
 
 TAAmerge <- properties.merge(CombiMatrix,Pfac)
 
+
 ###omdat de laatste waarden(die niet voorkwamen in de eerste aNOVA of T-test) geen AA/BB waarde of AA-BB waarde hebben, wil ik daar wat aan doen.
+
+
+#Samen voegen met van MAnova en rest van de matrix
+#(staan veel NA waardes in, dit komt door dat niet alle markers van CombiMatrix ook in Pfac zitten
+#en er nog een paar trait zijn waar de 5 basic properties niet in zitten)
+
+prop<-c(rep(names(Pfac[1]),length(unlist(Pfac[1]))),rep(names(Pfac[2]),length(unlist(Pfac[2]))),rep(names(Pfac[3]),length(unlist(Pfac[3]))),rep(names(Pfac[4]),length(unlist(Pfac[4]))),rep(names(Pfac[5]),length(unlist(Pfac[5]))))
+mark<-c(names(Pfac[[1]]),names(Pfac[[2]]),names(Pfac[[3]]),names(Pfac[[4]]),names(Pfac[[5]]))
+value<-as.vector(unlist(Pfac[1:5]))
+
+T3<-cbind(prop,mark,value)
+T7<-NULL
+for(term in 1:5){
+lengthprop<-length(grep(names(Pfac[term]),T3))
+n1<-grep(names(Pfac[term]),CombiMatrix[,1])
+T6<-NULL
+for(x in 1:lengthprop){
+T4<-which(T3[x,2]==CombiMatrix[n1,2])
+trait<-CombiMatrix[n1,1]
+T5<-cbind(as.character(trait[T4]),rep(mark[x],length(trait[T4])),rep(value[x],length(trait[T4])))
+T6<-rbind(T6,T5)
+}
+T7<-rbind(T7,T6)
+}
+colnames(T7)<-c("Trait","Marker","MAnova")
+T8<-voegsamen(CombiMatrix,T7)
 
