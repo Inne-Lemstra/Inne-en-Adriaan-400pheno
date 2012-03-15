@@ -164,7 +164,7 @@ Pfac <- vector("list",length(listpropvec))
 for (i in 1:length(listpropvec)){  
   for (n in 1:ncol(genotypes)){  
     Pfac[[i]] <- rbind(Pfac[[i]],anova(lm(listpropvec[[i]]~as.factor(listbatchvec[[i]])+as.factor(listenvironvec[[i]])+as.factor(rep(genotypes[,n],74))))$Pr)
-    #Efac[[i]] <- rbind(Efac[[i]],unlist(lm(listpropvec[[i]]~as.factor(listbatchvec[[i]])+as.factor(listenvironvec[[i]])+as.factor(rep(genotypes[,n],74))))[14])
+    Efac[[i]] <- rbind(Efac[[i]],unlist(lm(listpropvec[[i]]~as.factor(listbatchvec[[i]])+as.factor(listenvironvec[[i]])+as.factor(rep(genotypes[,n],74))))[14])
   }
   Pfac[[i]] <- -log10(Pfac[[i]])
   rownames(Pfac[[i]]) <- colnames(genotypes)
