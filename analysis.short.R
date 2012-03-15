@@ -160,17 +160,22 @@ for (i in 1:length(environmat)){ #de hele matrix per kolom achter elkaar in een 
 
 #anova gedeelte
 Pfac <- vector("list",length(listpropvec))
-
+Coefficients <- vector("list",length(listpropvec))
 for (i in 1:length(listpropvec)){  
   for (n in 1:ncol(genotypes)){  
     Pfac[[i]] <- rbind(Pfac[[i]],anova(lm(listpropvec[[i]]~as.factor(listbatchvec[[i]])+as.factor(listenvironvec[[i]])+as.factor(rep(genotypes[,n],74))))$Pr)
+	Coefficients[[i]] <- rbind(Coefficients[[i]],anova(lm(listpropvec[[i]]~as.factor(listbatchvec[[i]])+as.factor(listenvironvec[[i]])+as.factor(rep(genotypes[,n],74)))))
   }
   Pfac[[i]] <- -log10(Pfac[[i]])
   rownames(Pfac[[i]]) <- colnames(genotypes)
   colnames(Pfac[[i]]) <- c("Batch","Environment","Genotype","Residuals")
+  rownames(Coefficients[[i]]) <- colnames(genotypes)
+  colnames(Coefficients[[i]]) <- c("Batch","Environment","Genotype","Residuals")
   Pfac[[i]] <-Pfac[[i]][-which(Pfac[[i]][,3] < 3),3] #hier alle waarden die kleiner zijn dan 3 eruit halen
+  Coefficients[[i]] <- Coefficitents[[i]][-which(Pfac[[i]][,3] < 3),3]
 }
 names(Pfac) <- properties
+names(Coefficients) <- properties
 
 
 ##############
