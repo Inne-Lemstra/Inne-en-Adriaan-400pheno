@@ -160,22 +160,31 @@ for (i in 1:length(environmat)){ #de hele matrix per kolom achter elkaar in een 
 
 #anova gedeelte
 Pfac <- vector("list",length(listpropvec))
-#Efac<-NULL
+#Efac=NULL
+#Efac<-vector("character",1)
 for (i in 1:length(listpropvec)){  
   for (n in 1:ncol(genotypes)){  
     Pfac[[i]] <- rbind(Pfac[[i]],anova(lm(listpropvec[[i]]~as.factor(listbatchvec[[i]])+as.factor(listenvironvec[[i]])+as.factor(rep(genotypes[,n],74))))$Pr)
-    Efac[[i]] <- rbind(Efac[[i]],unlist(lm(listpropvec[[i]]~as.factor(listbatchvec[[i]])+as.factor(listenvironvec[[i]])+as.factor(rep(genotypes[,n],74))))[14])
+    #Efac <- rbind(Efac,unlist(lm(listpropvec[[i]]~as.factor(listbatchvec[[i]])+as.factor(listenvironvec[[i]])+as.factor(rep(genotypes[,n],74))))[14])
+    #cat(class(Efac),"\n")
   }
-  Pfac[[i]] <- -log10(Pfac[[i]])
+    Pfac[[i]] <- -log10(Pfac[[i]])
   rownames(Pfac[[i]]) <- colnames(genotypes)
   colnames(Pfac[[i]]) <- c("Batch","Environment","Genotype","Residuals")
   Pfac[[i]] <-Pfac[[i]][-which(Pfac[[i]][,3] < 3),3] #hier alle waarden die kleiner zijn dan 3 eruit halen
-  #colnames(Efac[[i]]) <- "BB-AA"
+  #colnames(Efac) <- "BB-AA"
+  #Names <- as.vector(colnames(genotypes))
+  #Efuc<-cbind(Names,Efac)
   #Efac[[i]]<-Efac[[i]][-which(Pfac[[i]][,3] < 3),3]
 }
 names(Pfac) <- properties
 
-
+##############
+for (i in 1:length(listpropvec)){  
+  for (n in 1:ncol(genotypes)){  
+    Efac <- rbind(Efac,unlist(lm(listpropvec[[i]]~as.factor(listbatchvec[[i]])+as.factor(listenvironvec[[i]])+as.factor(rep(genotypes[,n],74))))[14])
+  }}
+  
 ##############
 #hier de properties van de multiple anova mergen.
 ######
@@ -186,9 +195,9 @@ TAAmerge <- properties.merge(CombiMatrix,Pfac)
 #(staan veel NA waardes in, dit komt door dat niet alle markers van CombiMatrix ook in Pfac zitten
 #en er nog een paar trait zijn waar de 5 basic properties niet in zitten)
 
-prop<-c(rep(names(Pfac[1]),length(unlist(Pfac[1]))),rep(names(Pfac[2]),length(unlist(Pfac[2]))),rep(names(Pfac[3]),length(unlist(Pfac[3]))),rep(names(Pfac[4]),length(unlist(Pfac[4]))),rep(names(Pfac[5]),length(unlist(Pfac[5]))))
-mark<-c(names(Pfac[[1]]),names(Pfac[[2]]),names(Pfac[[3]]),names(Pfac[[4]]),names(Pfac[[5]]))
-value<-as.vector(unlist(Pfac[1:5]))
+prop  <-c(rep(names(Pfac[1]),length(unlist(Pfac[1]))),rep(names(Pfac[2]),length(unlist(Pfac[2]))),rep(names(Pfac[3]),length(unlist(Pfac[3]))),rep(names(Pfac[4]),length(unlist(Pfac[4]))),rep(names(Pfac[5]),length(unlist(Pfac[5]))))
+mark  <-c(names(Pfac[[1]]),names(Pfac[[2]]),names(Pfac[[3]]),names(Pfac[[4]]),names(Pfac[[5]]))
+value <-as.vector(unlist(Pfac[1:5]))
 
 T3<-cbind(prop,mark,value)
 T7<-NULL
