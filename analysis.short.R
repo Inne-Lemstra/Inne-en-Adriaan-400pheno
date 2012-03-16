@@ -161,6 +161,7 @@ for (i in 1:length(environmat)){ #de hele matrix per kolom achter elkaar in een 
 #anova gedeelte
 Pfac <- vector("list",length(listpropvec))
 
+
 #Efac<-NULL
 for (i in 1:length(listpropvec)){  
   for (n in 1:ncol(genotypes)){  
@@ -168,21 +169,33 @@ for (i in 1:length(listpropvec)){
     #Efac[[i]] <- rbind(Efac[[i]],unlist(lm(listpropvec[[i]]~as.factor(listbatchvec[[i]])+as.factor(listenvironvec[[i]])+as.factor(rep(genotypes[,n],74))))[14])
 
   }
-  Pfac[[i]] <- -log10(Pfac[[i]])
+    Pfac[[i]] <- -log10(Pfac[[i]])
   rownames(Pfac[[i]]) <- colnames(genotypes)
   colnames(Pfac[[i]]) <- c("Batch","Environment","Genotype","Residuals")
 
   Pfac[[i]] <-Pfac[[i]][-which(Pfac[[i]][,3] < 3),3] #hier alle waarden die kleiner zijn dan 3 eruit halen
+
+
+  #colnames(Efac) <- "BB-AA"
+  #Names <- as.vector(colnames(genotypes))
+  #Efuc<-cbind(Names,Efac)
+  #Efac[[i]]<-Efac[[i]][-which(Pfac[[i]][,3] < 3),3]
 }
 names(Pfac) <- properties
 
-
+##############
+for (i in 1:length(listpropvec)){  
+  for (n in 1:ncol(genotypes)){  
+    Efac <- rbind(Efac,unlist(lm(listpropvec[[i]]~as.factor(listbatchvec[[i]])+as.factor(listenvironvec[[i]])+as.factor(rep(genotypes[,n],74))))[14])
+  }}
+  
 
 ##############
 #hier de properties van de multiple anova mergen.
 ######
 
 TAAmerge <- properties.merge(CombiMatrix,Pfac)
+
 
 # hier de missende AA/BB waarden invullen
 isNA.div <- which(is.na(TAAmerge[,5]) == T) #welke zijn NA.
@@ -192,7 +205,7 @@ tempvec12 <- NULL
 for (i in isNA.div){ #voor de AA/BB waarden.
 	ADIVBcols <-grep(paste(TAAmerge[i,1]),names(effect.mat.div[,paste(TAAmerge[i,2])])) #zoek naar de missende waarden 
 	tempvec12 <-c(tempvec12,mean(effect.mat.div[ADIVBcols,paste(TAAmerge[i,2])]))
-}
+
 TAAmerge[,5] <- as.vector(TAAmerge[,5])
 TAAmerge[isNA.div,5] <- tempvec12 #hier de omzetting van de AA/BB
 
