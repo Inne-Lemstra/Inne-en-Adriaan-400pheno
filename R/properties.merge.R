@@ -18,12 +18,12 @@ properties.merge <- function(traitmat,propvec){ #in deze functie word ervan uit 
 	  }
   }
 
- traitmat <- cbind(traitmat,MultiAnova) #hier de multianova aan de traitmat cbinden. Dat wordt hier gedaan omdat de colnames van hierboven nog hetzelfde zijn
+traitmat <- cbind(traitmat,MultiAnova) #hier de multianova aan de traitmat cbinden. Dat wordt hier gedaan omdat de colnames van hierboven nog hetzelfde zijn
 traitmattest <- matrix(NA,(length(nondouble)/3),7) #traitmattest is voor de non-doubles.
 traitmattest[,1] <- nondouble[seq(1,length(nondouble),3)] #hier de properties in de traitmattest
 traitmattest[,2] <- nondouble[seq(2,length(nondouble),3)]#hier de marker
 traitmattest[,7] <- nondouble[seq(3,length(nondouble),3)]#hier de value
-#colnames(traitmattest) <- colnames(traitmat) #colnames samenvoegen, anders werkt Rbind niet.
+ #colnames samenvoegen, anders werkt Rbind niet.
 colnames(traitmattest) <- colnames(traitmat)
 traitmat <- rbind(traitmat,traitmattest,deparse.level = 0) #hier de nondoubles aan de traitmat rbinden
 
