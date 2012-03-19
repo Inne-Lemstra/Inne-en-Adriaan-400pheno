@@ -58,7 +58,7 @@ Morgan<-data[2,405:ncol(data)]
   ### here is danny
 
 
-plotDanny <- function(Morgan, chromos, yass, gapsize=25,type='o'){
+#plotDanny <- function(Morgan, chromos, yass, gapsize=25,type='o'){
   op <- par(las = 2)
   op <- par(cex.axis = 0.6)
   distances <- as.numeric(t(Morgan[1,]))
@@ -80,7 +80,7 @@ yass1<-Y.maker(CombiMatrix,2,3:4,xass,mean)
 yass2<-Y.maker(CombiMatrix,2,5,xass,mean)
 
 
-plotInne <- function(Morgan, chromos, yass1, yass2=NULL, gapsize=25,type='l',cuttoff=NULL){
+plotInne <- function(Morgan, chromos, yass1, yass2=NULL, gapsize=25,type='l',cuttoff=NULL,Title="Summarized QTL plot",Title_Y.as1="value of significant QTL",Title_Y.as2=""){
 if(missing(Morgan)) stop(cat("I am going to stop calling you a white man and I'm going to ask you to stop calling me a black man.","\n", "Morgan afstanden missen"))
 if(missing(chromos)) stop("lijst met markers gekoppeld aan op welk chromosoom ze liggen mist")
 
@@ -101,7 +101,7 @@ getCD <- function(which.chr=1, gapsize = 25,distances,chr){
   distances <- as.numeric(t(Morgan[1,]))
   chr <- as.numeric(unlist(t(chromos)))
   nchr <-length(unique(chr))
-  plot(c(0, getCD(nchr, gapsize=gapsize,distances=distances,chr=chr)),c(0,max(yass1)*1.25),type="n",main="Summarized QTL plot", ylab="# of significant QTL", xlab="Markers",xaxt="n")
+  plot(c(0, getCD(nchr, gapsize=gapsize,distances=distances,chr=chr)),c(0,max(yass1)*1.25),type="n",main=Title, ylab=Title_Y.as1, xlab="Markers",xaxt="n")
   axis(2, c(0,max(yass1)*1.25))
   locs <- NULL
   for(x in 1:nchr){
@@ -111,7 +111,7 @@ getCD <- function(which.chr=1, gapsize = 25,distances,chr){
   abline(h=cuttoff, lty="dashed")
    if(!is.null(yass2)){
       par(new=T)
-    plot(c(0, getCD(nchr, gapsize=gapsize,distances=distances,chr=chr)),c((min(yass2)*1.25),max(yass2)*1.25),type="n", axes=F,,xlab="Markers", ylab="")
+    plot(c(0, getCD(nchr, gapsize=gapsize,distances=distances,chr=chr)),c((min(yass2)*1.25),max(yass2)*1.25),type="n", axes=F,,xlab="Markers", ylab=Title_Y.as2)
   axis(4, c((min(yass2)*1.25),max(yass2)*1.25),lwd=1)
   locs<-NULL
   for(x in 1:nchr){
@@ -124,4 +124,3 @@ getCD <- function(which.chr=1, gapsize = 25,distances,chr){
   axis(1,locs,labels=names(Morgan[1,]))
 }
 plotInne(Morgan,chromos,yass1,sign(yass2),cuttoff=3)
-
