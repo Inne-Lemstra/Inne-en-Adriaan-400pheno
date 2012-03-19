@@ -14,6 +14,8 @@ source("Inne-en-Adriaan-400pheno/R/Grep.term.col.R") #functies laden
 source("Inne-en-Adriaan-400pheno/R/M.matcher.R")
 #voor het mergen van de properties.
 source("Inne-en-Adriaan-400pheno/R/properties.merge.R")
+#voor het maken van de plotjes van de multiple Anova
+source("Inne-en-Adriaan-400pheno/R/potje.plotje.r")
 
 #data laden
 data <- read.csv("BayShatraitsAll.csv",sep=";")
