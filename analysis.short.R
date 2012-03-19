@@ -160,8 +160,7 @@ for (i in 1:length(environmat)){ #de hele matrix per kolom achter elkaar in een 
 
 #anova gedeelte
 Pfac <- vector("list",length(listpropvec))
-
-
+Pfac.uncut <- vector("list",length(listpropvec))
 Efac<-vector("list",length(listpropvec))
 for (i in 1:length(listpropvec)){  
   for (n in 1:ncol(genotypes)){  
@@ -169,18 +168,35 @@ for (i in 1:length(listpropvec)){
     Efac[[i]] <- rbind(Efac[[i]],unlist(lm(listpropvec[[i]]~as.factor(listbatchvec[[i]])+as.factor(listenvironvec[[i]])+as.factor(rep(genotypes[,n],74))))[14])
 
   }
-    Pfac[[i]] <- -log10(Pfac[[i]])
+  Pfac[[i]] <- -log10(Pfac[[i]])
   rownames(Pfac[[i]]) <- colnames(genotypes)
   colnames(Pfac[[i]]) <- c("Batch","Environment","Genotype","Residuals")
   rownames(Efac[[i]]) <- colnames(genotypes)
+  Pfac.uncut[[i]] <- Pfac[[i]][,3]
   Pfac[[i]] <-Pfac[[i]][-which(Pfac[[i]][,3] < 3),3] #hier alle waarden die kleiner zijn dan 3 eruit halen
 
 }
 names(Pfac) <- properties
+names(Pfac.uncut) <- properties
 names(Efac) <- properties
 
-  
 
+##hier de multiple Anova met coefficients.
+MultiAnovamarker <- NULL
+MultiAnovatrait <- NULL
+MultiAnovaLOD <- NULL
+MultiAnovaCoe <- NULL
+
+for (i in 1:length(Pfac)){
+  MultiAnovatrait <- c(MultiAnovatrait, rep(names(Pfac)[i],length(Pfac[[i]])))
+    for (n in 1:length(Pfac[[i]])){
+      MultiAnovamarker <- unlist(c(MultiAnovamarker, names(Pfac[[i]])[n]))
+	  MultiAnovaLOD <- as.vector(unlist(c(MultiAnovaLOD, Pfac[[i]][n])))
+	  MultiAnovaCoe <- unlist(c(MultiAnovaCoe, Efac[[i]][n]))
+    }
+}  
+
+MultiAnova <- cbind(MultiAnovatrait,MultiAnovamarker, MultiAnovaLOD, MultiAnovaCoe)
 ##############
 #hier de properties van de multiple anova mergen.
 ######
@@ -211,9 +227,9 @@ for (i in isNA.coe){
   tempvec11 <- c(tempvec11, Efac[[paste(TAAmerge[i,1])]][TAAmerge[i,2]])
 }
 TAAmerge[,6] <- as.vector(TAAmerge[,6])
-TAAmerge[isNA.coe, 6] <- tempvec11
+TAAmerge[isNA.coe, 6] <- as.vector(unlist(tempvec11))
 
 
-###omdat de laatste waarden(die niet voorkwamen in de eerste aNOVA of T-test) geen AA/BB waarde of AA-BB waarde hebben, wil ik daar wat aan doen.
 
+#plotten van Pfac.
 
