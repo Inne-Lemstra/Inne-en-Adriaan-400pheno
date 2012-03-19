@@ -8,6 +8,7 @@ Morgan<-data[2,405:ncol(data)]
 plot(c(100,600),c(1,107),type="n", xlab="Markers",ylab="Number of LOD above cuttof",axes=FALSE)
 
 X.maker<- function(NameFile,aantalchr){
+if(missing(NameFile)) stop("insert file in wich ")
 xass<-NULL
 for(x in 1:aantalchr){
     vec<-NULL
@@ -32,6 +33,11 @@ for(y in 1:length(xass)){
 }
 
 Y.maker<-function(Matrix,col.mark,col.waarden, X.as,Fun=NULL){
+  if(missing(Matrix)) stop("Voer een Matrix in")
+  if(missing(col.mark)) stop("geen kollom met markers gevonden")
+  if(missing(col.waarden)) stop("er is geen kollom met waarden om te plotten")
+  if(missing(X.as)) stop("geen X.as ingevoerd, draai de X.maker om een x.as te maken")
+  
   yass<-NULL
 for(y in 1:length(X.as)){
   positie<-which(X.as[y]==Matrix[,col.mark])
@@ -125,7 +131,9 @@ points(1:10, T1)
 
 axis(1,pretty(range(x),10))
 
-plotDanny <- function(Morgan, chromos, yass1, yass2=NULL, gapsize=25,type='l'){
+plotDanny <- function(Morgan, chromos, yass1, yass2=NULL, gapsize=25,type='l',cuttoff=NULL){
+if(missing(Morgan)) stop(cat("I am going to stop calling you a white man and I'm going to ask you to stop calling me a black man.","\n", "Morgan afstanden missen"))
+if(missing(chromos)) stop("lijst met markers gekoppeld aan op welk chromosoom ze liggen mist")
   op <- par(las = 2)
   op <- par(cex.axis = 0.6)
   distances <- as.numeric(t(Morgan[1,]))
@@ -138,7 +146,7 @@ plotDanny <- function(Morgan, chromos, yass1, yass2=NULL, gapsize=25,type='l'){
     locs <- c(locs,distances[which(chr==x)] + (getCD(x-1,gapsize,distances,chr)))
     points(x=distances[which(chr==x)] + (getCD(x-1,gapsize,distances,chr)),y=yass1[which(chr==x)],type=type,col=x,lwd=3)
   }
-
+  abline(h=cuttoff )
    if(!is.null(yass2)){
       par(new=T)
     plot(c(0, getCD(nchr, gapsize=gapsize,distances=distances,chr=chr)),c((min(yass2)*1.25),max(yass2)*1.25),type="n", axes=F,,xlab="Markers", ylab="")
@@ -153,5 +161,5 @@ plotDanny <- function(Morgan, chromos, yass1, yass2=NULL, gapsize=25,type='l'){
   }
   axis(1,locs,labels=names(Morgan[1,]))
 }
-plotDanny(Morgan,chromos,yass1,sign(yass2))
+plotDanny(Morgan,chromos,yass1,sign(yass2),cuttoff=3)
 
