@@ -112,7 +112,7 @@ getCD <- function(which.chr=1, gapsize = 25,distances,chr){
    if(!is.null(yass2)){
       par(new=T)
     plot(c(0, getCD(nchr, gapsize=gapsize,distances=distances,chr=chr)),c((min(yass2)*1.25),max(yass2)*1.25),type="n", axes=F,,xlab="Markers", ylab=Title_Y.as2)
-  axis(4, c((min(yass2)*1.25),max(yass2)*1.25),lwd=1)
+  axis(4, c((min(yass2)*1.25),max(yass2)*1.25),lwd=1,at=c(-1,1),labels=c("B","A"))
   locs<-NULL
   for(x in 1:nchr){
     
