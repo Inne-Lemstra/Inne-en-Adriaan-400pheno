@@ -58,7 +58,7 @@ Morgan<-data[2,405:ncol(data)]
   ### here is danny
 
 
-#plotDanny <- function(Morgan, chromos, yass, gapsize=25,type='o'){
+plotDanny <- function(Morgan, chromos, yass, gapsize=25,type='o'){
   op <- par(las = 2)
   op <- par(cex.axis = 0.6)
   distances <- as.numeric(t(Morgan[1,]))
