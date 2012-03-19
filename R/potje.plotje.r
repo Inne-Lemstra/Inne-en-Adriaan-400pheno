@@ -58,7 +58,7 @@ Morgan<-data[2,405:ncol(data)]
   ### here is danny
 
 
-#plotDanny <- function(Morgan, chromos, yass, gapsize=25,type='o'){
+plotDanny <- function(Morgan, chromos, yass, gapsize=25,type='o'){
   op <- par(las = 2)
   op <- par(cex.axis = 0.6)
   distances <- as.numeric(t(Morgan[1,]))
@@ -81,7 +81,7 @@ yass2<-Y.maker(CombiMatrix,2,5,xass,mean)
 
 
 plotInne <- function(Morgan, chromos, yass1, yass2=NULL, gapsize=25,type='l',cuttoff=NULL,Title="Summarized QTL plot",Title_Y.as1="value of significant QTL",Title_Y.as2=""){
-if(missing(Morgan)) stop(cat("I am going to stop calling you a white man and I'm going to ask you to stop calling me a black man.","\n", "Morgan afstanden missen"))
+if(missing(Morgan)) stop(cat("I am going to stop calling you a white man and I'm going to ask you to stop calling me a black man.","\n", "Morgan afstanden missen","\t"))
 if(missing(chromos)) stop("lijst met markers gekoppeld aan op welk chromosoom ze liggen mist")
 
 getD <- function(which.chr=1,distances,chr){
@@ -97,7 +97,7 @@ getCD <- function(which.chr=1, gapsize = 25,distances,chr){
   return(D)
 }
   op <- par(las = 2)
-  op <- par(cex.axis = 0.6)
+  op <- par(cex.axis = 1)
   distances <- as.numeric(t(Morgan[1,]))
   chr <- as.numeric(unlist(t(chromos)))
   nchr <-length(unique(chr))
