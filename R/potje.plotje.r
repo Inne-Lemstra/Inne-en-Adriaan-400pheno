@@ -58,8 +58,12 @@ for(y in 1:length(X.as)){
 #vb.      First_line<-Y.maker(CombiMatrix,2,3:4,xass,mean)
 #vb.      yass2<-Y.maker(CombiMatrix,2,5,xass,mean)
 
+plotHarry <- fuction(Morgan,...){
+  plotInne(Morgan,...)
+}
 
-plotInne <- function(Morgan, chromos, First_line,Second_line=NULL, yass2=NULL,cuttoff=NULL,Title="Summarized QTL plot",Title_Y.as1="value of significant QTL",Title_Y.as2="",Grote_assen=0.6,gapsize=25,type='l'){
+
+plotInne <- function(Morgan, chromos, First_line,Second_line, yass2,cuttoff,Title="Summarized QTL plot",Title_Y.as1="value of significant QTL",Title_Y.as2="",Grote_assen=0.6,gapsize=25,type='l'){
 if(missing(Morgan)) stop(cat("I am going to stop calling you a white man and I'm going to ask you to stop calling me a black man.","\n", "Morgan afstanden missen","\t"))
 if(missing(chromos)) stop("lijst met markers gekoppeld aan op welk chromosoom ze liggen mist")
 if(missing(First_line)) stop("Ja ik moet wel punten, anders kan ik natuurlijk niet plotten")
@@ -85,7 +89,7 @@ getCD <- function(which.chr=1, gapsize = 25,distances,chr){
   chr <- as.numeric(unlist(t(chromos)))     #Chr is welk chromosoom en de lengte ervan
   nchr <-length(unique(chr))                #nchr is de lenget van alle chromosomen tot dusver
   
-  if(!is.null(Second_line)){                #dit past de range van de grafiek aan de van de grootste max (first of second line) aan
+  if(!missing(Second_line)){                #dit past de range van de grafiek aan de van de grootste max (first of second line) aan
     Max<-max(max(First_line),max(Second_line))*1.25
   }
   else{
@@ -109,7 +113,7 @@ getCD <- function(which.chr=1, gapsize = 25,distances,chr){
   }
   abline(h=cuttoff, lty="dashed")           #de cut-off
    
-   if(!is.null(yass2)){                     #Bepalen of 2e Yas gewenst is
+   if(!missing(yass2)){                     #Bepalen of 2e Yas gewenst is
   
   par(new=T)                                #Tweede Yas
     plot(c(0, getCD(nchr, gapsize=gapsize,distances=distances,chr=chr)),c((min(yass2)*1.25),max(yass2)*1.25),type="n", axes=F,,xlab="Markers", ylab=Title_Y.as2)  #de algemene plot 2e Yas
