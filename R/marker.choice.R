@@ -17,7 +17,7 @@ names(choice) <- properties #voor het nageslacht om te kijken welke lijst nou pr
 		AorB <- sum(sign(as.numeric(as.character(traitproperty[which(markervec[i] == traitproperty[,2]),AdivBcol])))) #hier wordt bekeken welke markers er in de al gefilterde traits ziten, en gekeken of ze groter of kleiner zijn dan nul (sign) en daarna gesummd om te kijken of het totaal AA of BB hoort te zijn.
 		if(AorB > 0) {choice[[prop]][i] <- "AA"} #als groter dan 0, dan is het AA
 		if(AorB < 0) {choice[[prop]][i] <- "BB"} #als kleiner dan 0 dan is het BB
-		if(AorB == 0) {choice[[prop]][i] <- "No pref"} #als 0, dan weten we het niet
+		if(AorB == 0) {choice[[prop]][i] <- "-"} #als 0, dan weten we het niet
 	  }
   }
   return(choice) #hier de uitgifte van de lijst.
