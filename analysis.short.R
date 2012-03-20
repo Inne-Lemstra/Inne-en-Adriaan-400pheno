@@ -226,9 +226,9 @@ tempvec11 <- NULL
 
 #omdat de AA-BB waarden hier nog niet bij staan, en de AA/BB waarden. neem ik de coefficienten. uit de Efac.
 for (i in isNA.coe){
-  tempvec11 <- c(tempvec11, Efac[[paste(TAAmerge[i,1])]][TAAmerge[i,2]])
+  tempvec11 <- c(tempvec11, Efac[[paste(TAAmerge[i,1])]][TAAmerge[i,2]]) #lees hier de markers en de traits uit in de Efac.
 }
-TAAmerge[,6] <- as.vector(TAAmerge[,6])
+TAAmerge[,6] <- as.vector(TAAmerge[,6])  #zet het in de TAAmerge.
 TAAmerge[isNA.coe, 6] <- as.vector(unlist(tempvec11))
 
 
@@ -237,8 +237,7 @@ TAAmerge[isNA.coe, 6] <- as.vector(unlist(tempvec11))
 setwd("C:/Users/Adriaan/400pheno/Inne-en-Adriaan-400pheno/images")
 for (i in 1:length(Pfac.uncut)){
   png(filename=paste("Trait ",names(Pfac.uncut)[i],".png"),bg="white",height=1000, width=1000)
-  
-  plotInne(Morgan, chromos, as.numeric(Pfac.uncut[[i]]), cuttoff=3,Title=NULL)
+  plotInne(Morgan, chromos, as.numeric(Pfac.uncut[[i]]), cuttoff=3,Title=NULL) #de mooie functie van inne gebruiken en de rest is opmaak.
   title(main=paste("trait ",names(Pfac.uncut)[i]))
   legend("topright", c("chromosome 1","chromosome 2","chromosome 3","chromosome 4","chromosome 5"),lty=rep(1,5),lwd=rep(3,5), col=1:5)
   dev.off()
