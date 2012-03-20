@@ -8,12 +8,12 @@
 if(missing(DATA))stop("DATA file is missing")
 if(missing(chr)) stop("chromosoom nummer not found")
 if(!is.null(dim(Vector))) stop("Lijst met markers moet een Vector zijn")
-chrnr<-which(DATA==chr)
+chrnr<-which(DATA==chr)                                                     #chromosoom nummer bepalen
 
 lijsten<-NULL
 for(x in 1:length(chrnr)){
-  lijst<- grep(colnames(DATA[,min(chrnr):max(chrnr)])[x],Vector)
-  lijsten<- c(lijsten,lijst)
+  lijst<- grep(colnames(DATA[,min(chrnr):max(chrnr)])[x],Vector)            
+  lijsten<- c(lijsten,lijst)                                                
 }
 lijsten
 }
