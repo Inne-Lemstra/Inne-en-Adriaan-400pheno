@@ -231,7 +231,19 @@ for (i in isNA.coe){
 TAAmerge[,6] <- as.vector(TAAmerge[,6])  #zet het in de TAAmerge.
 TAAmerge[isNA.coe, 6] <- as.vector(unlist(tempvec11))
 
-
+#plotten van hele t.test en anova (zonder cuttoff)
+T.test_raw<-as.numeric(apply(tmat,2,mean))
+Anova_raw<-as.numeric(apply(anovamat,2,mean))
+AminB_waarden<-sign(as.numeric(apply(effect.mat.min,2,mean)))
+chromos<-data[1,405:ncol(data)]
+Morgan<-data[2,405:ncol(data)]
+setwd("C:/github/400pheno/images")
+for (i in 1:length(Pfac.uncut)){
+  png(filename=paste("Trait ",names(Pfac.uncut)[i],".png"),bg="white",height=1000, width=1000)
+  plotInne(Morgan, chromos, First_line=T.test_raw, Second_line=Anova_raw,yass2=AminB_waarden,cuttoff=3,Title=paste("trait ",names(Pfac.uncut)[i]),Grote_assen=1) #de mooie functie van inne gebruiken en de rest is opmaak.
+  legend("topright", c("chromosome 1","chromosome 2","chromosome 3","chromosome 4","chromosome 5","A-B"),lty=rep(1,5),lwd=rep(3,5), col=c(1:5,"purple"))
+  dev.off()
+}
 
 #plotten van Pfac.
 chromos<-data[1,405:ncol(data)]

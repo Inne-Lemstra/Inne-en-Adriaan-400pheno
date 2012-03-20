@@ -55,13 +55,14 @@ for(y in 1:length(X.as)){
 
 
 #2 axis
-#vb.      yass1<-Y.maker(CombiMatrix,2,3:4,xass,mean)
+#vb.      First_line<-Y.maker(CombiMatrix,2,3:4,xass,mean)
 #vb.      yass2<-Y.maker(CombiMatrix,2,5,xass,mean)
 
 
-plotInne <- function(Morgan, chromos, yass1, yass2=NULL,cuttoff=NULL,Title="Summarized QTL plot",Title_Y.as1="value of significant QTL",Title_Y.as2="",Grote_assen=0.6,gapsize=25,type='l'){
+plotInne <- function(Morgan, chromos, First_line,Second_line=NULL, yass2=NULL,cuttoff=NULL,Title="Summarized QTL plot",Title_Y.as1="value of significant QTL",Title_Y.as2="",Grote_assen=0.6,gapsize=25,type='l'){
 if(missing(Morgan)) stop(cat("I am going to stop calling you a white man and I'm going to ask you to stop calling me a black man.","\n", "Morgan afstanden missen","\t"))
 if(missing(chromos)) stop("lijst met markers gekoppeld aan op welk chromosoom ze liggen mist")
+if(missing(First_line)) stop("Ja ik moet wel punten, anders kan ik natuurlijk niet plotten")
 
 #Getd bepaald de centimorgan afstand tussen de markers van één chromosoom
 getD <- function(which.chr=1,distances,chr){
@@ -83,12 +84,28 @@ getCD <- function(which.chr=1, gapsize = 25,distances,chr){
   distances <- as.numeric(t(Morgan[1,]))    #is de afstand van het totaal
   chr <- as.numeric(unlist(t(chromos)))     #Chr is welk chromosoom en de lengte ervan
   nchr <-length(unique(chr))                #nchr is de lenget van alle chromosomen tot dusver
-  plot(c(0, getCD(nchr, gapsize=gapsize,distances=distances,chr=chr)),c(0,max(yass1)*1.25),type="n",main=Title, ylab=Title_Y.as1, xlab="Markers",xaxt="n")        #De algemene plot
-  axis(2, c(0,max(yass1)*1.25))             #De Y-as
+  
+  if(!is.null(Second_line)){                #dit past de range van de grafiek aan de van de grootste max (first of second line) aan
+    Max<-max(max(First_line),max(Second_line))*1.25
+  }
+  else{
+    Max<-max(First_line)*1.25                    #deze range wordt gebruikt als er geen tweede lijn is
+  }
+  plot(c(0, getCD(nchr, gapsize=gapsize,distances=distances,chr=chr)),c(0,Max),type="n",main=Title, ylab=Title_Y.as1, xlab="Markers",xaxt="n")              #De algemene plot
+  axis(2, c(0,Max))                         #De Y-as (de eerste)
   locs <- NULL                              #Locaties op de x-as
   for(x in 1:nchr){                         #De loop voor het plotten van je points
     locs <- c(locs,distances[which(chr==x)] + (getCD(x-1,gapsize,distances,chr)))
-    points(x=distances[which(chr==x)] + (getCD(x-1,gapsize,distances,chr)),y=yass1[which(chr==x)],type=type,col=x,lwd=3)
+      
+      if(!is.null(Second_line)){            #maakt het mogelijk een tweede lijn te plotten
+      Kleur<-"red"                          #maakt alle chromosomen tweede lijn rood
+      points(x=distances[which(chr==x)] + (getCD(x-1,gapsize,distances,chr)),y=Second_line[which(chr==x)],type=type,col=Kleur,lwd=3)                        #De punten voor de tweede lijn (mits aanwezig) worden hier geplot
+      Kleur<-"green"                        #verandert de kleur van de eerste lijn (als er een tweede lijn aanwezig is) naar groen
+      }
+        else{
+        Kleur<-x                            #zorgt ervoor dat als er geen tweede lijn is dat de chromosomen weer gewoon verschillende kleuren krijgen
+        }
+      points(x=distances[which(chr==x)] + (getCD(x-1,gapsize,distances,chr)),y=First_line[which(chr==x)],type=type,col=Kleur,lwd=3)                              #Het plotten van punten lijn 1 (gebeurt altijd)
   }
   abline(h=cuttoff, lty="dashed")           #de cut-off
    
@@ -98,13 +115,13 @@ getCD <- function(which.chr=1, gapsize = 25,distances,chr){
     plot(c(0, getCD(nchr, gapsize=gapsize,distances=distances,chr=chr)),c((min(yass2)*1.25),max(yass2)*1.25),type="n", axes=F,,xlab="Markers", ylab=Title_Y.as2)  #de algemene plot 2e Yas
   axis(4, c((min(yass2)*1.25),max(yass2)*1.25),lwd=1,at=c(-1,0,1),labels=c("B","NA","A"))                                                                         #tweede Yas
   
-  locs<-NULL                                #loop om de points te bepalen net als hierboven
+  locs<-NULL                                #loop om de points van de yass2 te bepalen net als hierboven
   for(x in 1:nchr){
     locs <- c(locs,distances[which(chr==x)] + (getCD(x-1,gapsize,distances,chr)))
-      points(x=distances[which(chr==x)] + (getCSD(x-1,gapsize,distances,chr)),y=yass2[which(chr==x)],t="p",pch=16,col="purple",lwd=3)
+      points(x=distances[which(chr==x)] + (getCD(x-1,gapsize,distances,chr)),y=yass2[which(chr==x)],t="p",pch=16,col="purple",lwd=3)
    }
   
   }
   axis(1,locs,labels=names(Morgan[1,]))     #de x-as notatie
 }
-#vb.    plotInne(Morgan,chromos,yass1,sign(yass2),cuttoff=3)
+#vb.    plotInne(Morgan,chromos,First_line,yass2=sign(yass2),cuttoff=3)
