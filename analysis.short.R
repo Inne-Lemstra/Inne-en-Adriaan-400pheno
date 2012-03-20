@@ -1,21 +1,21 @@
 ##copyright Adriaan van der Graaf/Inne Lemstra 2012
 
-#je hoort nu in de folder onder Inne-en-Adriaan-400pheno te zitten
+#je hoort nu in de folder onder 400pheno te zitten
 
-source("Inne-en-Adriaan-400pheno/R/find.peaks.R")
-source("Inne-en-Adriaan-400pheno/R/effect.matrix.R")
-source("Inne-en-Adriaan-400pheno/R/t.test.R")
-source("Inne-en-Adriaan-400pheno/R/trait.marker.list.R")
-source("Inne-en-Adriaan-400pheno/R/anova.mat.R")
-source("Inne-en-Adriaan-400pheno/R/T en A matrix.r")
-source("Inne-en-Adriaan-400pheno/R/chr_finder.r")
+source("400pheno/R/find.peaks.R")
+source("400pheno/R/effect.matrix.R")
+source("400pheno/R/t.test.R")
+source("400pheno/R/trait.marker.list.R")
+source("400pheno/R/anova.mat.R")
+source("400pheno/R/T en A matrix.r")
+source("400pheno/R/chr_finder.r")
 #voor de multiple anova
-source("Inne-en-Adriaan-400pheno/R/Grep.term.col.R") #functies laden
-source("Inne-en-Adriaan-400pheno/R/M.matcher.R")
+source("400pheno/R/Grep.term.col.R") #functies laden
+source("400pheno/R/M.matcher.R")
 #voor het mergen van de properties.
-source("Inne-en-Adriaan-400pheno/R/properties.merge.R")
+source("400pheno/R/properties.merge.R")
 #voor het maken van de plotjes van de multiple Anova
-source("Inne-en-Adriaan-400pheno/R/potje.plotje.r")
+source("400pheno/R/potje.plotje.r")
 
 #data laden
 data <- read.csv("BayShatraitsAll.csv",sep=";")
@@ -234,11 +234,12 @@ TAAmerge[isNA.coe, 6] <- as.vector(unlist(tempvec11))
 
 
 #plotten van Pfac.
-setwd("C:/Users/Adriaan/400pheno/Inne-en-Adriaan-400pheno/images")
+chromos<-data[1,405:ncol(data)]
+Morgan<-data[2,405:ncol(data)]
+setwd("C:/github/400pheno/images")
 for (i in 1:length(Pfac.uncut)){
   png(filename=paste("Trait ",names(Pfac.uncut)[i],".png"),bg="white",height=1000, width=1000)
-  plotInne(Morgan, chromos, as.numeric(Pfac.uncut[[i]]), cuttoff=3,Title=NULL) #de mooie functie van inne gebruiken en de rest is opmaak.
-  title(main=paste("trait ",names(Pfac.uncut)[i]))
+  plotInne(Morgan, chromos, as.numeric(Pfac.uncut[[i]]), cuttoff=3,Title=paste("trait ",names(Pfac.uncut)[i]),Grote_assen=1) #de mooie functie van inne gebruiken en de rest is opmaak.
   legend("topright", c("chromosome 1","chromosome 2","chromosome 3","chromosome 4","chromosome 5"),lty=rep(1,5),lwd=rep(3,5), col=1:5)
   dev.off()
 }

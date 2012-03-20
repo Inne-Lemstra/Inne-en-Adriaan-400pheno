@@ -1,10 +1,8 @@
 #(c)Inne
 #date created:8 maart
 
-#een plotje
-chromos<-data[1,405:ncol(data)]
-Morgan<-data[2,405:ncol(data)]
-#plot grote
+
+
 
 #Bepaalt de volgorde van de Xas (is alleen nodig als je ook de Y.maker gaat gebruiken)
 X.maker<- function(NameFile,aantalchr){
@@ -18,7 +16,7 @@ for(x in 1:aantalchr){
   xass
   }
 
-xass<-X.maker(chromos,5) 
+#vb.    xass<-X.maker(chromos,5) 
 #nu de points invullen
 
 #Haalt de points uit een matrix (met markers en waarden) en zet deze in volgorde van de Xas
@@ -50,18 +48,18 @@ for(y in 1:length(X.as)){
 
 
 #centimorgans
-Morgan<-data[2,405:ncol(data)]
+#vb.Morgan<-data[2,405:ncol(data)]
 #zo moet ik dit doen, van morgan een lijst maken met centimorgans erin.(ten opzichte van elkaar).
 #dan in de axis(1, morgan, labels), en in de plot(c(1,de max Morgan),c(y-as)
 #de X.maker kan hiervoor omgeschreven worden
 
 
 #2 axis
-yass1<-Y.maker(CombiMatrix,2,3:4,xass,mean)
-yass2<-Y.maker(CombiMatrix,2,5,xass,mean)
+#vb.      yass1<-Y.maker(CombiMatrix,2,3:4,xass,mean)
+#vb.      yass2<-Y.maker(CombiMatrix,2,5,xass,mean)
 
 
-plotInne <- function(Morgan, chromos, yass1, yass2=NULL, gapsize=25,type='l',cuttoff=NULL,Title="Summarized QTL plot",Title_Y.as1="value of significant QTL",Title_Y.as2=""){
+plotInne <- function(Morgan, chromos, yass1, yass2=NULL,cuttoff=NULL,Title="Summarized QTL plot",Title_Y.as1="value of significant QTL",Title_Y.as2="",Grote_assen=0.6,gapsize=25,type='l'){
 if(missing(Morgan)) stop(cat("I am going to stop calling you a white man and I'm going to ask you to stop calling me a black man.","\n", "Morgan afstanden missen","\t"))
 if(missing(chromos)) stop("lijst met markers gekoppeld aan op welk chromosoom ze liggen mist")
 
@@ -81,7 +79,7 @@ getCD <- function(which.chr=1, gapsize = 25,distances,chr){
 }
 #hier worden plot parameters meegegeven
   op <- par(las = 2)                        #las is loodrechte x-aslabel notatie
-  op <- par(cex.axis = 1)                   #De grootte van de labels
+  op <- par(cex.axis = Grote_assen)                   #De grootte van de labels
   distances <- as.numeric(t(Morgan[1,]))    #is de afstand van het totaal
   chr <- as.numeric(unlist(t(chromos)))     #Chr is welk chromosoom en de lengte ervan
   nchr <-length(unique(chr))                #nchr is de lenget van alle chromosomen tot dusver
@@ -103,10 +101,10 @@ getCD <- function(which.chr=1, gapsize = 25,distances,chr){
   locs<-NULL                                #loop om de points te bepalen net als hierboven
   for(x in 1:nchr){
     locs <- c(locs,distances[which(chr==x)] + (getCD(x-1,gapsize,distances,chr)))
-      points(x=distances[which(chr==x)] + (getCD(x-1,gapsize,distances,chr)),y=yass2[which(chr==x)],t="p",pch=16,col="purple",lwd=3)
+      points(x=distances[which(chr==x)] + (getCSD(x-1,gapsize,distances,chr)),y=yass2[which(chr==x)],t="p",pch=16,col="purple",lwd=3)
    }
   
   }
   axis(1,locs,labels=names(Morgan[1,]))     #de x-as notatie
 }
-plotInne(Morgan,chromos,yass1,sign(yass2),cuttoff=3)
+#vb.    plotInne(Morgan,chromos,yass1,sign(yass2),cuttoff=3)
