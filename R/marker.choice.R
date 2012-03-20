@@ -14,7 +14,7 @@ names(choice) <- properties #voor het nageslacht om te kijken welke lijst nou pr
   names(choice[[prop]]) <- markervec #hier de markers aan de lijsten verbinden
 	traitproperty <- traitmat[grep(properties[prop], traitmat[,1]),] #hier haal je de property uit de traitnaam.
 	  for(i in 1:length(markervec)){
-		AorB <- sum(sign(as.numeric(as.character(traitproperty[which(markervec[i] == traitproperty[,2]),AdivBcol])))) #hier wordt bekeken welke markers er in de al gefilterde traits ziten, en gekeken of ze groter of kleiner zijn dan nul (sign) en daarna gesummd om te kijken of het totaal AA of BB hoort te zijn.
+		AorBl <- sum(sign(as.numeric(as.character(traitproperty[which(markervec[i] == traitproperty[,2]),AdivBcol])))) #hier wordt bekeken welke markers er in de al gefilterde traits ziten, en gekeken of ze groter of kleiner zijn dan nul (sign) en daarna gesummd om te kijken of het totaal AA of BB hoort te zijn.
 		if(AorB > 0) {choice[[prop]][i] <- "AA"} #als groter dan 0, dan is het AA
 		if(AorB < 0) {choice[[prop]][i] <- "BB"} #als kleiner dan 0 dan is het BB
 		if(AorB == 0) {choice[[prop]][i] <- "-"} #als 0, dan weten we het niet
@@ -22,3 +22,13 @@ names(choice) <- properties #voor het nageslacht om te kijken welke lijst nou pr
   }
   return(choice) #hier de uitgifte van de lijst.
 }
+
+#voor als je alle sequences los naast elkaar wilt
+
+T2  #lijst met traits
+Sequence<- NULL
+T3<- marker.choice(TAAmerge,T2,colnames(genotypes))
+for(x in 1:length(T2)){
+  Sequence<- cbind(Sequence,T3[[x]])
+  }
+  
