@@ -58,9 +58,6 @@ for(y in 1:length(X.as)){
 #vb.      First_line<-Y.maker(CombiMatrix,2,3:4,xass,mean)
 #vb.      yass2<-Y.maker(CombiMatrix,2,5,xass,mean)
 
-plotHarry <- fuction(Morgan,...){
-  plotInne(Morgan,...)
-}
 
 
 plotInne <- function(Morgan, chromos, First_line,Second_line, yass2,cuttoff,Title="Summarized QTL plot",Title_Y.as1="value of significant QTL",Title_Y.as2="",Grote_assen=0.6,gapsize=25,type='l'){

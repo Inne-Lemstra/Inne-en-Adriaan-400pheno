@@ -238,12 +238,11 @@ AminB_waarden<-sign(as.numeric(apply(effect.mat.min,2,mean)))
 chromos<-data[1,405:ncol(data)]
 Morgan<-data[2,405:ncol(data)]
 setwd("C:/github/400pheno/images")
-for (i in 1:length(Pfac.uncut)){
-  png(filename=paste("Trait ",names(Pfac.uncut)[i],".png"),bg="white",height=1000, width=1000)
-  plotInne(Morgan, chromos, First_line=T.test_raw, Second_line=Anova_raw,yass2=AminB_waarden,cuttoff=3,Title=paste("trait ",names(Pfac.uncut)[i]),Grote_assen=1) #de mooie functie van inne gebruiken en de rest is opmaak.
-  legend("topright", c("chromosome 1","chromosome 2","chromosome 3","chromosome 4","chromosome 5","A-B"),lty=rep(1,5),lwd=rep(3,5), col=c(1:5,"purple"))
+  png(filename=paste("Anova_vs_T.test",".png"),bg="white",height=1000, width=1000)
+  plotInne(Morgan, chromos, First_line=T.test_raw, Second_line=Anova_raw,yass2=AminB_waarden,cuttoff=3,Title="LOD T.test vs Anova",Grote_assen=1) #de mooie functie van inne gebruiken en de rest is opmaak.
+  legend("topright", c("T.test","Anova","A-B"),lty=1,lwd=3, col=c("green","red","purple"))
   dev.off()
-}
+
 
 #plotten van Pfac.
 chromos<-data[1,405:ncol(data)]
@@ -251,7 +250,7 @@ Morgan<-data[2,405:ncol(data)]
 setwd("C:/github/400pheno/images")
 for (i in 1:length(Pfac.uncut)){
   png(filename=paste("Trait ",names(Pfac.uncut)[i],".png"),bg="white",height=1000, width=1000)
-  plotInne(Morgan, chromos, as.numeric(Pfac.uncut[[i]]), cuttoff=3,Title=paste("trait ",names(Pfac.uncut)[i]),Grote_assen=1) #de mooie functie van inne gebruiken en de rest is opmaak.
-  legend("topright", c("chromosome 1","chromosome 2","chromosome 3","chromosome 4","chromosome 5"),lty=rep(1,5),lwd=rep(3,5), col=1:5)
+  plotInne(Morgan, chromos, as.numeric(Pfac.uncut[[i]]),yass2=sign(as.numeric(unlist(Efac[[i]]))), cuttoff=3,Title=paste("trait ",names(Pfac.uncut)[i]),Grote_assen=1) #de mooie functie van inne gebruiken en de rest is opmaak.
+  legend("topright", c("chromosome 1","chromosome 2","chromosome 3","chromosome 4","chromosome 5","A-B"),lty=rep(1,5),lwd=rep(3,5), col=c(1:5,"purple"))
   dev.off()
 }
