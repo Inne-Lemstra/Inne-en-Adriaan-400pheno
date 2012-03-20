@@ -2,6 +2,7 @@
 #date created:8 maart
 
 #een plotje
+data <- read.csv("BayShatraitsAll.csv",sep=";")
 chromos<-data[1,405:ncol(data)]
 Morgan<-data[2,405:ncol(data)]
 #plot grote
@@ -57,8 +58,8 @@ Morgan<-data[2,405:ncol(data)]
 
 
 #2 axis
-yass1<-Y.maker(CombiMatrix,2,3:4,xass,mean)
-yass2<-Y.maker(CombiMatrix,2,5,xass,mean)
+#yass1<-Y.maker(CombiMatrix,2,3:4,xass,mean)
+#yass2<-Y.maker(CombiMatrix,2,5,xass,mean)
 
 
 plotInne <- function(Morgan, chromos, yass1, yass2=NULL, gapsize=25,type='l',cuttoff=NULL,Title="Summarized QTL plot",Title_Y.as1="value of significant QTL",Title_Y.as2=""){
@@ -103,10 +104,10 @@ getCD <- function(which.chr=1, gapsize = 25,distances,chr){
   locs<-NULL                                #loop om de points te bepalen net als hierboven
   for(x in 1:nchr){
     locs <- c(locs,distances[which(chr==x)] + (getCD(x-1,gapsize,distances,chr)))
-      points(x=distances[which(chr==x)] + (getCD(x-1,gapsize,distances,chr)),y=yass2[which(chr==x)],t="p",pch=16,col="purple",lwd=3)
+      points(x=distances[which(chr==x)] + (getCSD(x-1,gapsize,distances,chr)),y=yass2[which(chr==x)],t="p",pch=16,col="purple",lwd=3)
    }
   
   }
   axis(1,locs,labels=names(Morgan[1,]))     #de x-as notatie
 }
-plotInne(Morgan,chromos,yass1,sign(yass2),cuttoff=3)
+#plotInne(Morgan,chromos,yass1,sign(yass2),cuttoff=3)
