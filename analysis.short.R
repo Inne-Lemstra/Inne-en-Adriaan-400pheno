@@ -18,6 +18,8 @@ source("400pheno/R/properties.merge.R")
 source("400pheno/R/potje.plotje.r")
 #voor het maken van de sequence
 source("400pheno/R/marker.choice.R")
+#voor het plotten van de sequence
+source("400pheno/R/plotSequence.r")
 
 #data laden
 data <- read.csv("BayShatraitsAll.csv",sep=";")
@@ -261,23 +263,21 @@ for (i in 1:length(Pfac.uncut)){
 #het vergelijken Gmax oogst A voor alle environments (Alleen eerset waarde genomen)
 lijst_traits<-c("Fresh.Gmax.A.ns", "AR.Gmax.A.ns", "AfterRipening.AR.Gmax.A.ns-Fresh.Gmax.A.ns", "NaCl-NS.AR.Gmax.A.ns-AR.100NaCl.Gmax.A.ns", "Mannitol-NS.AR.Gmax.S.ns-AR.Mann.Gmax.S.ns", "ABA-NS.AR.Gmax.D.ns-AR.0.5µmABA.Gmax.D.ns", "ColdFresh-NS.Fresh.Gmax.D.ns-Fresh.10C.Gmax.D.ns", "HeatFresh-NS.Fresh.Gmax.D.ns-Fresh.25C.Gmax.D.ns","ColdAR-NS.AR.Gmax.D.ns-AR.10C.Gmax.D.ns", "HeatAR-NS.AR.Gmax.avg.ns-AR.30C.Gmax.avg.ns", "CD-NS.AR.Gmax.D.ns-AR.with CD.Gmax.D.ns")
 lijst_traits<-TAAmerge[grep("ABA",TAAmerge[,1]),1]
-uitklomst_marker.choice<-Sequences(TAAmerge,lijst_traits,colnames(genotypes))
+uitkomst_marker.choice<-Sequences(TAAmerge,lijst_traits,colnames(genotypes))
 
+plotSequence(uitkomst_marker.choice)
+#het plotten van de MAnova properties
+setwd("C:/github/400pheno/images")
+for (i in 1:length(Pfac.uncut)){
+  png(filename=paste("Sequence ",environments[i],".png"),bg="white",height=1000, width=1000)
+  plotSequence(marker.choice(MatrixAnova,properties[i],colnames(genotypes),5)) #de mooie functie van inne gebruiken en de rest is opmaak.
+  dev.off()
+}
 
-plotSequence<-function(uitklomst_marker.choice){
-SEQ<-NULL
-SEQ<-uitklomst_marker.choice
-
-SEQ[which(SEQ=="AA")]<-1
-SEQ[which(SEQ=="BB")]<-2
-SEQ[which(SEQ=="-")]<-3
-
-op<-par(las=2)
-op<-par(cex=0.4)
-op<-par(mai=c(2,0.5,0,0))
-image(1:ncol(SEQ),1:nrow(SEQ), t(apply(SEQ,2,as.numeric)),col=c("green","red","white"),xlab="Traits", ylab="Markers",xaxt="n",yaxt="n")
-axis(1,1:ncol(SEQ),1:nrow(SEQ), labels=colnames(SEQ))
-axis(2,1:nrow(SEQ), labels=rownames(SEQ))
-legend("bottom", c("AA","BB"),lty=1, lwd=3, col=c("red","green"))
-box()
+#het plotten van alle trait sequences
+setwd("C:/github/400pheno/images")
+for (i in 1:length(environments)){
+  png(filename=paste("Raw","Sequence ",environments[i],".png"),bg="white",height=1000, width=1000)
+  plotSequence(Sequences(TAAmerge,TAAmerge[grep(environments[i],TAAmerge[,1]),1],colnames(genotypes))) #de mooie functie van inne gebruiken en de rest is opmaak.
+  dev.off()
 }
