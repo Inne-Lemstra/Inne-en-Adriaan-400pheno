@@ -1,10 +1,29 @@
 %de abstract
-\documentclass{article}
+\documentclass[10pt]{article}
 \author{Adriaan van der Graaf, Inne Lemstra}
+\title{400 Pheno}
+\date{Maart 2012}
 \begin{document}
+  \maketitle
 Arabidopsis thaliana (zandraket) is een kleine snelgroeiende plant die veel gebruikt wordt in het biologisch onderzoek.
 In dit onderzoek wordt er gebruik gemaakt van een dataset met 165 genetisch identieke groepen die gedefineerd zijn op 69 markers.
 er werden batches van groepen gemaakt. en er werd op 5 parameters genotypische parameters bekeken hoe het organisme zich gedroeg.
-Deze parameters werden gemeten op 8 verschillende omgevingen.
+Deze parameters werden gemeten op 8 verschillende omgevingen.\\
+
+het bestand dat we hebben gebruikt is de BayShatraitsAll. 
+Een ; gesepareerde tabel met de eerste 404 kolommen phenotypische data en de laatste 69 kolommen de genotypische data.
+Waar de eerste twee rijen van phenotypen niks bevatten en de genotypen de chromosomen en de morgans.
+Er werd een t-test gemaakt per trait en per marker (matrix van pheontypes bij genotypes).
+Deze matrix werd uitgezet over de markers en er werd een peakfinding algoritme op losgelaten. 
+De pieken die boven de cutoff van 3 zitten (P waarden maal -log 10, dus 3 is 0,001 kans dat de trait in de normale verdeling zou zitten)
+werden uit de verschillende 
+Daar wordt een matrix van gemaakt op de eerste kolom een phenotype en op de tweede een genotype met de -10log P-waarden en de  verhoudingswaarden AA/BB en AA-BB.
+deze zelfde methode wordt gebruikt voor een anova per genotype. 
+Hiervoor zijn verschillende functies geschreven om een zo duidelijk mogelijk code te schrijven(voor zover dat mogelijk is met nieuwe programmeurs).
+Daarnaast ook om functies die vaker gebruikt worden niet opnieuw te hoeven bedenken.//
+
+
+
+
 
 \end{document}
