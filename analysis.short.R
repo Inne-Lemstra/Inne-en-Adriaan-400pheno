@@ -2,20 +2,20 @@
 
 #je hoort nu in de folder onder 400pheno te zitten
 
-source("400pheno/R/find.peaks.R")
-source("400pheno/R/effect.matrix.R")
-source("400pheno/R/t.test.R")
-source("400pheno/R/trait.marker.list.R")
-source("400pheno/R/anova.mat.R")
-source("400pheno/R/T en A matrix.r")
-source("400pheno/R/chr_finder.r")
+source("Inne-en-Adriaan-400pheno/R/find.peaks.R")
+source("Inne-en-Adriaan-400pheno/R/effect.matrix.R")
+source("Inne-en-Adriaan-400pheno/R/t.test.R")
+source("Inne-en-Adriaan-400pheno/R/trait.marker.list.R")
+source("Inne-en-Adriaan-400pheno/R/anova.mat.R")
+source("Inne-en-Adriaan-400pheno/R/T en A matrix.r")
+source("Inne-en-Adriaan-400pheno/R/chr_finder.r")
 #voor de multiple anova
-source("400pheno/R/Grep.term.col.R") #functies laden
-source("400pheno/R/M.matcher.R")
+source("Inne-en-Adriaan-400pheno/R/Grep.term.col.R") #functies laden
+source("Inne-en-Adriaan-400pheno/R/M.matcher.R")
 #voor het mergen van de properties.
-source("400pheno/R/properties.merge.R")
+source("Inne-en-Adriaan-400pheno/R/properties.merge.R")
 #voor het maken van de plotjes van de multiple Anova
-source("400pheno/R/potje.plotje.r")
+source("Inne-en-Adriaan-400pheno/R/potje.plotje.r")
 
 #data laden
 data <- read.csv("BayShatraitsAll.csv",sep=";")
