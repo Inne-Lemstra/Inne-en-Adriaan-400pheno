@@ -259,6 +259,25 @@ for (i in 1:length(Pfac.uncut)){
 
 #Bepalen van Sequence
 #het vergelijken Gmax oogst A voor alle environments (Alleen eerset waarde genomen)
-lijst_traits<-c("Fresh.Gmax.A.ns", "AR.Gmax.A.ns", "AfterRipening.AR.Gmax.A.ns-Fresh.Gmax.A.ns", "NaCl-NS.AR.Gmax.A.ns-AR.100NaCl.Gmax.A.ns", "Mannitol-NS.AR.Gmax.S.ns-AR.Mann.Gmax.S.ns", "ABA-NS.AR.Gmax.D.ns-AR.0.5µmABA.Gmax.D.ns", "ColdFresh-NS.Fresh.Gmax.D.ns-Fresh.10C.Gmax.D.ns", "HeatFresh-NS.Fresh.Gmax.D.ns-Fresh.25C.Gmax.D.ns","ColdAR-NS.AR.Gmax.D.ns-AR.10C.Gmax.D.ns", "HeatAR-NS.AR.Gmax.avg.ns-AR.30C.Gmax.avg.ns", "CD-NS.AR.Gmax.D.ns-AR.with CD.Gmax.D.ns") 
-Sequences(TAAmerge,lijst_traits,colnames(genotypes))
+lijst_traits<-c("Fresh.Gmax.A.ns", "AR.Gmax.A.ns", "AfterRipening.AR.Gmax.A.ns-Fresh.Gmax.A.ns", "NaCl-NS.AR.Gmax.A.ns-AR.100NaCl.Gmax.A.ns", "Mannitol-NS.AR.Gmax.S.ns-AR.Mann.Gmax.S.ns", "ABA-NS.AR.Gmax.D.ns-AR.0.5µmABA.Gmax.D.ns", "ColdFresh-NS.Fresh.Gmax.D.ns-Fresh.10C.Gmax.D.ns", "HeatFresh-NS.Fresh.Gmax.D.ns-Fresh.25C.Gmax.D.ns","ColdAR-NS.AR.Gmax.D.ns-AR.10C.Gmax.D.ns", "HeatAR-NS.AR.Gmax.avg.ns-AR.30C.Gmax.avg.ns", "CD-NS.AR.Gmax.D.ns-AR.with CD.Gmax.D.ns")
+lijst_traits<-TAAmerge[grep("ABA",TAAmerge[,1]),1]
+uitklomst_marker.choice<-Sequences(TAAmerge,lijst_traits,colnames(genotypes))
 
+
+plotSequence<-function(uitklomst_marker.choice){
+SEQ<-NULL
+SEQ<-uitklomst_marker.choice
+
+SEQ[which(SEQ=="AA")]<-1
+SEQ[which(SEQ=="BB")]<-2
+SEQ[which(SEQ=="-")]<-3
+
+op<-par(las=2)
+op<-par(cex=0.4)
+op<-par(mai=c(2,0.5,0,0))
+image(1:ncol(SEQ),1:nrow(SEQ), t(apply(SEQ,2,as.numeric)),col=c("green","red","white"),xlab="Traits", ylab="Markers",xaxt="n",yaxt="n")
+axis(1,1:ncol(SEQ),1:nrow(SEQ), labels=colnames(SEQ))
+axis(2,1:nrow(SEQ), labels=rownames(SEQ))
+legend("bottom", c("AA","BB"),lty=1, lwd=3, col=c("red","green"))
+box()
+}

@@ -34,5 +34,6 @@ T3<- marker.choice(traitmat,properties,markervec) #hier zitten alle sequeces
 for(x in 1:length(properties)){
   Sequence<- cbind(Sequence,T3[[x]])
   }
+  colnames(Sequence)<-properties
   Sequence
 }
