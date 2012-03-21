@@ -14,7 +14,7 @@ names(choice) <- properties #voor het nageslacht om te kijken welke lijst nou pr
   names(choice[[prop]]) <- markervec #hier de markers aan de lijsten verbinden
 	traitproperty <- traitmat[grep(properties[prop], traitmat[,1]),] #hier haal je de property uit de traitnaam.
 	  for(i in 1:length(markervec)){
-		AorBl <- sum(sign(as.numeric(as.character(traitproperty[which(markervec[i] == traitproperty[,2]),AdivBcol])))) #hier wordt bekeken welke markers er in de al gefilterde traits ziten, en gekeken of ze groter of kleiner zijn dan nul (sign) en daarna gesummd om te kijken of het totaal AA of BB hoort te zijn.
+		AorB <- sum(sign(as.numeric(as.character(traitproperty[which(markervec[i] == traitproperty[,2]),AdivBcol])))) #hier wordt bekeken welke markers er in de al gefilterde traits ziten, en gekeken of ze groter of kleiner zijn dan nul (sign) en daarna gesummd om te kijken of het totaal AA of BB hoort te zijn.
 		if(AorB > 0) {choice[[prop]][i] <- "AA"} #als groter dan 0, dan is het AA
 		if(AorB < 0) {choice[[prop]][i] <- "BB"} #als kleiner dan 0 dan is het BB
 		if(AorB == 0) {choice[[prop]][i] <- "-"} #als 0, dan weten we het niet
@@ -30,7 +30,7 @@ if(missing(properties))stop("There needs to be a vector with traits to be sequen
 if(missing(traitmat)) stop("there needs to be a Matrix from were te A-B values are taken")
  #lijst met traits
 Sequence<- NULL
-T3<- marker.choice(Matrix,properties,markervec) #hier zitten alle sequeces
+T3<- marker.choice(traitmat,properties,markervec) #hier zitten alle sequeces
 for(x in 1:length(properties)){
   Sequence<- cbind(Sequence,T3[[x]])
   }
