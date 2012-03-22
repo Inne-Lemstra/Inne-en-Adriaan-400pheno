@@ -252,7 +252,7 @@ setwd("C:/github/400pheno/images")
 #plotten van Pfac.
 chromos<-data[1,405:ncol(data)]
 Morgan<-data[2,405:ncol(data)]
-setwd("C:/github/400pheno/images")
+setwd("C:/Users/Adriaan/400pheno/Inne-en-Adriaan-400pheno/images")
 for (i in 1:length(Pfac.uncut)){
   png(filename=paste("Trait ",names(Pfac.uncut)[i],".png"),bg="white",height=1000, width=1000)
   plotInne(Morgan, chromos, as.numeric(Pfac.uncut[[i]]),Second_line=NULL,yass2=sign(as.numeric(unlist(Efac[[i]]))), cuttoff=3,Title=paste("trait ",names(Pfac.uncut)[i]),Grote_assen=1) #de mooie functie van inne gebruiken en de rest is opmaak.
@@ -268,15 +268,15 @@ uitkomst_marker.choice<-Sequences(TAAmerge,lijst_traits,colnames(genotypes))
 
 plotSequence(uitkomst_marker.choice)
 #het plotten van de MAnova properties
-setwd("C:/github/400pheno/images")
-for (i in 1:length(Pfac.uncut)){
-  png(filename=paste("Sequence ",environments[i],".png"),bg="white",height=1000, width=1000)
-  plotSequence(marker.choice(MatrixAnova,properties[i],colnames(genotypes),5)) #de mooie functie van inne gebruiken en de rest is opmaak.
+setwd("C:/Users/Adriaan/400pheno/Inne-en-Adriaan-400pheno/images")
+
+  png(filename=paste("Sequence ","senvironments",".png"),bg="white",height=1000, width=1000)
+  plotSequence(marker.choice(MatrixAnova,properties,colnames(genotypes),5),cex=1) #de mooie functie van inne gebruiken en de rest is opmaak.
   dev.off()
-}
+
 
 #het plotten van alle trait sequences
-setwd("C:/github/400pheno/images")
+setwd("C:/Users/Adriaan/400pheno/Inne-en-Adriaan-400pheno/images")
 for (i in 1:length(environments)){
   png(filename=paste("Raw","Sequence ",environments[i],".png"),bg="white",height=1000, width=1000)
   plotSequence(Sequences(TAAmerge,TAAmerge[grep(environments[i],TAAmerge[,1]),1],colnames(genotypes))) #de mooie functie van inne gebruiken en de rest is opmaak.
