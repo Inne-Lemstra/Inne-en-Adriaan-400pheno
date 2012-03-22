@@ -2,6 +2,8 @@
 # Created: 01-03-12
 # (C) created by Inne Lemstra
 
+#
+
 t.test.mat<- function(MatrixTrait, MatrixGeno, genocode = c("AA","BB"), conf.level = 0.95){
   if(missing(MatrixTrait)) stop("No traits")
   if(missing(MatrixGeno)) stop("No genotypes")
@@ -11,15 +13,15 @@ t.test.mat<- function(MatrixTrait, MatrixGeno, genocode = c("AA","BB"), conf.lev
     for(b in 1:ncol(MatrixTrait)){
       genoA <- which(MatrixGeno[,rmark]==genocode[1])   #AA genotype selecteren uit col marker
       genoB <- which(MatrixGeno[,rmark]==genocode[2])   #BB genotype selecteren uit col marker
-      coru <- t.test(MatrixTrait[genoA,b],MatrixTrait[genoB,b], conf.level = conf.level, use="pair")$p.value
-      vectu<-c(vectu,coru)
+      coru <- t.test(MatrixTrait[genoA,b],MatrixTrait[genoB,b], conf.level = conf.level, use="pair")$p.value    #berekent de P-values
+      vectu<-c(vectu,coru)                                                                                      #Stopt deze in een vector
     }
-    matru<- cbind(matru,vectu)
+    matru<- cbind(matru,vectu)                          #Bind de vectoren bij elkaar tot een matrix
   }
 
-  colnames(matru)<- colnames(MatrixGeno)
+  colnames(matru)<- colnames(MatrixGeno)                #col en rownames aan passen
   rownames(matru) <- colnames(MatrixTrait)
-  return(-log10(matru)) #levert de min 10 log van de p waarde.
+  return(-log10(matru))                                 #levert de min 10 log van de p waarde. (beter mee te werken)
 }
 
 #om te gebruiken store t.test.mat in een variabele

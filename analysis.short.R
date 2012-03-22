@@ -182,7 +182,6 @@ for (i in 1:length(listpropvec)){
   colnames(Pfac[[i]]) <- c("Batch","Environment","Genotype","Residuals")
   rownames(Efac[[i]]) <- colnames(genotypes)
   Pfac.uncut[[i]] <- Pfac[[i]][,3]
-  Pfac[[i]] <-Pfac[[i]][-which(Pfac[[i]][,3] < 3),3] #hier alle waarden die kleiner zijn dan 3 eruit halen
 
 }
 names(Pfac) <- properties
@@ -196,16 +195,17 @@ MultiAnovatrait <- NULL
 MultiAnovaLOD <- NULL
 MultiAnovaCoe <- NULL
 
-for (i in 1:length(Pfac)){
-  MultiAnovatrait <- c(MultiAnovatrait, rep(names(Pfac)[i],length(Pfac[[i]])))
-    for (n in 1:length(Pfac[[i]])){
-      MultiAnovamarker <- unlist(c(MultiAnovamarker, names(Pfac[[i]])[n]))
-	  MultiAnovaLOD <- as.vector(unlist(c(MultiAnovaLOD, Pfac[[i]][n])))
+for (i in 1:length(Pfac.uncut)){
+  MultiAnovatrait <- c(MultiAnovatrait, rep(names(Pfac)[i],length(Pfac.uncut[[i]])))
+    for (n in 1:length(Pfac.uncut[[i]])){
+      MultiAnovamarker <- unlist(c(MultiAnovamarker, names(Pfac.uncut[[i]])[n]))
+	  MultiAnovaLOD <- as.vector(unlist(c(MultiAnovaLOD, Pfac.uncut[[i]][n])))
 	  MultiAnovaCoe <- unlist(c(MultiAnovaCoe, Efac[[i]][n]))
     }
 }  
 
 MultiAnova <- cbind(MultiAnovatrait,MultiAnovamarker, MultiAnovaLOD, MultiAnovaCoe)
+MultiAnova <- MultiAnova[which(MultiAnova[,3] >= 3),]
 ##############
 #hier de properties van de multiple anova mergen.
 ######
@@ -270,6 +270,7 @@ uitkomst_marker.choice<-Sequences(TAAmerge,lijst_traits,colnames(genotypes))
 
 plotSequence(uitkomst_marker.choice)
 #het plotten van de MAnova properties
+
 setwd("C:/github/400pheno/images")
   png(filename=paste("Sequence ","environments","_",".png"),bg="white",height=1000, width=1000)
   plotSequence(marker.choice(MatrixAnova,properties,colnames(genotypes),5),cex=1,title=paste("Sequence ","environments")) #de mooie functie van inne gebruiken en de rest is opmaak.
@@ -293,7 +294,7 @@ setwd("C:/github/400pheno/images")
   dev.off()
 
 
-#List_all_tests<-lapply(List_all_tests,sort)
+
 
 #het plotten van alle trait sequences
 setwd("C:/github/400pheno/images")

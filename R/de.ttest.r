@@ -2,6 +2,8 @@
 # created: 01-03-12
 #(c) created by Inne Lemstra
 
+#Nog een t.test maar nu gebaseert op de AA en BB.
+
 t.test.mat<- function(MatrixTrait, MatrixGeno, geno1,geno2, conf.level){
   if(length(geno1) != 1) stop("marker definition 1 needs to be of length 1")
   if(length(geno2) != 1) stop("marker definition 2 needs to be of length 1")

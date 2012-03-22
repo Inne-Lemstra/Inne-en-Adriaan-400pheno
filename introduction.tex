@@ -1,44 +1,58 @@
 %de abstract
-\documentclass[10pt,a4paper, twocollumn]{article}
+\documentclass[12pt,a4paper, twocolumn]{article}
+\voffset = -70pt
+\textheight = 662pt
 \author{Adriaan van der Graaf, Inne Lemstra}
 \title{400 Pheno}
 \date{Maart 2012}
 \begin{document}
-  \maketitle
-\section  {intro}
+\maketitle
+
+\subsubsection*{Introductie}
 Arabidopsis thaliana (zandraket) is een kleine snelgroeiende plant die veel gebruikt wordt in het biologisch onderzoek.
 In dit onderzoek wordt er gebruik gemaakt van een dataset met 165 genetisch identieke groepen die gedefineerd zijn op 69 markers.
-er werden batches van groepen gemaakt. en er werd op 5 parameters genotypische parameters bekeken hoe het organisme zich gedroeg.
-Deze parameters werden gemeten op 8 verschillende milieus.\\
-
-\section{het uitrekenen}
+De markers maken onderscheid tussen paternal en maternal. Resp. AA en BB.
+Er werden batches van groepen gemaakt en er werd op 5 klassieke genotypische eigenschappen bekeken hoe de zaden van het organisme zich gedroegen.
+Deze parameters werden gemeten op 8 verschillende milieus en op 5 verschillende groepen gemeten.
+Uiteindelijk waren er 404 gedefinieerde 'traits'\\
+\subsubsection*{Methode}
 Het bestand dat we hebben gebruikt is de BayShatraitsAll. 
-Een ; gesepareerde tabel met de eerste 404 kolommen phenotypische data en de laatste 69 kolommen de genotypische data.
+Een ';' gesepareerde tabel met de eerste 404 kolommen phenotypische data en de laatste 69 kolommen de genotypische data.
 Waar de eerste twee rijen van phenotypen niks bevatten en de genotypen de chromosomen en de morgans.
 Er werd een t-test gemaakt per trait en per marker (matrix van pheontypes bij genotypes).
-Deze matrix werd uitgezet over de markers en er werd een peakfinding algoritme op losgelaten. 
-De pieken die boven de cutoff van 3 zitten (P waarden maal -log 10, dus 3 is 0,001 kans dat de trait in de normale verdeling zou zitten)
+Deze matrix werd uitgezet over de markers en er werd een peakfinding algoritme op losgelaten. (plaatje
+De pieken die boven de logarithm of odds (LOD) 3 zitten (P waarden maal -log 10 , dus 3 is 0,001 kans dat de trait in de normale verdeling zou zitten)
 Daar wordt een matrix van gemaakt op de eerste kolom een phenotype en op de tweede een genotype met de -10log P-waarden en de  verhoudingswaarden AA/BB en AA-BB.
 deze zelfde methode wordt gebruikt voor een anova per genotype. 
 Hiervoor zijn verschillende functies geschreven om een zo duidelijk mogelijk code te schrijven(voor zover dat mogelijk is met nieuwe programmeurs).
 Daarnaast ook om functies die vaker gebruikt worden niet opnieuw te hoeven bedenken.
 
-Het maken van de multiple Anova had wat meer voeten in de aarde omdat we graag de verschillende tussen de batches en milieus eruit wilden halen.
-de verschillende properties,batches en milieus zijn in de volgende tabel te vinden.
+Het maken van de multiple Anova had wat meer voeten in de aarde omdat we graag de verschillen tussen de batches en milieus eruit wilden halen.
+Hiervoor is een linear model opgesteld met waarbij eerst het verschillende batch-effect eruit werd gefilterd en daarna de mileu-effecten.
+Zo krijgen we een afgewogen oordeel over de verschillende eigenschappen.
+de verschillende eigenschappen,batches en milieus zijn in de volgende tabel te vinden.\\
 
-\begin{tabular} {l | c | r}
-\hline
-Properties & Batches & Milieus\\ 
-\hline \hline
+\begin{tabular} {l  l  l}
+\multicolumn{3}{c}{Phenotypische metingen} \\
+Eigenschappen & Batches & Milieus\\ 
+\hline 
 Gmax & A & AfterRipening\\
 U8416 & B & NaCL\\
 T10 & C & Mannitol\\
 T50 & D & Cold\\
 AUC & ABC & Heat\\
-- & - & ABA\\
-- & - & Fresh\\
- -& - & Stratification\\
- \hline
-\end{tabular}
+ &  & ABA\\
+ &  & Fresh\\
+ &  & Stratification\\
+\end{tabular}\\
+\subsubsection*{Resultaten}
+Na het uitwerken van de multiple anova en het afkappen op een LOD van 3 of hoger zijn er op 3 verschillende manieren markers bekend. 
+Op de t.test manier, de Anova per trait manier en de multiple anova manier. 
+Deze matrices geven aan op welke trait ze slaan en welke marker significant is voor de specifieke trait.
+Omdat we op dat moment alleen nog LOD waarden hebben, willen we ook graag weten welke waarden groter zijn dan de andere. 
+Dit doen we door de gemiddelde waarden BB (per trait) af te trekken van de waarden AA (AA-BB).
+Als deze waarde positief is, dan zal de AA variant van de marker een groter effect hebben op de trait. 
+Als de AA-BB negatief is, dan zal de BB variant een groter effect hebben op de trait. \\
+Met deze waarden kunnen we nu 
 
 \end{document}

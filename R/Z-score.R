@@ -2,7 +2,7 @@
 # Z-score function
 
 
-# 
+
 #input een vector 
 z.vector     <- function(a){
   if(!is.vector(a)) stop("input has to be a vector for Z")

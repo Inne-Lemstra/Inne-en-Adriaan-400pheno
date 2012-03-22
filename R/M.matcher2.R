@@ -2,6 +2,7 @@
 #date created: 8 maart
 
 #een functie die een collum in een matrix met een andere kan vergelijke en er een nieuwe matrix van maakt
+#beschrijving zie M.matcher.r
 
 matrixA<-grep.term.col(phenotypes,"ABA")
 Refmatrix<-phenotypes
