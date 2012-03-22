@@ -22,3 +22,18 @@ names(choice) <- properties #voor het nageslacht om te kijken welke lijst nou pr
   }
   return(choice) #hier de uitgifte van de lijst.
 }
+
+#voor als je alle sequences los naast elkaar wilt
+
+Sequences<-function(traitmat,properties,markervec){
+if(missing(properties))stop("There needs to be a vector with traits to be sequenced")
+if(missing(traitmat)) stop("there needs to be a Matrix from were te A-B values are taken")
+ #lijst met traits
+Sequence<- NULL
+T3<- marker.choice(traitmat,properties,markervec) #hier zitten alle sequeces
+for(x in 1:length(properties)){
+  Sequence<- cbind(Sequence,T3[[x]])
+  }
+  colnames(Sequence)<-properties
+  Sequence
+}

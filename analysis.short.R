@@ -16,6 +16,11 @@ source("Inne-en-Adriaan-400pheno/R/M.matcher.R")
 source("Inne-en-Adriaan-400pheno/R/properties.merge.R")
 #voor het maken van de plotjes van de multiple Anova
 source("Inne-en-Adriaan-400pheno/R/potje.plotje.r")
+#voor het maken van de sequence
+source("Inne-en-Adriaan-400pheno/R/marker.choice.R")
+#voor het plotten van de sequence
+source("Inne-en-Adriaan-400pheno/R/plotSequence.r")
+
 
 #data laden
 data <- read.csv("BayShatraitsAll.csv",sep=";")
@@ -238,12 +243,11 @@ AminB_waarden<-sign(as.numeric(apply(effect.mat.min,2,mean)))
 chromos<-data[1,405:ncol(data)]
 Morgan<-data[2,405:ncol(data)]
 setwd("C:/github/400pheno/images")
-for (i in 1:length(Pfac.uncut)){
-  png(filename=paste("Trait ",names(Pfac.uncut)[i],".png"),bg="white",height=1000, width=1000)
-  plotInne(Morgan, chromos, First_line=T.test_raw, Second_line=Anova_raw,yass2=AminB_waarden,cuttoff=3,Title=paste("trait ",names(Pfac.uncut)[i]),Grote_assen=1) #de mooie functie van inne gebruiken en de rest is opmaak.
-  legend("topright", c("chromosome 1","chromosome 2","chromosome 3","chromosome 4","chromosome 5","A-B"),lty=rep(1,5),lwd=rep(3,5), col=c(1:5,"purple"))
+  png(filename=paste("Anova_vs_T.test",".png"),bg="white",height=1000, width=1000)
+  plotInne(Morgan, chromos, First_line=T.test_raw, Second_line=Anova_raw,yass2=AminB_waarden,cuttoff=3,Title="LOD T.test vs Anova",Grote_assen=1) #de mooie functie van inne gebruiken en de rest is opmaak.
+  legend("topright", c("T.test","Anova","A-B"),lty=1,lwd=3, col=c("green","red","purple"))
   dev.off()
-}
+
 
 #plotten van Pfac.
 chromos<-data[1,405:ncol(data)]
@@ -251,7 +255,30 @@ Morgan<-data[2,405:ncol(data)]
 setwd("C:/github/400pheno/images")
 for (i in 1:length(Pfac.uncut)){
   png(filename=paste("Trait ",names(Pfac.uncut)[i],".png"),bg="white",height=1000, width=1000)
-  plotInne(Morgan, chromos, as.numeric(Pfac.uncut[[i]]), cuttoff=3,Title=paste("trait ",names(Pfac.uncut)[i]),Grote_assen=1) #de mooie functie van inne gebruiken en de rest is opmaak.
-  legend("topright", c("chromosome 1","chromosome 2","chromosome 3","chromosome 4","chromosome 5"),lty=rep(1,5),lwd=rep(3,5), col=1:5)
+  plotInne(Morgan, chromos, as.numeric(Pfac.uncut[[i]]),Second_line=NULL,yass2=sign(as.numeric(unlist(Efac[[i]]))), cuttoff=3,Title=paste("trait ",names(Pfac.uncut)[i]),Grote_assen=1) #de mooie functie van inne gebruiken en de rest is opmaak.
+  legend("topright", c("chromosome 1","chromosome 2","chromosome 3","chromosome 4","chromosome 5","A-B"),lty=rep(1,5),lwd=rep(3,5), col=c(1:5,"purple"))
+  dev.off()
+}
+
+#Bepalen van Sequence
+#het vergelijken Gmax oogst A voor alle environments (Alleen eerset waarde genomen)
+lijst_traits<-c("Fresh.Gmax.A.ns", "AR.Gmax.A.ns", "AfterRipening.AR.Gmax.A.ns-Fresh.Gmax.A.ns", "NaCl-NS.AR.Gmax.A.ns-AR.100NaCl.Gmax.A.ns", "Mannitol-NS.AR.Gmax.S.ns-AR.Mann.Gmax.S.ns", "ABA-NS.AR.Gmax.D.ns-AR.0.5µmABA.Gmax.D.ns", "ColdFresh-NS.Fresh.Gmax.D.ns-Fresh.10C.Gmax.D.ns", "HeatFresh-NS.Fresh.Gmax.D.ns-Fresh.25C.Gmax.D.ns","ColdAR-NS.AR.Gmax.D.ns-AR.10C.Gmax.D.ns", "HeatAR-NS.AR.Gmax.avg.ns-AR.30C.Gmax.avg.ns", "CD-NS.AR.Gmax.D.ns-AR.with CD.Gmax.D.ns")
+lijst_traits<-TAAmerge[grep("ABA",TAAmerge[,1]),1]
+uitkomst_marker.choice<-Sequences(TAAmerge,lijst_traits,colnames(genotypes))
+
+plotSequence(uitkomst_marker.choice)
+#het plotten van de MAnova properties
+setwd("C:/github/400pheno/images")
+for (i in 1:length(Pfac.uncut)){
+  png(filename=paste("Sequence ",environments[i],".png"),bg="white",height=1000, width=1000)
+  plotSequence(marker.choice(MatrixAnova,properties[i],colnames(genotypes),5)) #de mooie functie van inne gebruiken en de rest is opmaak.
+  dev.off()
+}
+
+#het plotten van alle trait sequences
+setwd("C:/github/400pheno/images")
+for (i in 1:length(environments)){
+  png(filename=paste("Raw","Sequence ",environments[i],".png"),bg="white",height=1000, width=1000)
+  plotSequence(Sequences(TAAmerge,TAAmerge[grep(environments[i],TAAmerge[,1]),1],colnames(genotypes))) #de mooie functie van inne gebruiken en de rest is opmaak.
   dev.off()
 }
