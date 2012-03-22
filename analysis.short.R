@@ -167,6 +167,7 @@ for (i in 1:length(environmat)){ #de hele matrix per kolom achter elkaar in een 
 
 #anova gedeelte
 Pfac <- vector("list",length(listpropvec))
+Dfac <- vector("list",length(listpropvec))
 Pfac.uncut <- vector("list",length(listpropvec))
 Efac<-vector("list",length(listpropvec))
 for (i in 1:length(listpropvec)){  
@@ -176,6 +177,7 @@ for (i in 1:length(listpropvec)){
 
   }
   Pfac[[i]] <- -log10(Pfac[[i]])
+  Dfac[[i]] <- Pfac[[i]]
   rownames(Pfac[[i]]) <- colnames(genotypes)
   colnames(Pfac[[i]]) <- c("Batch","Environment","Genotype","Residuals")
   rownames(Efac[[i]]) <- colnames(genotypes)
