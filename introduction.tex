@@ -17,17 +17,17 @@ Deze parameters werden gemeten op 8 verschillende milieus en op 5 verschillende 
 Uiteindelijk waren er 404 gedefinieerde 'traits'\\
 \subsubsection*{Methode}
 Het bestand dat we hebben gebruikt is de BayShatraitsAll. 
-Een ; gesepareerde tabel met de eerste 404 kolommen phenotypische data en de laatste 69 kolommen de genotypische data.
+Een ';' gesepareerde tabel met de eerste 404 kolommen phenotypische data en de laatste 69 kolommen de genotypische data.
 Waar de eerste twee rijen van phenotypen niks bevatten en de genotypen de chromosomen en de morgans.
 Er werd een t-test gemaakt per trait en per marker (matrix van pheontypes bij genotypes).
-Deze matrix werd uitgezet over de markers en er werd een peakfinding algoritme op losgelaten. 
+Deze matrix werd uitgezet over de markers en er werd een peakfinding algoritme op losgelaten. (plaatje
 De pieken die boven de logarithm of odds (LOD) 3 zitten (P waarden maal -log 10 , dus 3 is 0,001 kans dat de trait in de normale verdeling zou zitten)
 Daar wordt een matrix van gemaakt op de eerste kolom een phenotype en op de tweede een genotype met de -10log P-waarden en de  verhoudingswaarden AA/BB en AA-BB.
 deze zelfde methode wordt gebruikt voor een anova per genotype. 
 Hiervoor zijn verschillende functies geschreven om een zo duidelijk mogelijk code te schrijven(voor zover dat mogelijk is met nieuwe programmeurs).
 Daarnaast ook om functies die vaker gebruikt worden niet opnieuw te hoeven bedenken.
 
-Het maken van de multiple Anova had wat meer voeten in de aarde omdat we graag de verschillend tussen de batches en milieus eruit wilden halen.
+Het maken van de multiple Anova had wat meer voeten in de aarde omdat we graag de verschillen tussen de batches en milieus eruit wilden halen.
 Hiervoor is een linear model opgesteld met waarbij eerst het verschillende batch-effect eruit werd gefilterd en daarna de mileu-effecten.
 Zo krijgen we een afgewogen oordeel over de verschillende eigenschappen.
 de verschillende eigenschappen,batches en milieus zijn in de volgende tabel te vinden.\\
@@ -52,6 +52,7 @@ Deze matrices geven aan op welke trait ze slaan en welke marker significant is v
 Omdat we op dat moment alleen nog LOD waarden hebben, willen we ook graag weten welke waarden groter zijn dan de andere. 
 Dit doen we door de gemiddelde waarden BB (per trait) af te trekken van de waarden AA (AA-BB).
 Als deze waarde positief is, dan zal de AA variant van de marker een groter effect hebben op de trait. 
-Als de AA-BB negatief is, dan zal de BB variant een groter effect hebben op de trait. 
+Als de AA-BB negatief is, dan zal de BB variant een groter effect hebben op de trait. \\
+Met deze waarden kunnen we nu 
 
 \end{document}
