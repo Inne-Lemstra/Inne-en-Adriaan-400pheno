@@ -1,5 +1,8 @@
 %de abstract
-\documentclass[10pt,a4paper, twocollumn]{article}
+\documentclass[10pt,a4paper]{article}
+\usepackage{sweave}
+\addtolength{\oddsidemargin}{-1.5in}
+\addtolength{\evensidemargin}{-1.5in}
 \author{Adriaan van der Graaf, Inne Lemstra}
 \title{400 Pheno}
 \date{Maart 2012}
@@ -24,9 +27,9 @@ Hiervoor zijn verschillende functies geschreven om een zo duidelijk mogelijk cod
 Daarnaast ook om functies die vaker gebruikt worden niet opnieuw te hoeven bedenken.
 
 Het maken van de multiple Anova had wat meer voeten in de aarde omdat we graag de verschillende tussen de batches en milieus eruit wilden halen.
-de verschillende properties,batches en milieus zijn in de volgende tabel te vinden.
-
+de verschillende properties,batches en milieus zijn in de volgende tabel te vinden.\\
 \begin{tabular} {l | c | r}
+\multicolumn{3}{c}{Phenotypische metingen} \\
 \hline
 Properties & Batches & Milieus\\ 
 \hline \hline
@@ -35,9 +38,9 @@ U8416 & B & NaCL\\
 T10 & C & Mannitol\\
 T50 & D & Cold\\
 AUC & ABC & Heat\\
-- & - & ABA\\
-- & - & Fresh\\
- -& - & Stratification\\
+ &  & ABA\\
+ &  & Fresh\\
+ &  & Stratification\\
  \hline
 \end{tabular}
 
