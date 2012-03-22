@@ -269,16 +269,34 @@ uitkomst_marker.choice<-Sequences(TAAmerge,lijst_traits,colnames(genotypes))
 plotSequence(uitkomst_marker.choice)
 #het plotten van de MAnova properties
 setwd("C:/github/400pheno/images")
-  png(filename=paste("Sequence ","environments",".png"),bg="white",height=1000, width=1000)
-  plotSequence(marker.choice(MatrixAnova,properties,colnames(genotypes),5),cex=1) #de mooie functie van inne gebruiken en de rest is opmaak.
+  png(filename=paste("Sequence ","environments","_",".png"),bg="white",height=1000, width=1000)
+  plotSequence(marker.choice(MatrixAnova,properties,colnames(genotypes),5),cex=1,title=paste("Sequence ","environments")) #de mooie functie van inne gebruiken en de rest is opmaak.
   dev.off()
   
 #het plotten van Anova T.test en MAnova
+#op de juiste volgorde krijgen
+seqano<-marker.choice(MatrixAnova,properties,colnames(genotypes),5)
+seqT.tes<-marker.choice(MatrixT.test,properties,colnames(genotypes),5)
+MAnseq<-marker.choice(MultiAnova,properties,colnames(genotypes),4)
+names(seqano)<-c("Gmax_Ano","U8_Ano","T10_Ano","T50_Ano","AUC_Ano")
+names(seqT.tes)<-c("Gmax_T","U8_T","T10_T","T50_T","AUC_T")
+names(MAnseq)<-c("Gmax_MAn","U8_MAn","T10_MAn","T50_MAn","AUC_MAn")
+List_all_tests <-c(seqano,seqT.tes,MAnseq)
+volgorde<-sort(names(List_all_tests),decreasing=FALSE)
+List_all_tests<-List_all_tests[volgorde]
+#het maken van de image
+setwd("C:/github/400pheno/images")
+  png(filename=paste("Sequence ","genotype_preference","All_tests","_",".png"),bg="white",height=1000, width=1000)
+  plotSequence(List_all_tests,cex=1,title=c("Sequence_genotype_preference_all_tests")) #de mooie functie van inne gebruiken en de rest is opmaak.
+  dev.off()
+
+
+#List_all_tests<-lapply(List_all_tests,sort)
 
 #het plotten van alle trait sequences
 setwd("C:/github/400pheno/images")
 for (i in 1:length(environments)){
-  png(filename=paste("Raw","Sequence ",environments[i],".png"),bg="white",height=1000, width=1000)
-  plotSequence(Sequences(TAAmerge,TAAmerge[grep(environments[i],TAAmerge[,1]),1],colnames(genotypes))) #de mooie functie van inne gebruiken en de rest is opmaak.
+  png(filename=paste("Raw","Sequence ",environments[i],"_",".png"),bg="white",height=1000, width=1000)
+  plotSequence(Sequences(TAAmerge,TAAmerge[grep(environments[i],TAAmerge[,1]),1],colnames(genotypes)),title=paste("Raw","Sequence ",environments[i])) #de mooie functie van inne gebruiken en de rest is opmaak.
   dev.off()
 }
