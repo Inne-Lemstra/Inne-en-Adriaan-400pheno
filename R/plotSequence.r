@@ -19,10 +19,12 @@ plotSequence<-function(uitkomst_marker.choice,las=2,cex=0.4){
   SEQ[which(SEQ=="-")]<-3
 
   SEQ<-apply(SEQ,2,as.numeric)
+  if(class(uitkomst_marker.choice)=="list"){rownames(SEQ)<-rownames(matri)}
+  if(class(uitkomst_marker.choice)=="matrix"){rownames(SEQ)<-rownames(uitkomst_marker.choice)}
 
   op<-par(las=las)
   op<-par(cex=cex)
-  op<-par(mai=c(2,0.5,0.1,0.1))
+  op<-par(mai=c(2,1.25,0.1,0.1))
   image(1:ncol(SEQ),1:nrow(SEQ), t(SEQ),col=c("green","red","white"),xlab="Traits", ylab="Markers",xaxt="n",yaxt="n")
   axis(1,1:ncol(SEQ), labels=colnames(SEQ))
   axis(2,1:nrow(SEQ), labels=rownames(SEQ))

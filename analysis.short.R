@@ -1,25 +1,25 @@
 ##copyright Adriaan van der Graaf/Inne Lemstra 2012
 
 #je hoort nu in de folder onder 400pheno te zitten
-
-source("Inne-en-Adriaan-400pheno/R/find.peaks.R")
-source("Inne-en-Adriaan-400pheno/R/effect.matrix.R")
-source("Inne-en-Adriaan-400pheno/R/t.test.R")
-source("Inne-en-Adriaan-400pheno/R/trait.marker.list.R")
-source("Inne-en-Adriaan-400pheno/R/anova.mat.R")
-source("Inne-en-Adriaan-400pheno/R/T en A matrix.r")
-source("Inne-en-Adriaan-400pheno/R/chr_finder.r")
+setwd("C:/github")
+source("400pheno/R/find.peaks.R")
+source("400pheno/R/effect.matrix.R")
+source("400pheno/R/t.test.R")
+source("400pheno/R/trait.marker.list.R")
+source("400pheno/R/anova.mat.R")
+source("400pheno/R/T en A matrix.r")
+source("400pheno/R/chr_finder.r")
 #voor de multiple anova
-source("Inne-en-Adriaan-400pheno/R/Grep.term.col.R") #functies laden
-source("Inne-en-Adriaan-400pheno/R/M.matcher.R")
+source("400pheno/R/Grep.term.col.R") #functies laden
+source("400pheno/R/M.matcher.R")
 #voor het mergen van de properties.
-source("Inne-en-Adriaan-400pheno/R/properties.merge.R")
+source("400pheno/R/properties.merge.R")
 #voor het maken van de plotjes van de multiple Anova
-source("Inne-en-Adriaan-400pheno/R/potje.plotje.r")
+source("400pheno/R/potje.plotje.r")
 #voor het maken van de sequence
-source("Inne-en-Adriaan-400pheno/R/marker.choice.R")
+source("400pheno/R/marker.choice.R")
 #voor het plotten van de sequence
-source("Inne-en-Adriaan-400pheno/R/plotSequence.r")
+source("400pheno/R/plotSequence.r")
 
 
 #data laden
@@ -268,6 +268,7 @@ uitkomst_marker.choice<-Sequences(TAAmerge,lijst_traits,colnames(genotypes))
 
 plotSequence(uitkomst_marker.choice)
 #het plotten van de MAnova properties
+
 setwd("C:/Users/Adriaan/400pheno/Inne-en-Adriaan-400pheno/images")
 
   png(filename=paste("Sequence ","senvironments",".png"),bg="white",height=1000, width=1000)
