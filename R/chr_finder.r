@@ -11,11 +11,11 @@ if(!is.null(dim(Vector))) stop("Lijst met markers moet een Vector zijn")
 chrnr<-which(DATA==chr)                                                     #chromosoom nummer bepalen
 
 lijsten<-NULL
-for(x in 1:length(chrnr)){
+for(x in 1:length(chrnr)){                                                  #Gaat alle waarden van de markers bij na die in het opgegeven chromosoom zitten
   lijst<- grep(colnames(DATA[,min(chrnr):max(chrnr)])[x],Vector)            
-  lijsten<- c(lijsten,lijst)                                                
+  lijsten<- c(lijsten,lijst)                                                #zet waarden in een vector
 }
-lijsten
+lijsten                                                                     #display lijst
 }
 
 #DATA= lijst of tabel waaruit de namen van de Markes gehaald moeten worden

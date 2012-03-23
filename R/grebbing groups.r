@@ -7,15 +7,20 @@
 # Funk= de functie waarop je wilt zoeken
 # DATA = de dataset waarin gezocht moet worden
 
-Zoek <- function(Term, Funk=missing, DATA=colnames(data),Raw=missing){
-	T1<-grep(Term, DATA,ignore.case=TRUE)
-	if(!missing(Funk)){
+Zoek1 <- function(Term, Funk=missing, DATA=colnames(data),Raw=missing){
+	if(missing(Term))stop("Term not found")
+  
+  T1<-grep(Term, DATA,ignore.case=TRUE)   #zoek de term in data zonder hoofdletter gevoelig
+	if(!missing(Funk)){                     #voert de functie uit middels een apply
 		Funk(apply(DATA[,T1], 2, na.rm=TRUE, Funk))
 	}
 	else{
-	if(missing(Raw)){DATA[grep(Term, DATA,ignore.case=TRUE),]
-		}else{grep(Term, DATA,ignore.case=TRUE)
-		}
+	if(missing(Raw)){                                 #de data grebben zonder een functie in te voeren
+  DATA[grep(Term, DATA,ignore.case=TRUE),]          #geeft de colnames terug
+  }
+    else{
+    grep(Term, DATA,ignore.case=TRUE)               #geeft de ruwe data terug
+    }
 	}
 }
 
@@ -23,10 +28,10 @@ Zoek <- function(Term, Funk=missing, DATA=colnames(data),Raw=missing){
 #Is alleen getest op standart deviantion en mean
 #Bevat nog de stratification waarde
 
-Zoek <- function(Term, DATA, FUN, colTODO = c(1,2,3), index.return = TRUE){
+Zoek2 <- function(Term, DATA, FUN, colTODO = c(1,2,3), index.return = TRUE){
     if(missing(Term)) stop("You need to fill in a term")
     if(missing(DATA)) stop("You need to fill DATA")
-	if(!is.matrix(DATA)) stop("DATA needs to be a matrix")
+	if(!is.matrix(DATA)&!is.data.frame(DATA)) stop("DATA needs to be a matrix")
 	
 	if(!missing(FUN)){
 	    if(length(colnames(DATA))==0) stop("You'll need to supply column names")

@@ -5,6 +5,8 @@
 *.Rdata
 *~
 *.xls
+*.AUX
+*.aux
 
 # Compiled source #
 ###################

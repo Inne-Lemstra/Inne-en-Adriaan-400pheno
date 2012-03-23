@@ -1,6 +1,9 @@
 #Matrix met correlatie waarden tussen phenotypes en markers
 # created: 01-03-12
 #(c) created by Inne Lemstra
+
+#Het bepalen van de correlatie (niet in een functie)
+
 matri<-NULL
 for(romark in 1:ncol(genotypes)){
 	

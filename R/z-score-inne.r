@@ -9,20 +9,20 @@
 Zmat<-function(colgroups,DATA){
 
 matr <- NULL
-for(pheno in colgroups){
-	gemm <-mean(DATA[,pheno], na.rm=TRUE)
-	stand<- sd(DATA[,pheno], na.rm=TRUE)
+for(pheno in colgroups){                                #voor alle kollomen
+	gemm <-mean(DATA[,pheno], na.rm=TRUE)                 #mean bepalen
+	stand<- sd(DATA[,pheno], na.rm=TRUE)                  #Standart deviation bepalen
 	vect <- NULL
-	for(a in 1:nrow(DATA)){
+	for(a in 1:nrow(DATA)){                               #z-score per individu uitrekenen
 		z<- ((DATA[a,pheno]-gemm)/stand)
-		vect <- c(vect,z)
+		vect <- c(vect,z)                                   #z-score in een vector stoppen
 	}
-	matr <- cbind(matr,vect)
+	matr <- cbind(matr,vect)                              #alle z-score (per kollom) samenvoegen
 }
-	colnames(matr) <- colnames(phenotypes)
-	matr
+	colnames(matr) <- colnames(phenotypes)                #Kollom namen gelijk zetten
+	matr                                                  #display matrix
 	
-}	
+}
 
 #Ik wil er ook graag nog in hebben dat als je bij colgroups 
 # een character invoerd hij gaat zoeken in de namen van kollomen en vervolgens die nummers gebruikt

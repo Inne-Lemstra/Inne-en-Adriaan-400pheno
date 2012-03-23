@@ -1,25 +1,25 @@
 ##copyright Adriaan van der Graaf/Inne Lemstra 2012
 
 #je hoort nu in de folder onder 400pheno te zitten
-setwd("C:/Users/Adriaan/400pheno")
-source("Inne-en-Adriaan-400pheno/R/find.peaks.R")
-source("Inne-en-Adriaan-400pheno/R/effect.matrix.R")
-source("Inne-en-Adriaan-400pheno/R/t.test.R")
-source("Inne-en-Adriaan-400pheno/R/trait.marker.list.R")
-source("Inne-en-Adriaan-400pheno/R/anova.mat.R")
-source("Inne-en-Adriaan-400pheno/R/T en A matrix.r")
-source("Inne-en-Adriaan-400pheno/R/chr_finder.r")
+setwd("C:/github")
+source("400pheno/R/find.peaks.R")
+source("400pheno/R/effect.matrix.R")
+source("400pheno/R/t.test.R")
+source("400pheno/R/trait.marker.list.R")
+source("400pheno/R/anova.mat.R")
+source("400pheno/R/T en A matrix.r")
+source("400pheno/R/chr_finder.r")
 #voor de multiple anova
-source("Inne-en-Adriaan-400pheno/R/Grep.term.col.R") #functies laden
-source("Inne-en-Adriaan-400pheno/R/M.matcher.R")
+source("400pheno/R/Grep.term.col.R") #functies laden
+source("400pheno/R/M.matcher.R")
 #voor het mergen van de properties.
-source("Inne-en-Adriaan-400pheno/R/properties.merge.R")
+source("400pheno/R/properties.merge.R")
 #voor het maken van de plotjes van de multiple Anova
-source("Inne-en-Adriaan-400pheno/R/potje.plotje.r")
+source("400pheno/R/potje.plotje.r")
 #voor het maken van de sequence
-source("Inne-en-Adriaan-400pheno/R/marker.choice.R")
+source("400pheno/R/marker.choice.R")
 #voor het plotten van de sequence
-source("Inne-en-Adriaan-400pheno/R/plotSequence.r")
+source("400pheno/R/plotSequence.r")
 
 
 #data laden
@@ -166,7 +166,10 @@ for (i in 1:length(environmat)){ #de hele matrix per kolom achter elkaar in een 
 
 
 #anova gedeelte
+
 Pfac <- vector("list",length(listpropvec)) #variabelen ckecken.
+Dfac <- vector("list",length(listpropvec))
+
 Pfac.uncut <- vector("list",length(listpropvec))
 Efac<-vector("list",length(listpropvec))
 for (i in 1:length(listpropvec)){  
@@ -176,6 +179,7 @@ for (i in 1:length(listpropvec)){
 
   }
   Pfac[[i]] <- -log10(Pfac[[i]])
+  Dfac[[i]] <- Pfac[[i]]
   rownames(Pfac[[i]]) <- colnames(genotypes)
   colnames(Pfac[[i]]) <- c("Batch","Environment","Genotype","Residuals")
   rownames(Efac[[i]]) <- colnames(genotypes)
@@ -236,11 +240,24 @@ for (i in isNA.coe){
 TAAmerge[,6] <- as.vector(TAAmerge[,6])  #zet het in de TAAmerge.
 TAAmerge[isNA.coe, 6] <- as.vector(unlist(tempvec11))
 
+-#plotten van hele t.test en anova (zonder cuttoff)
+
+T.test_raw<-as.numeric(apply(tmat,2,mean))
+Anova_raw<-as.numeric(apply(anovamat,2,mean))
+AminB_waarden<-sign(as.numeric(apply(effect.mat.min,2,mean)))
+chromos<-data[1,405:ncol(data)]
+Morgan<-data[2,405:ncol(data)]
+
+setwd("C:/github/400pheno/images")
+png(filename=paste("Anova_vs_T.test",".png"),bg="white",height=1000, width=1000)
+plotInne(Morgan, chromos, First_line=T.test_raw, Second_line=Anova_raw,yass2=AminB_waarden,cuttoff=3,Title="LOD T.test vs Anova",Grote_assen=1) #de mooie functie van inne gebruiken en de rest is opmaak.
+legend("topright", c("T.test","Anova","A-B"),lty=1,lwd=3, col=c("green","red","purple"))
+dev.off()
 
 #plotten van Pfac.
 chromos<-data[1,405:ncol(data)]
 Morgan<-data[2,405:ncol(data)]
-setwd("C:/Users/Adriaan/400pheno/Inne-en-Adriaan-400pheno/images")
+setwd("C:/github/400pheno/images")
 for (i in 1:length(Pfac.uncut)){
   png(filename=paste("Trait ",names(Pfac.uncut)[i],".png"),bg="white",height=1000, width=1000)
   plotInne(Morgan, chromos, as.numeric(Pfac.uncut[[i]]),Second_line=NULL,yass2=sign(as.numeric(unlist(Efac[[i]]))), cuttoff=3,Title=paste("trait ",names(Pfac.uncut)[i]),Grote_assen=1) #de mooie functie van inne gebruiken en de rest is opmaak.
@@ -257,17 +274,35 @@ uitkomst_marker.choice<-Sequences(TAAmerge,lijst_traits,colnames(genotypes))
 plotSequence(uitkomst_marker.choice)
 #het plotten van de MAnova properties
 
-setwd("C:/Users/Adriaan/400pheno/Inne-en-Adriaan-400pheno/images")
-
-  png(filename=paste("Sequence ","senvironments",".png"),bg="white",height=1000, width=1000)
-  plotSequence(marker.choice(MatrixAnova,properties,colnames(genotypes),5),cex=1) #de mooie functie van inne gebruiken en de rest is opmaak.
+setwd("C:/github/400pheno/images")
+  png(filename=paste("Sequence ","environments","_",".png"),bg="white",height=1000, width=1000)
+  plotSequence(marker.choice(MatrixAnova,properties,colnames(genotypes),5),cex=1,title=paste("Sequence ","environments")) #de mooie functie van inne gebruiken en de rest is opmaak.
+  dev.off()
+  
+#het plotten van Anova T.test en MAnova
+#op de juiste volgorde krijgen
+seqano<-marker.choice(MatrixAnova,properties,colnames(genotypes),5)
+seqT.tes<-marker.choice(MatrixT.test,properties,colnames(genotypes),5)
+MAnseq<-marker.choice(MultiAnova,properties,colnames(genotypes),4)
+names(seqano)<-c("Gmax_Ano","U8_Ano","T10_Ano","T50_Ano","AUC_Ano")
+names(seqT.tes)<-c("Gmax_T","U8_T","T10_T","T50_T","AUC_T")
+names(MAnseq)<-c("Gmax_MAn","U8_MAn","T10_MAn","T50_MAn","AUC_MAn")
+List_all_tests <-c(seqano,seqT.tes,MAnseq)
+volgorde<-sort(names(List_all_tests),decreasing=FALSE)
+List_all_tests<-List_all_tests[volgorde]
+#het maken van de image
+setwd("C:/github/400pheno/images")
+  png(filename=paste("Sequence ","genotype_preference","All_tests","_",".png"),bg="white",height=1000, width=1000)
+  plotSequence(List_all_tests,cex=1,title=c("Sequence_genotype_preference_all_tests")) #de mooie functie van inne gebruiken en de rest is opmaak.
   dev.off()
 
 
+
+
 #het plotten van alle trait sequences
-setwd("C:/Users/Adriaan/400pheno/Inne-en-Adriaan-400pheno/images")
+setwd("C:/github/400pheno/images")
 for (i in 1:length(environments)){
-  png(filename=paste("Raw","Sequence ",environments[i],".png"),bg="white",height=1000, width=1000)
-  plotSequence(Sequences(TAAmerge,TAAmerge[grep(environments[i],TAAmerge[,1]),1],colnames(genotypes))) #de mooie functie van inne gebruiken en de rest is opmaak.
+  png(filename=paste("Raw","Sequence ",environments[i],"_",".png"),bg="white",height=1000, width=1000)
+  plotSequence(Sequences(TAAmerge,TAAmerge[grep(environments[i],TAAmerge[,1]),1],colnames(genotypes)),title=paste("Raw","Sequence ",environments[i])) #de mooie functie van inne gebruiken en de rest is opmaak.
   dev.off()
 }
