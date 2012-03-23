@@ -166,7 +166,7 @@ for (i in 1:length(environmat)){ #de hele matrix per kolom achter elkaar in een 
 
 
 #anova gedeelte
-Pfac <- vector("list",length(listpropvec))
+Pfac <- vector("list",length(listpropvec)) #variabelen ckecken.
 Pfac.uncut <- vector("list",length(listpropvec))
 Efac<-vector("list",length(listpropvec))
 for (i in 1:length(listpropvec)){  

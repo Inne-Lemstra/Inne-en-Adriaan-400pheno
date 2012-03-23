@@ -1,4 +1,4 @@
-## copyright Adriaan van der Graaf
+## copyright Adriaan van der Graaf 2012
 #het maken van een matrix met de traits die opgekomen waren uit een find peaks functie.
 
 #de matrix beginnen met de traits en de markers op de eerste kolommen.
@@ -7,7 +7,7 @@ trait.marker.list <- function(a){ #waarbij a de lijst is die aangeleverd wordt m
   mmatrix <- NULL
   for(i in 1:length(a)){ 
     for(e in a[[i]]){
-      mmatrix <- rbind(mmatrix,c(names((a)[i]),e))
+      mmatrix <- rbind(mmatrix,c(names((a)[i]),e)) #maak hier een vector met naam van a en daarna de waarde van a.
     }
   }
   mmatrix
