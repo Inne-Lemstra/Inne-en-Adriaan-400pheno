@@ -9,6 +9,6 @@ z.vector     <- function(a){
   vecmean <- mean(a,na.rm=T)
   vecz <- NULL
   for(i in 1:length(a)){vecz <- c(vecz, ((a[i]-vecmean)/sd(a,na.rm=T)))} #hier wordt de z score uitgerekend voor elke waarde in een vector. en in de vector vecz gestopt
-  vecz
+  return(vecz)
 }
 # 

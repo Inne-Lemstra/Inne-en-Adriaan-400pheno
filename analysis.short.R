@@ -166,8 +166,10 @@ for (i in 1:length(environmat)){ #de hele matrix per kolom achter elkaar in een 
 
 
 #anova gedeelte
-Pfac <- vector("list",length(listpropvec))
+
+Pfac <- vector("list",length(listpropvec)) #variabelen ckecken.
 Dfac <- vector("list",length(listpropvec))
+
 Pfac.uncut <- vector("list",length(listpropvec))
 Efac<-vector("list",length(listpropvec))
 for (i in 1:length(listpropvec)){  
@@ -182,7 +184,7 @@ for (i in 1:length(listpropvec)){
   colnames(Pfac[[i]]) <- c("Batch","Environment","Genotype","Residuals")
   rownames(Efac[[i]]) <- colnames(genotypes)
   Pfac.uncut[[i]] <- Pfac[[i]][,3]
-
+  Pfac[[i]] <- Pfac[[i]][which(Pfac[[i]][,3] >= 3),3]
 }
 names(Pfac) <- properties
 names(Pfac.uncut) <- properties
@@ -238,18 +240,19 @@ for (i in isNA.coe){
 TAAmerge[,6] <- as.vector(TAAmerge[,6])  #zet het in de TAAmerge.
 TAAmerge[isNA.coe, 6] <- as.vector(unlist(tempvec11))
 
-#plotten van hele t.test en anova (zonder cuttoff)
+-#plotten van hele t.test en anova (zonder cuttoff)
+
 T.test_raw<-as.numeric(apply(tmat,2,mean))
 Anova_raw<-as.numeric(apply(anovamat,2,mean))
 AminB_waarden<-sign(as.numeric(apply(effect.mat.min,2,mean)))
 chromos<-data[1,405:ncol(data)]
 Morgan<-data[2,405:ncol(data)]
-setwd("C:/github/400pheno/images")
-  png(filename=paste("Anova_vs_T.test",".png"),bg="white",height=1000, width=1000)
-  plotInne(Morgan, chromos, First_line=T.test_raw, Second_line=Anova_raw,yass2=AminB_waarden,cuttoff=3,Title="LOD T.test vs Anova",Grote_assen=1) #de mooie functie van inne gebruiken en de rest is opmaak.
-  legend("topright", c("T.test","Anova","A-B"),lty=1,lwd=3, col=c("green","red","purple"))
-  dev.off()
 
+setwd("C:/github/400pheno/images")
+png(filename=paste("Anova_vs_T.test",".png"),bg="white",height=1000, width=1000)
+plotInne(Morgan, chromos, First_line=T.test_raw, Second_line=Anova_raw,yass2=AminB_waarden,cuttoff=3,Title="LOD T.test vs Anova",Grote_assen=1) #de mooie functie van inne gebruiken en de rest is opmaak.
+legend("topright", c("T.test","Anova","A-B"),lty=1,lwd=3, col=c("green","red","purple"))
+dev.off()
 
 #plotten van Pfac.
 chromos<-data[1,405:ncol(data)]
