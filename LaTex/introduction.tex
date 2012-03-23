@@ -1,0 +1,103 @@
+%de abstract
+\documentclass[12pt,a4paper, twocolumn]{article}
+\usepackage{graphicx}
+\voffset = -70pt
+\textheight = 662pt
+\author{Adriaan van der Graaf, Inne Lemstra}
+\title{400 Pheno}
+\date{Maart 2012}
+\begin{document}
+\maketitle
+
+
+
+\subsubsection*{Introductie}
+\textit{Arabidopsis thaliana} (zandraket) is een kleine snelgroeiende plant die veel gebruikt wordt in het biologisch onderzoek.
+Van de arabidopsis plant zijn 165 indivduen (zaden) voortgekomen uit een RIL (recomninant inbred line) van twee subsoorten van arabidopsis Bayreuth x shahdara.
+Van deze 165 individuen zijn 5 eigenschappen gemeten onder een verschijdene omstandigheden
+Ook is van 69 markers  gemeten van welke ouder elk individu de marker had gekregen (Resp. AA en BB).
+Genetisch gelijke individuen zijn gebruikt om dit experiment in drie oogsten (batches) uit te voeren, twee tegelijkertijd en een op een later tijdstip.
+De 5 klassieke eigenschappen die gemeten zijn:
+Gmax is de maximum ontkieming,
+U8416 is de tijd tussen 16\% en 84\% van  ontkieming,
+T10 is de tijd totdat 10\% van alle zaden ontkiemt is,
+T50 is de tijd voordat 50\% van alle zaden ontkiemt is,
+AUC is de oppervlakte onder de ontkiemings grafiek  tot 100 uur na het experiment.
+Deze parameters werden gemeten op 8 verschillende milieus namenlijk:
+Manitol (een suiker alcohol), salt (NaCl), ABA (een hormoon), hete en koude omgevingen.
+Al deze omgevingen en eigenschappen zijn ook met en zonder koude stratificatie gedaan. 
+Wat het totaal uiteindelijk op 404 gedefinieerde 'traits" brengt\\
+\subsubsection*{Methode}
+Het bestand dat we hebben gebruikt is de BayShatraitsAll. 
+Een ';' gesepareerde tabel met de eerste 404 kolommen phenotypische data en de laatste 69 kolommen de genotypische data.
+Waar de eerste twee rijen van phenotypen niks bevatten en de genotypen de chromosomen en de morgans.
+Er werd een t-test gemaakt per trait en per marker (matrix van phenotypes bij genotypes).
+Deze matrix werd uitgezet over de markers en er werd een peakfinding algoritme op losgelaten. (plaatje
+De pieken die boven de logarithm of odds (LOD) 3 zitten (P waarden maal -log 10 , dus 3 is 0,001 kans dat de trait in de normale verdeling zou zitten) //
+Peak finder Grafiek//
+Daar wordt een matrix van gemaakt op de eerste kolom een phenotype en op de tweede een genotype met de -10log P-waarden en de  verhoudingswaarden AA/BB en AA-BB.
+Dezelfde methode wordt gebruikt voor een anova per genotype. 
+Deze waarden kunnen gevisualiseerd worden in een plot die per chromosoom de LOD scores uitzet tegen de markers (op moragn afstand van elkaar).
+Het is mogelijk een tweede Y-as in de plot te krijgen met daarin de AA-BB uitgezet (1 als het A is en -1 als het B is).
+Er kunnen maximaal twee grafieken tegelijk geplot worden.
+Hiervoor zijn verschillende functies geschreven om een zo duidelijk mogelijk code te schrijven(voor zover dat mogelijk is met nieuwe programmeurs).
+Daarnaast ook om functies die vaker gebruikt worden niet opnieuw te hoeven bedenken.
+
+Het maken van de multiple Anova had wat meer voeten in de aarde omdat we graag de verschillen tussen de batches en milieus eruit wilden halen.
+Hiervoor is een linear model opgesteld met waarbij eerst het verschillende batch-effect eruit werd gefilterd en daarna de milieu-effecten.
+Zo krijgen we een afgewogen oordeel over de verschillende eigenschappen.
+de verschillende eigenschappen, batches en milieus zijn in de volgende tabel te vinden:\\
+
+\begin{tabular} {l  l  l}
+\multicolumn{3}{c}{Phenotypische metingen} \\
+Eigenschappen & Batches & Milieus\\ 
+\hline 
+Gmax & A & AfterRipening\\
+U8416 & B & NaCL\\
+T10 & C & Mannitol\\
+T50 & D & Cold\\
+AUC & ABC & Heat\\
+ &  & ABA\\
+ &  & Fresh\\
+ &  & Stratification\\
+\end{tabular}\\
+
+
+Ook is het mogelijk om de beste genotype sequentie op te vragen voor bepaalde Traits.
+Dan wordt weergegeven of voor een bepaalde marker het beste de genen van de moeder of van de vader gebruikt kunnen worden.
+Dit kan vervolgens  in een image gevisualiseerd worden, zowel samengevat als alle traits afzonderlijk.
+
+
+\subsubsection*{Resultaten}
+Na het uitwerken van de multiple anova en het afkappen op een LOD van 3 of hoger zijn er op 3 verschillende manieren markers bekend. 
+Op de t.test manier, de Anova per trait manier en de multiple anova manier. 
+Deze matrices geven aan op welke trait ze slaan en welke marker significant is voor de specifieke trait.
+Omdat  op dat moment alleen nog LOD waarden voor handen waren, was het ook interesant te weten welke waarden groter zijn dan de andere. 
+Dit is gedaan door de gemiddelde waarden BB (per trait) af te trekken van de waarden AA (AA-BB).
+Als deze waarde positief is, dan zal de AA variant van de marker een groter effect hebben op de trait. 
+Als de AA-BB negatief is, dan zal de BB variant een groter effect hebben op de trait. \\
+Met deze waarden is te bepalen of een specifiek organisme een bepaalde marker van de vader of de moeder nodig heeft.
+Als er wordt gekozen voor de maximale opbrengst dan zou de volgende grafiek een mooi uitgangspunt zijn.\\
+GRAFIEK\\
+Daarnaast is het ook mogelijk om over het chromosoom te bekijken wat de belangrijkste regio's zijn.\\
+Zo kun je zien op welk deel van het chromosoom de meeste Quantative Trait Loci zitten.
+\subsection*{Conclusies en interpretatie}
+Op dit moment kan er worden gekeken 
+
+
+Zo is te zien op welk deel van het chromosoom de meeste Quantative Trait Loci zitten.
+\listoffigures
+\begin{figure}
+\hspace{-1.5cm}
+\includegraphics[scale=0.5]{Anova_vs_Ttest.png}
+\caption{Anova vergeleken met T.test}
+\end{figure}
+\begin{figure}
+\vspace{2ex}
+\hspace{-1.5ex}
+\includegraphics[scale=0.5]{}]
+\end{figure}
+
+
+
+\end{document}
