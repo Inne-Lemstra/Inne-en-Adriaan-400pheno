@@ -1,25 +1,25 @@
 ##copyright Adriaan van der Graaf/Inne Lemstra 2012
 
 #je hoort nu in de folder onder 400pheno te zitten
-setwd("C:/github")
-source("400pheno/R/find.peaks.R")
-source("400pheno/R/effect.matrix.R")
-source("400pheno/R/t.test.R")
-source("400pheno/R/trait.marker.list.R")
-source("400pheno/R/anova.mat.R")
-source("400pheno/R/T en A matrix.r")
-source("400pheno/R/chr_finder.r")
+setwd("C:/Users/Adriaan/400pheno")
+source("Inne-en-Adriaan-400pheno/R/find.peaks.R")
+source("Inne-en-Adriaan-400pheno/R/effect.matrix.R")
+source("Inne-en-Adriaan-400pheno/R/t.test.R")
+source("Inne-en-Adriaan-400pheno/R/trait.marker.list.R")
+source("Inne-en-Adriaan-400pheno/R/anova.mat.R")
+source("Inne-en-Adriaan-400pheno/R/T en A matrix.r")
+source("Inne-en-Adriaan-400pheno/R/chr_finder.r")
 #voor de multiple anova
-source("400pheno/R/Grep.term.col.R") #functies laden
-source("400pheno/R/M.matcher.R")
+source("Inne-en-Adriaan-400pheno/R/Grep.term.col.R") #functies laden
+source("Inne-en-Adriaan-400pheno/R/M.matcher.R")
 #voor het mergen van de properties.
-source("400pheno/R/properties.merge.R")
+source("Inne-en-Adriaan-400pheno/R/properties.merge.R")
 #voor het maken van de plotjes van de multiple Anova
-source("400pheno/R/potje.plotje.r")
+source("Inne-en-Adriaan-400pheno/R/potje.plotje.r")
 #voor het maken van de sequence
-source("400pheno/R/marker.choice.R")
+source("Inne-en-Adriaan-400pheno/R/marker.choice.R")
 #voor het plotten van de sequence
-source("400pheno/R/plotSequence.r")
+source("Inne-en-Adriaan-400pheno/R/plotSequence.r")
 
 
 #data laden
@@ -180,7 +180,7 @@ for (i in 1:length(listpropvec)){
   colnames(Pfac[[i]]) <- c("Batch","Environment","Genotype","Residuals")
   rownames(Efac[[i]]) <- colnames(genotypes)
   Pfac.uncut[[i]] <- Pfac[[i]][,3]
-
+  Pfac[[i]] <- Pfac[[i]][which(Pfac[[i]][,3] >= 3),3]
 }
 names(Pfac) <- properties
 names(Pfac.uncut) <- properties
@@ -235,18 +235,6 @@ for (i in isNA.coe){
 }
 TAAmerge[,6] <- as.vector(TAAmerge[,6])  #zet het in de TAAmerge.
 TAAmerge[isNA.coe, 6] <- as.vector(unlist(tempvec11))
-
-#plotten van hele t.test en anova (zonder cuttoff)
-T.test_raw<-as.numeric(apply(tmat,2,mean))
-Anova_raw<-as.numeric(apply(anovamat,2,mean))
-AminB_waarden<-sign(as.numeric(apply(effect.mat.min,2,mean)))
-chromos<-data[1,405:ncol(data)]
-Morgan<-data[2,405:ncol(data)]
-setwd("C:/github/400pheno/images")
-  png(filename=paste("Anova_vs_T.test",".png"),bg="white",height=1000, width=1000)
-  plotInne(Morgan, chromos, First_line=T.test_raw, Second_line=Anova_raw,yass2=AminB_waarden,cuttoff=3,Title="LOD T.test vs Anova",Grote_assen=1) #de mooie functie van inne gebruiken en de rest is opmaak.
-  legend("topright", c("T.test","Anova","A-B"),lty=1,lwd=3, col=c("green","red","purple"))
-  dev.off()
 
 
 #plotten van Pfac.
