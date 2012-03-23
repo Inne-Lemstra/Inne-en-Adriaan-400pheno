@@ -1,25 +1,25 @@
 ##copyright Adriaan van der Graaf/Inne Lemstra 2012
 
 #je hoort nu in de folder onder 400pheno te zitten
-setwd("C:/Users/Adriaan/400pheno")
-source("Inne-en-Adriaan-400pheno/R/find.peaks.R")
-source("Inne-en-Adriaan-400pheno/R/effect.matrix.R")
-source("Inne-en-Adriaan-400pheno/R/t.test.R")
-source("Inne-en-Adriaan-400pheno/R/trait.marker.list.R")
-source("Inne-en-Adriaan-400pheno/R/anova.mat.R")
-source("Inne-en-Adriaan-400pheno/R/T en A matrix.r")
-source("Inne-en-Adriaan-400pheno/R/chr_finder.r")
+setwd("C:/github")
+source("400pheno/R/find.peaks.R")
+source("400pheno/R/effect.matrix.R")
+source("400pheno/R/t.test.R")
+source("400pheno/R/trait.marker.list.R")
+source("400pheno/R/anova.mat.R")
+source("400pheno/R/T en A matrix.r")
+source("400pheno/R/chr_finder.r")
 #voor de multiple anova
-source("Inne-en-Adriaan-400pheno/R/Grep.term.col.R") #functies laden
-source("Inne-en-Adriaan-400pheno/R/M.matcher.R")
+source("400pheno/R/Grep.term.col.R") #functies laden
+source("400pheno/R/M.matcher.R")
 #voor het mergen van de properties.
-source("Inne-en-Adriaan-400pheno/R/properties.merge.R")
+source("400pheno/R/properties.merge.R")
 #voor het maken van de plotjes van de multiple Anova
-source("Inne-en-Adriaan-400pheno/R/potje.plotje.r")
+source("400pheno/R/potje.plotje.r")
 #voor het maken van de sequence
-source("Inne-en-Adriaan-400pheno/R/marker.choice.R")
+source("400pheno/R/marker.choice.R")
 #voor het plotten van de sequence
-source("Inne-en-Adriaan-400pheno/R/plotSequence.r")
+source("400pheno/R/plotSequence.r")
 
 
 #data laden
@@ -111,7 +111,7 @@ lijsten_chr1<-per.chr(chromos,CombiMatrix[,2],1)
 plot(CombiMatrix[lijsten_chr1,])
 
 #hier wordt de multiple anova berekend.
-##########################################################################################333
+##########################################################################################
 
 properties <- c("Gmax","U8","T10","T50","AUC")#de eigenschappen scheiden.
 
@@ -248,8 +248,8 @@ AminB_waarden<-sign(as.numeric(apply(effect.mat.min,2,mean)))
 chromos<-data[1,405:ncol(data)]
 Morgan<-data[2,405:ncol(data)]
 
-setwd("C:/Users/Adriaan/400pheno/Inne-en-Adriaan-400pheno/images")
-png(filename=paste("Anova_vs_T.test",".png"),bg="white",height=1000, width=1000)
+setwd("C:/github/400pheno/images")
+png(filename=paste("Anova_vs_T.test",".png",sep="",collapse=""),bg="white",height=1000, width=1000)
 plotInne(Morgan, chromos, First_line=T.test_raw, Second_line=Anova_raw,yass2=AminB_waarden,cuttoff=3,Title="LOD T.test vs Anova",Grote_assen=1) #de mooie functie van inne gebruiken en de rest is opmaak.
 legend("topright", c("T.test","Anova","A-B"),lty=1,lwd=3, col=c("green","red","purple"))
 dev.off()
@@ -257,9 +257,9 @@ dev.off()
 #plotten van Pfac.
 chromos<-data[1,405:ncol(data)]
 Morgan<-data[2,405:ncol(data)]
-setwd("C:/Users/Adriaan/400pheno/Inne-en-Adriaan-400pheno/images")
+setwd("C:/github/400pheno/images")
 for (i in 1:length(Pfac.uncut)){
-  png(filename=paste("Trait ",names(Pfac.uncut)[i],".png"),bg="white",height=1000, width=1000)
+  png(filename=paste("Trait ",names(Pfac.uncut)[i],".png",sep="",collapse=""),bg="white",height=1000, width=1000)
   plotInne(Morgan, chromos, as.numeric(Pfac.uncut[[i]]),Second_line=NULL,yass2=sign(as.numeric(unlist(Efac[[i]]))), cuttoff=3,Title=paste("trait ",names(Pfac.uncut)[i]),Grote_assen=1) #de mooie functie van inne gebruiken en de rest is opmaak.
   legend("topright", c("chromosome 1","chromosome 2","chromosome 3","chromosome 4","chromosome 5","A-B"),lty=rep(1,5),lwd=rep(3,5), col=c(1:5,"purple"))
   dev.off()
@@ -274,12 +274,12 @@ uitkomst_marker.choice<-Sequences(TAAmerge,lijst_traits,colnames(genotypes))
 plotSequence(uitkomst_marker.choice)
 #het plotten van de MAnova properties
 
-setwd("C:/Users/Adriaan/400pheno/Inne-en-Adriaan-400pheno/images")
-  png(filename=paste("Sequence ","environments","_",".png"),bg="white",height=1000, width=1000)
+setwd("C:/github/400pheno/images")
+  png(filename=paste("Sequence ","environments","_",".png",sep="",collapse=""),bg="white",height=1000, width=1000)
   plotSequence(marker.choice(MatrixAnova,properties,colnames(genotypes),5),cex=1,title=paste("Sequence ","environments")) #de mooie functie van inne gebruiken en de rest is opmaak.
   dev.off()
   
-#het plotten van Anova T.test en MAnova
+#het plotten van Anova, T.test en MAnova
 #op de juiste volgorde krijgen
 seqano<-marker.choice(MatrixAnova,properties,colnames(genotypes),5)
 seqT.tes<-marker.choice(MatrixT.test,properties,colnames(genotypes),5)
@@ -290,148 +290,30 @@ names(MAnseq)<-c("Gmax_MAn","U8_MAn","T10_MAn","T50_MAn","AUC_MAn")
 List_all_tests <-c(seqano,seqT.tes,MAnseq)
 volgorde<-sort(names(List_all_tests),decreasing=FALSE)
 List_all_tests<-List_all_tests[volgorde]
+
 #het maken van de image
 T.test_raw <- as.numeric(apply(tmat,2,mean))
 Anova_raw<-as.numeric(apply(anovamat,2,mean))
 AminB_waarden<-sign(as.numeric(apply(effect.mat.min,2,mean)))
 chromos<-data[1,405:ncol(data)]
 Morgan<-data[2,405:ncol(data)]
-
-setwd("C:/Users/Adriaan/400pheno/Inne-en-Adriaan-400pheno/images")
-png(filename=paste("Anova_vs_T.test",".png"),bg="white",height=1000, width=1000)
+####################schrijven naar schijf##########################
+setwd("C:/github/400pheno/images")
+png(filename=paste("Anova_vs_T.test",".png",sep="",collapse=""),bg="white",height=1000, width=1000)
 plotInne(Morgan, chromos, First_line=T.test_raw, Second_line=Anova_raw,yass2=AminB_waarden,cuttoff=3,Title="LOD T.test vs Anova",Grote_assen=1) #de mooie functie van inne gebruiken en de rest is opmaak.
 legend("topright", c("T.test","Anova","A-B"),lty=1,lwd=3, col=c("green","red","purple"))
 dev.off()
-
-#plotten van Pfac.
-chromos<-data[1,405:ncol(data)]
-Morgan<-data[2,405:ncol(data)]
-setwd("C:/Users/Adriaan/400pheno/Inne-en-Adriaan-400pheno/images")
-for (i in 1:length(Pfac.uncut)){
-  png(filename=paste("Trait ",names(Pfac.uncut)[i],".png"),bg="white",height=1000, width=1000)
-  plotInne(Morgan, chromos, as.numeric(Pfac.uncut[[i]]),Second_line=NULL,yass2=sign(as.numeric(unlist(Efac[[i]]))), cuttoff=3,Title=paste("trait ",names(Pfac.uncut)[i]),Grote_assen=1) #de mooie functie van inne gebruiken en de rest is opmaak.
-  legend("topright", c("chromosome 1","chromosome 2","chromosome 3","chromosome 4","chromosome 5","A-B"),lty=rep(1,5),lwd=rep(3,5), col=c(1:5,"purple"))
-  dev.off()
-}
-
-#Bepalen van Sequence
-#het vergelijken Gmax oogst A voor alle environments (Alleen eerset waarde genomen)
-lijst_traits<-c("Fresh.Gmax.A.ns", "AR.Gmax.A.ns", "AfterRipening.AR.Gmax.A.ns-Fresh.Gmax.A.ns", "NaCl-NS.AR.Gmax.A.ns-AR.100NaCl.Gmax.A.ns", "Mannitol-NS.AR.Gmax.S.ns-AR.Mann.Gmax.S.ns", "ABA-NS.AR.Gmax.D.ns-AR.0.5µmABA.Gmax.D.ns", "ColdFresh-NS.Fresh.Gmax.D.ns-Fresh.10C.Gmax.D.ns", "HeatFresh-NS.Fresh.Gmax.D.ns-Fresh.25C.Gmax.D.ns","ColdAR-NS.AR.Gmax.D.ns-AR.10C.Gmax.D.ns", "HeatAR-NS.AR.Gmax.avg.ns-AR.30C.Gmax.avg.ns", "CD-NS.AR.Gmax.D.ns-AR.with CD.Gmax.D.ns")
-lijst_traits<-TAAmerge[grep("ABA",TAAmerge[,1]),1]
-uitkomst_marker.choice<-Sequences(TAAmerge,lijst_traits,colnames(genotypes))
-
-plotSequence(uitkomst_marker.choice)
-#het plotten van de MAnova properties
-
-setwd("C:/Users/Adriaan/400pheno/Inne-en-Adriaan-400pheno/images")
-  png(filename=paste("Sequence ","environments","_",".png"),bg="white",height=1000, width=1000)
-  plotSequence(marker.choice(MatrixAnova,properties,colnames(genotypes),5),cex=1,title=paste("Sequence ","environments")) #de mooie functie van inne gebruiken en de rest is opmaak.
-  dev.off()
   
-#het plotten van Anova T.test en MAnova
-#op de juiste volgorde krijgen
-seqano<-marker.choice(MatrixAnova,properties,colnames(genotypes),5)
-seqT.tes<-marker.choice(MatrixT.test,properties,colnames(genotypes),5)
-MAnseq<-marker.choice(MultiAnova,properties,colnames(genotypes),4)
-names(seqano)<-c("Gmax_Ano","U8_Ano","T10_Ano","T50_Ano","AUC_Ano")
-names(seqT.tes)<-c("Gmax_T","U8_T","T10_T","T50_T","AUC_T")
-names(MAnseq)<-c("Gmax_MAn","U8_MAn","T10_MAn","T50_MAn","AUC_MAn")
-List_all_tests <-c(seqano,seqT.tes,MAnseq)
-volgorde<-sort(names(List_all_tests),decreasing=FALSE)
-List_all_tests<-List_all_tests[volgorde]
-#het maken van de image
-
-T.test_raw <- as.numeric(apply(tmat,2,mean))
-Anova_raw<-as.numeric(apply(anovamat,2,mean))
-AminB_waarden<-sign(as.numeric(apply(effect.mat.min,2,mean)))
-chromos<-data[1,405:ncol(data)]
-Morgan<-data[2,405:ncol(data)]
-
-setwd("C:/Users/Adriaan/400pheno/Inne-en-Adriaan-400pheno/images")
-png(filename=paste("Anova_vs_T.test",".png"),bg="white",height=1000, width=1000)
-plotInne(Morgan, chromos, First_line=T.test_raw, Second_line=Anova_raw,yass2=AminB_waarden,cuttoff=3,Title="LOD T.test vs Anova",Grote_assen=1) #de mooie functie van inne gebruiken en de rest is opmaak.
-legend("topright", c("T.test","Anova","A-B"),lty=1,lwd=3, col=c("green","red","purple"))
-dev.off()
-
-#plotten van Pfac.
-chromos<-data[1,405:ncol(data)]
-Morgan<-data[2,405:ncol(data)]
-setwd("C:/Users/Adriaan/400pheno/Inne-en-Adriaan-400pheno/images")
-for (i in 1:length(Pfac.uncut)){
-  png(filename=paste("Trait ",names(Pfac.uncut)[i],".png"),bg="white",height=1000, width=1000)
-  plotInne(Morgan, chromos, as.numeric(Pfac.uncut[[i]]),Second_line=NULL,yass2=sign(as.numeric(unlist(Efac[[i]]))), cuttoff=3,Title=paste("trait ",names(Pfac.uncut)[i]),Grote_assen=1) #de mooie functie van inne gebruiken en de rest is opmaak.
-  legend("topright", c("chromosome 1","chromosome 2","chromosome 3","chromosome 4","chromosome 5","A-B"),lty=rep(1,5),lwd=rep(3,5), col=c(1:5,"purple"))
-  dev.off()
-}
-
-#Bepalen van Sequence
-#het vergelijken Gmax oogst A voor alle environments (Alleen eerset waarde genomen)
-lijst_traits<-c("Fresh.Gmax.A.ns", "AR.Gmax.A.ns", "AfterRipening.AR.Gmax.A.ns-Fresh.Gmax.A.ns", "NaCl-NS.AR.Gmax.A.ns-AR.100NaCl.Gmax.A.ns", "Mannitol-NS.AR.Gmax.S.ns-AR.Mann.Gmax.S.ns", "ABA-NS.AR.Gmax.D.ns-AR.0.5µmABA.Gmax.D.ns", "ColdFresh-NS.Fresh.Gmax.D.ns-Fresh.10C.Gmax.D.ns", "HeatFresh-NS.Fresh.Gmax.D.ns-Fresh.25C.Gmax.D.ns","ColdAR-NS.AR.Gmax.D.ns-AR.10C.Gmax.D.ns", "HeatAR-NS.AR.Gmax.avg.ns-AR.30C.Gmax.avg.ns", "CD-NS.AR.Gmax.D.ns-AR.with CD.Gmax.D.ns")
-lijst_traits<-TAAmerge[grep("ABA",TAAmerge[,1]),1]
-uitkomst_marker.choice<-Sequences(TAAmerge,lijst_traits,colnames(genotypes))
-
-plotSequence(uitkomst_marker.choice)
-#het plotten van de MAnova properties
-
-setwd("C:/Users/Adriaan/400pheno/Inne-en-Adriaan-400pheno/images")
-  png(filename=paste("Sequence ","environments","_",".png"),bg="white",height=1000, width=1000)
-  plotSequence(marker.choice(MatrixAnova,properties,colnames(genotypes),5),cex=1,title=paste("Sequence ","environments")) #de mooie functie van inne gebruiken en de rest is opmaak.
-  dev.off()
-  
-#het plotten van Anova T.test en MAnova
-#op de juiste volgorde krijgen
-seqano<-marker.choice(MatrixAnova,properties,colnames(genotypes),5)
-seqT.tes<-marker.choice(MatrixT.test,properties,colnames(genotypes),5)
-MAnseq<-marker.choice(MultiAnova,properties,colnames(genotypes),4)
-names(seqano)<-c("Gmax_Ano","U8_Ano","T10_Ano","T50_Ano","AUC_Ano")
-names(seqT.tes)<-c("Gmax_T","U8_T","T10_T","T50_T","AUC_T")
-names(MAnseq)<-c("Gmax_MAn","U8_MAn","T10_MAn","T50_MAn","AUC_MAn")
-List_all_tests <-c(seqano,seqT.tes,MAnseq)
-volgorde<-sort(names(List_all_tests),decreasing=FALSE)
-List_all_tests<-List_all_tests[volgorde]
-#het maken van de image
-setwd("C:/Users/Adriaan/400pheno/Inne-en-Adriaan-400pheno/images")
-  png(filename=paste("Sequence ","genotype_preference","All_tests","_",".png"),bg="white",height=1000, width=1000)
-  plotSequence(List_all_tests,cex=1,title=c("Sequence_genotype_preference_all_tests")) #de mooie functie van inne gebruiken en de rest is opmaak.
-  dev.off()
-
-
-
-
 #het plotten van alle trait sequences
-setwd("C:/Users/Adriaan/400pheno/Inne-en-Adriaan-400pheno/images")
+setwd("C:/github/400pheno/images")
 for (i in 1:length(environments)){
-  png(filename=paste("Raw","Sequence ",environments[i],"_",".png"),bg="white",height=1000, width=1000)
+  png(filename=paste("Raw","Sequence ",environments[i],"_",".png",sep="",collapse=""),bg="white",height=1000, width=1000)
   plotSequence(Sequences(TAAmerge,TAAmerge[grep(environments[i],TAAmerge[,1]),1],colnames(genotypes)),title=paste("Raw","Sequence ",environments[i])) #de mooie functie van inne gebruiken en de rest is opmaak.
   dev.off()
 }
 
-  png(filename=paste("Sequence ","genotype_preference","All_tests","_",".png"),bg="white",height=1000, width=1000)
+  png(filename=paste("Sequence ","genotype_preference","All_tests","_",".png",sep="",collapse=""),bg="white",height=1000, width=1000)
   plotSequence(List_all_tests,cex=1,title=c("Sequence_genotype_preference_all_tests")) #de mooie functie van inne gebruiken en de rest is opmaak.
   dev.off()
 
 
-
-
-#het plotten van alle trait sequences
-setwd("C:/Users/Adriaan/400pheno/Inne-en-Adriaan-400pheno/images")
-for (i in 1:length(environments)){
-  png(filename=paste("Raw","Sequence ",environments[i],"_",".png"),bg="white",height=1000, width=1000)
-  plotSequence(Sequences(TAAmerge,TAAmerge[grep(environments[i],TAAmerge[,1]),1],colnames(genotypes)),title=paste("Raw","Sequence ",environments[i])) #de mooie functie van inne gebruiken en de rest is opmaak.
-  dev.off()
-}
-
-  png(filename=paste("Sequence ","genotype_preference","All_tests","_",".png"),bg="white",height=1000, width=1000)
-  plotSequence(List_all_tests,cex=1,title=c("Sequence_genotype_preference_all_tests")) #de mooie functie van inne gebruiken en de rest is opmaak.
-  dev.off()
-
-
-
-
-#het plotten van alle trait sequences
-setwd("C:/Users/Adriaan/400pheno/Inne-en-Adriaan-400pheno/images")
-for (i in 1:length(environments)){
-  png(filename=paste("Raw","Sequence ",environments[i],"_",".png"),bg="white",height=1000, width=1000)
-  plotSequence(Sequences(TAAmerge,TAAmerge[grep(environments[i],TAAmerge[,1]),1],colnames(genotypes)),title=paste("Raw","Sequence ",environments[i])) #de mooie functie van inne gebruiken en de rest is opmaak.
-  dev.off()
-}
