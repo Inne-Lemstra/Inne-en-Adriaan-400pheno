@@ -240,7 +240,7 @@ for (i in isNA.coe){
 TAAmerge[,6] <- as.vector(TAAmerge[,6])  #zet het in de TAAmerge.
 TAAmerge[isNA.coe, 6] <- as.vector(unlist(tempvec11))
 
--#plotten van hele t.test en anova (zonder cuttoff)
+#plotten van hele t.test en anova (zonder cuttoff)
 
 T.test_raw<-as.numeric(apply(tmat,2,mean))
 Anova_raw<-as.numeric(apply(anovamat,2,mean))

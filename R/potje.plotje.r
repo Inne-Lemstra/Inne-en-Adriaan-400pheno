@@ -93,7 +93,7 @@ getCD <- function(which.chr=1, gapsize = 25,distances,chr){
     Max<-max(First_line)*1.25                    #deze range wordt gebruikt als er geen tweede lijn is
   }
   plot(c(0, getCD(nchr, gapsize=gapsize,distances=distances,chr=chr)),c(0,Max),type="n",main=Title, ylab=Title_Y.as1, xlab="Markers",xaxt="n")              #De algemene plot
-  axis(2, c(0,Max))                         #De Y-as (de eerste)
+  axis(2, c(0,Max), yaxt="n")                         #De Y-as (de eerste)
   locs <- NULL                              #Locaties op de x-as
   for(x in 1:nchr){                         #De loop voor het plotten van je points
     locs <- c(locs,distances[which(chr==x)] + (getCD(x-1,gapsize,distances,chr)))
