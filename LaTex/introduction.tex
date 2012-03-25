@@ -1,6 +1,11 @@
 %de abstract
 \documentclass[12pt,a4paper, twocolumn]{article}
 \usepackage{graphicx}
+\usepackage{float}
+\usepackage{subfig}
+\usepackage{graphicx}
+\usepackage[section]{placeins}
+\restylefloat{figure}
 \voffset = -70pt
 \textheight = 662pt
 \author{Adriaan van der Graaf, Inne Lemstra}
@@ -85,17 +90,26 @@ Zo kun je zien op welk deel van het chromosoom de meeste Quantative Trait Loci z
 Op dit moment kan er worden gekeken 
 
 
+
+
 Zo is te zien op welk deel van het chromosoom de meeste Quantative Trait Loci zitten.
+
 \listoffigures
+
 \begin{figure}
 \hspace{-1.5cm}
 \includegraphics[scale=0.5]{Anova_vs_Ttest.png}
 \caption{Anova vergeleken met T.test}
+\FloatBarrier
 \end{figure}
+
+\section{page 1}
+
+
 \begin{figure}
 \vspace{2ex}
 \hspace{-1.5ex}
-\includegraphics[scale=0.5]{}]
+\includegraphics[scale=0.5]{RawSequenceAR_.png}
 \end{figure}
 
 
