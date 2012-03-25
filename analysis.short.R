@@ -1,7 +1,7 @@
 ##copyright Adriaan van der Graaf/Inne Lemstra 2012
 
 #je hoort nu in de folder onder 400pheno te zitten
-setwd("C:/github")
+setwd("C:/users/Inne")
 source("400pheno/R/find.peaks.R")
 source("400pheno/R/effect.matrix.R")
 source("400pheno/R/t.test.R")
@@ -248,8 +248,8 @@ AminB_waarden<-sign(as.numeric(apply(effect.mat.min,2,mean)))
 chromos<-data[1,405:ncol(data)]
 Morgan<-data[2,405:ncol(data)]
 
-setwd("C:/github/400pheno/images")
-png(filename=paste("Anova_vs_T.test",".png",sep="",collapse=""),bg="white",height=1000, width=1000)
+setwd("C:/users/Inne/400pheno/images")
+png(filename=paste("Anova_vs_Ttest",".png",sep="",collapse=""),bg="white",height=1000, width=1000)
 plotInne(Morgan, chromos, First_line=T.test_raw, Second_line=Anova_raw,yass2=AminB_waarden,cuttoff=3,Title="LOD T.test vs Anova",Grote_assen=1) #de mooie functie van inne gebruiken en de rest is opmaak.
 legend("topright", c("T.test","Anova","A-B"),lty=1,lwd=3, col=c("green","red","purple"))
 dev.off()
@@ -257,7 +257,7 @@ dev.off()
 #plotten van Pfac.
 chromos<-data[1,405:ncol(data)]
 Morgan<-data[2,405:ncol(data)]
-setwd("C:/github/400pheno/images")
+setwd("C:/users/Inne/400pheno/images")
 for (i in 1:length(Pfac.uncut)){
   png(filename=paste("Trait ",names(Pfac.uncut)[i],".png",sep="",collapse=""),bg="white",height=1000, width=1000)
   plotInne(Morgan, chromos, as.numeric(Pfac.uncut[[i]]),Second_line=NULL,yass2=sign(as.numeric(unlist(Efac[[i]]))), cuttoff=3,Title=paste("trait ",names(Pfac.uncut)[i]),Grote_assen=1) #de mooie functie van inne gebruiken en de rest is opmaak.
@@ -265,17 +265,11 @@ for (i in 1:length(Pfac.uncut)){
   dev.off()
 }
 
-#Bepalen van Sequence
-#het vergelijken Gmax oogst A voor alle environments (Alleen eerset waarde genomen)
-lijst_traits<-c("Fresh.Gmax.A.ns", "AR.Gmax.A.ns", "AfterRipening.AR.Gmax.A.ns-Fresh.Gmax.A.ns", "NaCl-NS.AR.Gmax.A.ns-AR.100NaCl.Gmax.A.ns", "Mannitol-NS.AR.Gmax.S.ns-AR.Mann.Gmax.S.ns", "ABA-NS.AR.Gmax.D.ns-AR.0.5µmABA.Gmax.D.ns", "ColdFresh-NS.Fresh.Gmax.D.ns-Fresh.10C.Gmax.D.ns", "HeatFresh-NS.Fresh.Gmax.D.ns-Fresh.25C.Gmax.D.ns","ColdAR-NS.AR.Gmax.D.ns-AR.10C.Gmax.D.ns", "HeatAR-NS.AR.Gmax.avg.ns-AR.30C.Gmax.avg.ns", "CD-NS.AR.Gmax.D.ns-AR.with CD.Gmax.D.ns")
-lijst_traits<-TAAmerge[grep("ABA",TAAmerge[,1]),1]
-uitkomst_marker.choice<-Sequences(TAAmerge,lijst_traits,colnames(genotypes))
 
-plotSequence(uitkomst_marker.choice)
 #het plotten van de MAnova properties
 
-setwd("C:/github/400pheno/images")
-  png(filename=paste("Sequence ","environments","_",".png",sep="",collapse=""),bg="white",height=1000, width=1000)
+setwd("C:/users/Inne/400pheno/images")
+  png(filename=paste("Sequence_","environments","_",".png",sep="",collapse=""),bg="white",height=1000, width=1000)
   plotSequence(marker.choice(MatrixAnova,properties,colnames(genotypes),5),cex=1,title=paste("Sequence ","environments")) #de mooie functie van inne gebruiken en de rest is opmaak.
   dev.off()
   
@@ -298,16 +292,16 @@ AminB_waarden<-sign(as.numeric(apply(effect.mat.min,2,mean)))
 chromos<-data[1,405:ncol(data)]
 Morgan<-data[2,405:ncol(data)]
 ####################schrijven naar schijf##########################
-setwd("C:/github/400pheno/images")
-png(filename=paste("Anova_vs_T.test",".png",sep="",collapse=""),bg="white",height=1000, width=1000)
+setwd("C:/users/Inne/400pheno/images")
+png(filename=paste("Anova_vs_Ttest",".png",sep="",collapse=""),bg="white",height=1000, width=1000)
 plotInne(Morgan, chromos, First_line=T.test_raw, Second_line=Anova_raw,yass2=AminB_waarden,cuttoff=3,Title="LOD T.test vs Anova",Grote_assen=1) #de mooie functie van inne gebruiken en de rest is opmaak.
 legend("topright", c("T.test","Anova","A-B"),lty=1,lwd=3, col=c("green","red","purple"))
 dev.off()
   
 #het plotten van alle trait sequences
-setwd("C:/github/400pheno/images")
+setwd("C:/users/Inne/400pheno/images")
 for (i in 1:length(environments)){
-  png(filename=paste("Raw","Sequence ",environments[i],"_",".png",sep="",collapse=""),bg="white",height=1000, width=1000)
+  png(filename=paste("Raw","Sequence_",environments[i],"_",".png",sep="",collapse=""),bg="white",height=1000, width=1000)
   plotSequence(Sequences(TAAmerge,TAAmerge[grep(environments[i],TAAmerge[,1]),1],colnames(genotypes)),title=paste("Raw","Sequence ",environments[i])) #de mooie functie van inne gebruiken en de rest is opmaak.
   dev.off()
 }
