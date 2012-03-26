@@ -71,12 +71,31 @@ AUC & ABC & Heat\\
 Ook is het mogelijk om de beste genotype sequentie op te vragen voor bepaalde Traits.
 Dan wordt weergegeven of voor een bepaalde marker het beste de genen van de moeder of van de vader gebruikt kunnen worden.
 Dit kan vervolgens  in een image gevisualiseerd worden, zowel samengevat als alle traits afzonderlijk.
+\pagebreak
+\subsection*{Functies}
+om deze rekenstappen te bereiken zijn er verschillende functies geschreven om veel voorkomende rekenstappen terug te halen(voor zover dat mogelijk is met nieuwe programmeurs).
+Daarnaast ook om functies die vaker gebruikt worden niet opnieuw te hoeven bedenken.\\
 
+Een korte uitleg van belangrijke functies die gemaakt zijn:
+\begin{itemize}
+\item t.test.mat: Voert een t.test uit om correlatie tussen twee groepen te bepalen, dit geval genotypen en phenotypen.
+\item anova.mat: Voert een Anova uit om correlatie tussen twee groepen te bepalen, dit geval genotypen en phenotypen.
+\item Peak.finder: Een functie die de pieken kon vinden in een grafiek door te kijken naar de difference tussen twee opeenvolgende waarden.
+\item Effect.matrix: Deze functie berekende het verschil of de verhoudingen tussen AA en BB per phenotype en marker.
+\item Grep.term.col: Een functie om een uit de kolomn namen te selecteren voor specifieke termen.
+\item M.matcher: Zoekt binnen een matrix naar kollommen met dezelfde naam als van andere opgegeven matrix en vervangt de waarden in de kollom door een term
+\item chr.finder: Een functie om de posities van markers uit een chromosoom te vinden en te gebruiken voor plaatsing in een plot
+\item properties.merge: Een functie om de resultaten van de verschillende testen samen te voegen.
+\item marker.choice: Een functie om de vader of de moeder van een gentische marker te kiezen uit de testwaarden.
+\item Sequences: waarmee je de resultaten van marker.choice kunt splitsen in de afzonderlijke traits
+\item plotInne: maakt een plot met op de x-as de markers op morgan afstand van elkaar (X.maker en Y.maker kunnen gebruikt worden om geschikte assen te maken)
+\item plotSequence: maakt een image van een AA,BB,- sequentie/genotype om het geheel visueel weer te geven
+\end{itemize}
 
 \subsubsection*{Resultaten}
-Na het uitwerken van de multiple anova en het afkappen op een LOD van 3 of hoger zijn er op 3 verschillende manieren markers bekend. 
-Op de t.test manier, de Anova per trait manier en de multiple anova manier. 
-Deze matrices geven aan op welke trait ze slaan en welke marker significant is voor de specifieke trait.
+Na het uitwerken van de multiple anova en het afkappen op een LOD (van 3 of hoger), zijn er op 3 verschillende manieren significante markers bekend. 
+Via t.test, via Anova per trait en via multiple anova. 
+Deze matrices geven aan welke trait beinvloed wordt en welke marker significant is voor de specifieke trait.
 Omdat  op dat moment alleen nog LOD waarden voor handen waren, was het ook interesant te weten welke waarden groter zijn dan de andere. 
 Dit is gedaan door de gemiddelde waarden BB (per trait) af te trekken van de waarden AA (AA-BB).
 Als deze waarde positief is, dan zal de AA variant van de marker een groter effect hebben op de trait. 
