@@ -1,5 +1,5 @@
 %de abstract
-\documentclass[12pt,a4paper, twocolumn]{article}
+\documentclass[12pt,a4paper]{article}
 \usepackage{graphicx}
 \usepackage{float}
 \usepackage{subfig}
@@ -18,7 +18,7 @@
 
 \subsubsection*{Introductie}
 \textit{Arabidopsis thaliana} (zandraket) is een kleine snelgroeiende plant die veel gebruikt wordt in het biologisch onderzoek.
-Van de arabidopsis plant zijn 165 indivduen (zaden) voortgekomen uit een RIL (recomninant inbred line) van twee subsoorten van arabidopsis Bayreuth x shahdara.
+Van de\textit{Arabidopsis} plant zijn 165 indivduen (zaden) voortgekomen uit een RIL (recomninant inbred line) van twee subsoorten van arabidopsis Bayreuth x shahdara.
 Van deze 165 individuen zijn 5 eigenschappen gemeten onder een verschijdene omstandigheden
 Ook is van 69 markers  gemeten van welke ouder elk individu de marker had gekregen (Resp. AA en BB).
 Genetisch gelijke individuen zijn gebruikt om dit experiment in drie oogsten (batches) uit te voeren, twee tegelijkertijd en een op een later tijdstip.
@@ -42,16 +42,16 @@ De pieken die boven de logarithm of odds (LOD) 3 zitten (P waarden maal -log 10 
 Peak finder Grafiek//
 Daar wordt een matrix van gemaakt op de eerste kolom een phenotype en op de tweede een genotype met de -10log P-waarden en de  verhoudingswaarden AA/BB en AA-BB.
 Dezelfde methode wordt gebruikt voor een anova per genotype. 
-Deze waarden kunnen gevisualiseerd worden in een plot die per chromosoom de LOD scores uitzet tegen de markers (op moragn afstand van elkaar).
+Deze waarden kunnen gevisualiseerd worden in een plot die per chromosoom de LOD scores uitzet tegen de markers (op morgan afstand van elkaar).
 Het is mogelijk een tweede Y-as in de plot te krijgen met daarin de AA-BB uitgezet (1 als het A is en -1 als het B is).
 Er kunnen maximaal twee grafieken tegelijk geplot worden.
-Hiervoor zijn verschillende functies geschreven om een zo duidelijk mogelijk code te schrijven(voor zover dat mogelijk is met nieuwe programmeurs).
-Daarnaast ook om functies die vaker gebruikt worden niet opnieuw te hoeven bedenken.
+Voor de analyse van de dataset BayShatraitsall zijn verscheidene functies geschreven om een zo duidelijk mogelijk code te behouden(voor zover dat mogelijk is met nieuwe programmeurs).
+Daarnaast ook om functies die vaker gebruikt worden niet opnieuw te hoeven bedenken en uit te typen.
 
 Het maken van de multiple Anova had wat meer voeten in de aarde omdat we graag de verschillen tussen de batches en milieus eruit wilden halen.
-Hiervoor is een linear model opgesteld met waarbij eerst het verschillende batch-effect eruit werd gefilterd en daarna de milieu-effecten.
+Hiervoor is een linear model opgesteld waarbij eerst de verschillende batch-effecten eruit werden gefilterd en daarna ditzelfde voor de milieu-effecten.
 Zo krijgen we een afgewogen oordeel over de verschillende eigenschappen.
-de verschillende eigenschappen, batches en milieus zijn in de volgende tabel te vinden:\\
+De verschillende eigenschappen, batches en milieus zijn in de volgende tabel te vinden:\\
 
 \begin{tabular} {l  l  l}
 \multicolumn{3}{c}{Phenotypische metingen} \\
@@ -93,25 +93,70 @@ Op dit moment kan er worden gekeken
 
 
 Zo is te zien op welk deel van het chromosoom de meeste Quantative Trait Loci zitten.
+\pagebreak
 
 \listoffigures
+\pagebreak
 
 \begin{figure}
+\vspace{-6cm}
 \hspace{-1.5cm}
 \includegraphics[scale=0.5]{Anova_vs_Ttest.png}
 \caption{Anova vergeleken met T.test}
 \FloatBarrier
 \end{figure}
 
-\section{page 1}
-
 
 \begin{figure}
-\vspace{2ex}
-\hspace{-1.5ex}
-\includegraphics[scale=0.5]{RawSequenceAR_.png}
+\vspace{-1.5cm}
+\hspace{-2cm}
+\includegraphics[scale=0.4]{TraitGmax.png}
+\subfloat[T10]{\label{fig:T10}\includegraphics[width=0.3\textwidth]{TraitT10.png}}
+\subfloat[T50]{\label{fig:T50}\includegraphics[width=0.3\textwidth]{TraitT50.png}}
+\subfloat[U8416]{\label{fig:U8416}\includegraphics[width=0.3\textwidth]{TraitU8.png}}\quad\
+\subfloat[AUC]{\label{fig:AUC}\includegraphics[width=0.3\textwidth]{TraitAUC.png}}
+\caption[LOD scores per eigenschap]{Grafieken waarop de LOD scores van de verschijdene eigenschappen te zien zijn.De LOD score zijn gemmideld (met alle LOD scores) en zijn uitgezet tegen de markers (die gerangschikt zijn op morgan afstand), Voor alle eigeschappen zijn er op chromosoom 5  hoge LOD scores te zien, chromossom 5  is het geslachts-chromosoom van\textit{Arabidopsis thaliana}}
 \end{figure}
 
-
-
+\begin{figure}
+\vspace{-9cm}
+\includegraphics[scale=0.4]{Sequence_genotype_preferenceAll_tests_.png}
+\caption[genotype voorkeuren bij alle tests]{Op de y-as zijn de markers weergegeven en op de x-as staan de eigenschappen plus met welke test ze zijn bepaalt. Per eigenschap is af te lezen welk phenotype, AA(Rood), BB(Groen) of geen voorkeur(wit), het meest geschikt om een zo groot mogelijke verbetering van deze eigenschap te krijgen. De Anova test vertoont wat afwijkingen omdat door het verwijderen van het omgevings effect de waarden soms de neiging hebben om te klappen.}
+\end{figure}
+\FloatBarrier
+\begin{figure}
+\vspace{-2cm}
+\subfloat[AR]{\label{fig:AR}\includegraphics[width=0.7\textwidth\hspace{-1.5cm}]{RawSequence_AR_.png}}
+\subfloat[Stratification]{\label{fig:Stratification}\includegraphics[width=0.7\textwidth]{RawSequence_Stratification_.png}}\\
+\subfloat[Fresh]{\label{fig:Fresh}\includegraphics[width=0.7\textwidth\hspace{-1.5cm}]{RawSequence_Fresh_.png}}
+\subfloat[Mannitol]{\label{fig:Mannitol}\includegraphics[width=0.7\textwidth]{RawSequence_Mannitol_.png}}\\
+\caption[genotype voorkeuren omgeving (Rood/Groen)]{Genotype voorkeur per omgeving. Op de x-as staan de namen van de traits (phenotypen) en op de y-as de markers. De trais op de x-as staan op de volgorde waarin ze gegrept zijn.\\
+a) De beste genotypen voor het After Riping effect. b)bij deze genotypen is het meeste efftect te zien als stratification wordt toegepast, het AA genotype blijkt hier overerzend te zijn. c) De genotypen voor zaden in een Fresh omgeving, ook vooral AA. d) de genotypen voor Mannitol, er zijn weinig markers die hier regulatie toepassen.}
+\end{figure}
+\FloatBarrier
+\begin{figure}
+\vspace{-3.5cm}
+\subfloat[Cold]{\label{fig:Cold}\includegraphics[width=0.7\textwidth\hspace{-1.5cm}]{RawSequence_Cold_.png}}
+\subfloat[Heat]{\label{fig:Heat}\includegraphics[width=0.7\textwidth]{RawSequence_Heat_.png}}\\
+\subfloat[NaCl]{\label{fig:NaCl}\includegraphics[width=0.7\textwidth\hspace{-1.5cm}]{RawSequence_NaCl_.png}}
+\subfloat[ABA]{\label{fig:ABA}\includegraphics[width=0.7\textwidth]{RawSequence_ABA_.png}}\\
+\caption[genotype voorkeuren omgeving (overwegend Groen)]{Genotype voorkeur per omgeving. Op de x-as staan de namen van de traits (phenotypen) en op de y-as de markers. De trais op de x-as staan op de volgorde waarin ze gegrept zijn.\\ a)cold wordt minder door AA gereguleerd dan heat (te zien in b). Er is duidelijk te zien dat in c) Nacl en d) ABA het BB genotype verantwoordelijk is voor beter scores in deze milieus. }
+\end{figure}
 \end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
