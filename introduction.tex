@@ -1,18 +1,24 @@
 %de abstract
-\documentclass[12pt,a4paper, twocolumn]{article}
+\documentclass[12pt,a4paper]{article}
 \usepackage{graphicx}
+\usepackage{float}
+\usepackage{subfig}
+\usepackage{graphicx}
+\usepackage[section]{placeins}
+\restylefloat{figure}
 \voffset = -70pt
 \textheight = 662pt
-\author{Adriaan van der Graaf, Inne Lemstra}
+\author{Adriaan van der Graaf(), Inne Lemstra(s1928473)}
 \title{400 Pheno}
 \date{Maart 2012}
 \begin{document}
 \maketitle
 
 
+
 \subsubsection*{Introductie}
 \textit{Arabidopsis thaliana} (zandraket) is een kleine snelgroeiende plant die veel gebruikt wordt in het biologisch onderzoek.
-Van de arabidopsis plant zijn 165 indivduen (zaden) voortgekomen uit een RIL (recomninant inbred line) van twee subsoorten van arabidopsis Bayreuth x shahdara.
+Van de\textit{Arabidopsis} plant zijn 165 indivduen (zaden) voortgekomen uit een RIL (recomninant inbred line) van twee subsoorten van arabidopsis Bayreuth x shahdara.
 Van deze 165 individuen zijn 5 eigenschappen gemeten onder een verschijdene omstandigheden
 Ook is van 69 markers  gemeten van welke ouder elk individu de marker had gekregen (Resp. AA en BB).
 Genetisch gelijke individuen zijn gebruikt om dit experiment in drie oogsten (batches) uit te voeren, twee tegelijkertijd en een op een later tijdstip.
@@ -36,16 +42,16 @@ De pieken die boven de logarithm of odds (LOD) 3 zitten (P waarden maal -log 10 
 Peak finder Grafiek//
 Daar wordt een matrix van gemaakt op de eerste kolom een phenotype en op de tweede een genotype met de -10log P-waarden en de  verhoudingswaarden AA/BB en AA-BB.
 Dezelfde methode wordt gebruikt voor een anova per genotype. 
-Deze waarden kunnen gevisualiseerd worden in een plot die per chromosoom de LOD scores uitzet tegen de markers (op moragn afstand van elkaar).
+Deze waarden kunnen gevisualiseerd worden in een plot die per chromosoom de LOD scores uitzet tegen de markers (op morgan afstand van elkaar).
 Het is mogelijk een tweede Y-as in de plot te krijgen met daarin de AA-BB uitgezet (1 als het A is en -1 als het B is).
 Er kunnen maximaal twee grafieken tegelijk geplot worden.
-Hiervoor zijn verschillende functies geschreven om een zo duidelijk mogelijk code te schrijven(voor zover dat mogelijk is met nieuwe programmeurs).
-Daarnaast ook om functies die vaker gebruikt worden niet opnieuw te hoeven bedenken.
+Voor de analyse van de dataset BayShatraitsall zijn verscheidene functies geschreven om een zo duidelijk mogelijk code te behouden(voor zover dat mogelijk is met nieuwe programmeurs).
+Daarnaast ook om functies die vaker gebruikt worden niet opnieuw te hoeven bedenken en uit te typen.
 
 Het maken van de multiple Anova had wat meer voeten in de aarde omdat we graag de verschillen tussen de batches en milieus eruit wilden halen.
-Hiervoor is een linear model opgesteld met waarbij eerst het verschillende batch-effect eruit werd gefilterd en daarna de milieu-effecten.
+Hiervoor is een linear model opgesteld waarbij eerst de verschillende batch-effecten eruit werden gefilterd en daarna ditzelfde voor de milieu-effecten.
 Zo krijgen we een afgewogen oordeel over de verschillende eigenschappen.
-de verschillende eigenschappen, batches en milieus zijn in de volgende tabel te vinden:\\
+De verschillende eigenschappen, batches en milieus zijn in de volgende tabel te vinden:\\
 
 \begin{tabular} {l  l  l}
 \multicolumn{3}{c}{Phenotypische metingen} \\
@@ -65,40 +71,134 @@ AUC & ABC & Heat\\
 Ook is het mogelijk om de beste genotype sequentie op te vragen voor bepaalde Traits.
 Dan wordt weergegeven of voor een bepaalde marker het beste de genen van de moeder of van de vader gebruikt kunnen worden.
 Dit kan vervolgens  in een image gevisualiseerd worden, zowel samengevat als alle traits afzonderlijk.
+\pagebreak
+\subsection*{Functies}
+om deze rekenstappen te bereiken zijn er verschillende functies geschreven om veel voorkomende rekenstappen terug te halen(voor zover dat mogelijk is met nieuwe programmeurs).
+Daarnaast ook om functies die vaker gebruikt worden niet opnieuw te hoeven bedenken.\\
 
+Een korte uitleg van belangrijke functies die gemaakt zijn:
+\begin{itemize}
+\item t.test.mat: Voert een t.test uit om correlatie tussen twee groepen te bepalen, dit geval genotypen en phenotypen.
+\item anova.mat: Voert een Anova uit om correlatie tussen twee groepen te bepalen, dit geval genotypen en phenotypen.
+\item Peak.finder: Een functie die de pieken kon vinden in een grafiek door te kijken naar de difference tussen twee opeenvolgende waarden.
+\item Effect.matrix: Deze functie berekende het verschil of de verhoudingen tussen AA en BB per phenotype en marker.
+\item Grep.term.col: Een functie om een uit de kolomn namen te selecteren voor specifieke termen.
+\item M.matcher: Zoekt binnen een matrix naar kollommen met dezelfde naam als van andere opgegeven matrix en vervangt de waarden in de kollom door een term
+\item chr.finder: Een functie om de posities van markers uit een chromosoom te vinden en te gebruiken voor plaatsing in een plot
+\item properties.merge: Een functie om de resultaten van de verschillende testen samen te voegen.
+\item marker.choice: Een functie om de vader of de moeder van een gentische marker te kiezen uit de testwaarden.
+\item Sequences: waarmee je de resultaten van marker.choice kunt splitsen in de afzonderlijke traits
+\item plotInne: maakt een plot met op de x-as de markers op morgan afstand van elkaar (X.maker en Y.maker kunnen gebruikt worden om geschikte assen te maken)
+\item plotSequence: maakt een image van een AA,BB,- sequentie/genotype om het geheel visueel weer te geven
+\end{itemize}
 
 \subsubsection*{Resultaten}
-Na het uitwerken van de multiple anova en het afkappen op een LOD van 3 of hoger zijn er op 3 verschillende manieren markers bekend. 
-Op de t.test manier, de Anova per trait manier en de multiple anova manier. 
-Deze matrices geven aan op welke trait ze slaan en welke marker significant is voor de specifieke trait.
-Omdat  op dat moment alleen nog LOD waarden voor handen waren, was het ook interesant te weten welke waarden groter zijn dan de andere. 
+Na het uitwerken van de multiple anova en het afkappen op een LOD (van 3 of hoger), zijn er op 3 verschillende manieren significante markers bekend. 
+Via t.test, via Anova per trait en via multiple anova. 
+Deze matrices geven aan welke trait beinvloed wordt en welke marker significant is voor de specifieke trait.
+In Figuur 1 is de enkele Anova met de T.test vergeleken. En in Figuur 2 zijn de LOD scores van de verschillende eigenschappen uitgezet (per chromosoom).
+Omdat op dat moment alleen nog LOD waarden voor handen waren, was het ook interesant te weten welke waarden groter zijn dan de andere.
 Dit is gedaan door de gemiddelde waarden BB (per trait) af te trekken van de waarden AA (AA-BB).
-Als deze waarde positief is, dan zal de AA variant van de marker een groter effect hebben op de trait. 
+Als deze waarde positief is, dan zal de AA variant van de marker een groter effect hebben op de trait.
 Als de AA-BB negatief is, dan zal de BB variant een groter effect hebben op de trait. \\
 Met deze waarden is te bepalen of een specifiek organisme een bepaalde marker van de vader of de moeder nodig heeft.
 Als er wordt gekozen voor de maximale opbrengst dan zou de volgende grafiek een mooi uitgangspunt zijn.\\
-GRAFIEK\\
-Daarnaast is het ook mogelijk om over het chromosoom te bekijken wat de belangrijkste regio's zijn.\\
+(Fig. 3)\\
+Daarnaast is het ook mogelijk om over het chromosoom te bekijken wat de belangrijkste regio's zijn.(Fig.4/5)\\
 Zo kun je zien op welk deel van het chromosoom de meeste Quantative Trait Loci zitten.
 \subsection*{Conclusies en interpretatie}
-Op dit moment kan er worden gekeken 
+Op dit moment kan er worden gekeken naar het verschil tussen de meetmethoden.
+In figuur1 is te zien dat de Anova en de T.test elkaar redelijk overlappen.
+En in figuur 3 zijn beste genotypen te zien voor alle tests.
+Er is bijna geen enkele eigenschap waar alle drie de testen eenduidig voor AA of BB coderen.
+Wel is er tussen de anova en de t.test ongeveer hetzelfde te vinden.
+De multiple Anova die de batch en environmental effecten weghaalt is vaak tegenstrijdig. 
+Dit komt doordat bij het verekenen van deze effecten de AA en BB nog wel eens willen omklappen.
+Bij het wegfilteren van alle afwijkende effecten wil wel eens een outlier blijven staan, deze bepaalt vervolgens voor de hele vector of het AA of BB is.
+
+
+Waarom de Multiple Anova niet zulke overlappende waarden geeft is omdat de environmental effect en de batchefffecten worden weggehaald.\\
+Dit is op twee verschillende manieren uit te leggen: de Multiple Anova is geen goed selectiemiddel, of de anova en de t. test zijn geen goede selectiemiddelen.
+Omdat de multiple Anova ook batch en milieu-effecten filtert, zou je kunnen zeggen dat deze de meer betrouwbare test-methode is (Adriaan zijn meningen).
 
 
 
 Zo is te zien op welk deel van het chromosoom de meeste Quantative Trait Loci zitten.
 
+\subsection*{Discussie}
+Inne: Als ik er nu bij stil sta wat ik allemaal tijdens dit vak geleerd heb, heeft het (vak) al mijn verwachtingen overtroffen. Ik maakte mij in begin erg zorgen dat ik misschien niet goed genoeg kon programmeren om dit vak te kunnen volgen. Maar gelukkig bleek dit erg mee te vallen. Ik denk dat ik het fijnste aan dit vak vond dat het met een kleine hechte groep is. Het feit dat je als je een probleem hebt het makkelijk even aan je buurman kan vragen, zorgt voor een prettige werksfeer. De begeleiding (Danny) voor dit vak is bekwaam en toegankelijk, alleen gaat de uitleg soms wat snel. Maar gellukig staat hij altijd open voor vragen. Het feit dat we mee mochten lunchen met de rest van de bioinformatics afdeling (BIC), zorgde er ook meteen voor dat het toekomst perspectief van dit vak in beeld gebracht wordt. Bovendien is het erg gezellig. Wel vond ik dat men weinig feedback kreeg tijdens de cursus, wat ik vervelend vond om dat ik steeds onzeker was over mijn code.  Ik vind het jammer dat dit al vak afgelopen is want er was nog zoveel te doen. significanties bepalen, meer data visualiseren, het omklap effect bij de MAnova eruit halen. Gelukkig zijn dit allemaal onderwerpen voor vervolg onderzoek en wellicht kan ik dat in de toekomst zelf uitvoeren. Ik heb in ieder geval heel erg genoten van deze research cursus en ben een carriere overweging rijker (evt. als ik wat beter kan programeren).
+
+
+\subsection*{Bronnen}
+\begin{itemize}
+\item the genetic landscape of arabidopsis seed preformance-Wilco Ligterink-Plant Physiology Preview-Published:December 12,2011, as DOI:10.1104/pp.111.186676\\
+\item De dataset BayShattraitsall gekregen van Danny Arends
+\end{itemize}
+
+\pagebreak
+
 \listoffigures
+\pagebreak
+
 \begin{figure}
+\vspace{-6cm}
 \hspace{-1.5cm}
 \includegraphics[scale=0.5]{Anova_vs_Ttest.png}
 \caption{Anova vergeleken met T.test}
+\FloatBarrier
 \end{figure}
+
+
 \begin{figure}
-\vspace{2ex}
-\hspace{-1.5ex}
-\includegraphics[scale=0.5]{}]
+\vspace{-1.5cm}
+\hspace{-2cm}
+\includegraphics[scale=0.4]{TraitGmax.png}
+\subfloat[T10]{\label{fig:T10}\includegraphics[width=0.3\textwidth]{TraitT10.png}}
+\subfloat[T50]{\label{fig:T50}\includegraphics[width=0.3\textwidth]{TraitT50.png}}
+\subfloat[U8416]{\label{fig:U8416}\includegraphics[width=0.3\textwidth]{TraitU8.png}}\quad\
+\subfloat[AUC]{\label{fig:AUC}\includegraphics[width=0.3\textwidth]{TraitAUC.png}}
+\caption[LOD scores per eigenschap]{Grafieken waarop de LOD scores van de verschijdene eigenschappen te zien zijn.De LOD score zijn gemmideld (met alle LOD scores) en zijn uitgezet tegen de markers (die gerangschikt zijn op morgan afstand), Voor alle eigeschappen zijn er op chromosoom 5  hoge LOD scores te zien, chromossom 5  is het geslachts-chromosoom van\textit{Arabidopsis thaliana}}
 \end{figure}
 
-
+\begin{figure}
+\vspace{-9cm}
+\includegraphics[scale=0.4]{Sequence_genotype_preferenceAll_tests_.png}
+\caption[genotype voorkeuren bij alle tests]{Op de y-as zijn de markers weergegeven en op de x-as staan de eigenschappen plus met welke test ze zijn bepaalt. Per eigenschap is af te lezen welk phenotype, AA(Rood), BB(Groen) of geen voorkeur(wit), het meest geschikt om een zo groot mogelijke verbetering van deze eigenschap te krijgen. De Anova test vertoont wat afwijkingen omdat door het verwijderen van het omgevings effect de waarden soms de neiging hebben om te klappen.}
+\end{figure}
+\FloatBarrier
+\begin{figure}
+\vspace{-2cm}
+\subfloat[AR]{\label{fig:AR}\includegraphics[width=0.7\textwidth\hspace{-1.5cm}]{RawSequence_AR_.png}}
+\subfloat[Stratification]{\label{fig:Stratification}\includegraphics[width=0.7\textwidth]{RawSequence_Stratification_.png}}\\
+\subfloat[Fresh]{\label{fig:Fresh}\includegraphics[width=0.7\textwidth\hspace{-1.5cm}]{RawSequence_Fresh_.png}}
+\subfloat[Mannitol]{\label{fig:Mannitol}\includegraphics[width=0.7\textwidth]{RawSequence_Mannitol_.png}}\\
+\caption[genotype voorkeuren omgeving (Rood/Groen)]{Genotype voorkeur per omgeving. Op de x-as staan de namen van de traits (phenotypen) en op de y-as de markers. De trais op de x-as staan op de volgorde waarin ze gegrept zijn.\\
+a) De beste genotypen voor het After Riping effect. b)bij deze genotypen is het meeste efftect te zien als stratification wordt toegepast, het AA genotype blijkt hier overerzend te zijn. c) De genotypen voor zaden in een Fresh omgeving, ook vooral AA. d) de genotypen voor Mannitol, er zijn weinig markers die hier regulatie toepassen.}
+\end{figure}
+\FloatBarrier
+\begin{figure}
+\vspace{-3.5cm}
+\subfloat[Cold]{\label{fig:Cold}\includegraphics[width=0.7\textwidth\hspace{-1.5cm}]{RawSequence_Cold_.png}}
+\subfloat[Heat]{\label{fig:Heat}\includegraphics[width=0.7\textwidth]{RawSequence_Heat_.png}}\\
+\subfloat[NaCl]{\label{fig:NaCl}\includegraphics[width=0.7\textwidth\hspace{-1.5cm}]{RawSequence_NaCl_.png}}
+\subfloat[ABA]{\label{fig:ABA}\includegraphics[width=0.7\textwidth]{RawSequence_ABA_.png}}\\
+\caption[genotype voorkeuren omgeving (overwegend Groen)]{Genotype voorkeur per omgeving. Op de x-as staan de namen van de traits (phenotypen) en op de y-as de markers. De trais op de x-as staan op de volgorde waarin ze gegrept zijn.\\ a)cold wordt minder door AA gereguleerd dan heat (te zien in b). Er is duidelijk te zien dat in c) Nacl en d) ABA het BB genotype verantwoordelijk is voor beter scores in deze milieus. }
+\end{figure}
 \end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
